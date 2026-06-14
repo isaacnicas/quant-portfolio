@@ -26,27 +26,6 @@
     font-size: 14px;
     margin: 0 0 1.5rem 0;
   }
-  .toggle-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-  .toggle-btn {
-    border: 0.5px solid #CCCAC4;
-    background: #FFFFFF;
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    color: #2B2B2B;
-    transition: background 0.15s;
-  }
-  .toggle-btn.active {
-    background: #2B2B2B;
-    color: #FFFFFF;
-    border-color: #2B2B2B;
-  }
   .chart-wrap {
     position: relative;
     height: 420px;
@@ -90,9 +69,9 @@
   <p class="subtitle">Real backtest results. Hover over the line to see exact values for any month.</p>
 
   <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:#5BA88C"></span>Nasdaq-100 (QQQ)</span>
     <span class="legend-item"><span class="legend-swatch" style="background:#3B6FB6"></span>This strategy</span>
     <span class="legend-item"><span class="legend-swatch" style="background:#E8845C"></span>S&amp;P 500 (SPY)</span>
-    <span class="legend-item"><span class="legend-swatch" style="background:#5BA88C"></span>Nasdaq-100 (QQQ)</span>
   </div>
 
   <div class="chart-wrap">
@@ -106,9 +85,9 @@
   <p class="subtitle">The drop from each strategy's previous high point, at every point in time. Real backtest results.</p>
 
   <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:#5BA88C"></span>Nasdaq-100 (QQQ)</span>
     <span class="legend-item"><span class="legend-swatch" style="background:#3B6FB6"></span>This strategy</span>
     <span class="legend-item"><span class="legend-swatch" style="background:#E8845C"></span>S&amp;P 500 (SPY)</span>
-    <span class="legend-item"><span class="legend-swatch" style="background:#5BA88C"></span>Nasdaq-100 (QQQ)</span>
   </div>
 
   <div class="chart-wrap">
@@ -163,39 +142,29 @@ new Chart(document.getElementById('growthChart'), {
   data: {
     labels: CHART_DATA.dates,
     datasets: [
-  {
-    label: 'Nasdaq-100 (QQQ)',
-    data: CHART_DATA.qqq,
-    borderColor: C_QQQ,
-    backgroundColor: C_QQQ,
-    borderWidth: 1.5,
-    pointRadius: 0,
-    tension: 0.1,
-  },
-  {
-    label: 'This strategy',
-    data: CHART_DATA.strategy,
-    borderColor: C_STRAT,
-    backgroundColor: C_STRAT,
-    borderWidth: 2.5,
-    pointRadius: 0,
-    tension: 0.1,
-  },
-  {
-    label: 'S&P 500 (SPY)',
-    data: CHART_DATA.spy,
-    borderColor: C_SPY,
-    backgroundColor: C_SPY,
-    borderWidth: 1.5,
-    pointRadius: 0,
-    tension: 0.1,
-  },
-]
       {
         label: 'Nasdaq-100 (QQQ)',
         data: CHART_DATA.qqq,
         borderColor: C_QQQ,
         backgroundColor: C_QQQ,
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0.1,
+      },
+      {
+        label: 'This strategy',
+        data: CHART_DATA.strategy,
+        borderColor: C_STRAT,
+        backgroundColor: C_STRAT,
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0.1,
+      },
+      {
+        label: 'S&P 500 (SPY)',
+        data: CHART_DATA.spy,
+        borderColor: C_SPY,
+        backgroundColor: C_SPY,
         borderWidth: 1.5,
         pointRadius: 0,
         tension: 0.1,
@@ -238,38 +207,29 @@ new Chart(document.getElementById('drawdownChart'), {
   data: {
     labels: CHART_DATA.dates,
     datasets: [
-  {
-    label: 'Nasdaq-100 (QQQ)',
-    data: CHART_DATA.qqq,
-    borderColor: C_QQQ,
-    backgroundColor: C_QQQ,
-    borderWidth: 1.5,
-    pointRadius: 0,
-    tension: 0.1,
-  },
-  {
-    label: 'This strategy',
-    data: CHART_DATA.strategy,
-    borderColor: C_STRAT,
-    backgroundColor: C_STRAT,
-    borderWidth: 2.5,
-    pointRadius: 0,
-    tension: 0.1,
-  },
-  {
-    label: 'S&P 500 (SPY)',
-    data: CHART_DATA.spy,
-    borderColor: C_SPY,
-    backgroundColor: C_SPY,
-    borderWidth: 1.5,
-    pointRadius: 0,
-    tension: 0.1,
-  },
-]
       {
         label: 'Nasdaq-100 (QQQ)',
         data: CHART_DATA.dd_qqq,
         borderColor: C_QQQ,
+        backgroundColor: 'transparent',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0.1,
+      },
+      {
+        label: 'This strategy',
+        data: CHART_DATA.dd_strategy,
+        borderColor: C_STRAT,
+        backgroundColor: 'rgba(59, 111, 182, 0.15)',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0.1,
+        fill: true,
+      },
+      {
+        label: 'S&P 500 (SPY)',
+        data: CHART_DATA.dd_spy,
+        borderColor: C_SPY,
         backgroundColor: 'transparent',
         borderWidth: 1.5,
         pointRadius: 0,
