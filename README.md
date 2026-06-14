@@ -13,7 +13,7 @@ I spent a good chunk of time building, testing, and — more importantly — bre
 
 ## The results
 
-Here's the headline comparison, using eighteen years of historical data (2008–2026). *(There's also an [interactive version](interactive_results.html) of the two charts below — hover over any point to see the exact numbers for that month.)*
+Here's the headline comparison, using eighteen years of historical data (2008–2026). *(There's also an [interactive version](https://isaacnicas.github.io/quant-portfolio/interactive_results.html) of the two charts below — hover over any point to see the exact numbers for that month.)*
 
 ![Growth of $10,000 chart comparing the strategy to SPY and QQQ from 2008 to 2026](images/chart1_growth.png)
 
