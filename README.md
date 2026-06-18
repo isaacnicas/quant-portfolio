@@ -103,7 +103,7 @@ Both moments taught me the same thing: the gap between a strategy that looks wel
 
 **Backtesting is complete** across eighteen years of daily price data with realistic trading costs built in.
 
-**Paper trading is live.** The strategy is running on a simulated brokerage account through Interactive Brokers, with positions entered in June 2026. The pipeline runs automatically: prices refresh daily after market close, performance is logged, and the strategy rebalances on the last trading day of each month. The key question paper trading answers that backtesting cannot is whether real fill prices, data feeds, and order execution match the assumptions built into the backtest. Results and a comparison against backtest expectations will be added here as data accumulates.
+**Paper trading is live.** The strategy is running on a simulated brokerage account through Interactive Brokers, with 7 positions entered on June 18, 2026. The pipeline runs automatically: prices refresh daily after market close, performance is logged, and the strategy rebalances on the last trading day of each month. The key question paper trading answers that backtesting cannot is whether real fill prices, data feeds, and order execution match the assumptions built into the backtest. Results and a comparison against backtest expectations will be added here as data accumulates.
 
 The live execution stack runs across five Python scripts:
 
