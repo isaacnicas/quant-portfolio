@@ -1,0 +1,79 @@
+{
+  "last_updated": "2026-06-20T10:31:25.759763",
+  "nav": 995985.35,
+  "inception_nav": 993973.57,
+  "nav_history": [
+    {
+      "date": "2026-06-18",
+      "nav": 995560.45
+    },
+    {
+      "date": "2026-06-20",
+      "nav": 995985.35
+    }
+  ],
+  "positions": [
+    {
+      "symbol": "SMH",
+      "shares": 318,
+      "market_value": 210115.32,
+      "unrealized_pnl": 227.37,
+      "weight": 0.211,
+      "signal": 0.846
+    },
+    {
+      "symbol": "EEM",
+      "shares": 3221,
+      "market_value": 228301.15,
+      "unrealized_pnl": 77.19,
+      "weight": 0.2292,
+      "signal": 0.608
+    },
+    {
+      "symbol": "XLK",
+      "shares": 1065,
+      "market_value": 203883.6,
+      "unrealized_pnl": 37.27,
+      "weight": 0.2047,
+      "signal": 0.544
+    },
+    {
+      "symbol": "IWM",
+      "shares": 872,
+      "market_value": 257369.33,
+      "unrealized_pnl": 552.25,
+      "weight": 0.2584,
+      "signal": 0.439
+    },
+    {
+      "symbol": "QQQ",
+      "shares": 211,
+      "market_value": 156270.82,
+      "unrealized_pnl": 184.62,
+      "weight": 0.1569,
+      "signal": 0.309
+    },
+    {
+      "symbol": "EWJ",
+      "shares": 1033,
+      "market_value": 99853.11,
+      "unrealized_pnl": 297.73,
+      "weight": 0.1003,
+      "signal": 0.182
+    },
+    {
+      "symbol": "SPY",
+      "shares": 116,
+      "market_value": 86644.87,
+      "unrealized_pnl": 20.87,
+      "weight": 0.087,
+      "signal": 0.106
+    }
+  ],
+  "regime": {
+    "raw_bull_score": 0.84,
+    "leverage_scalar": 1.5,
+    "fast_exit_triggered": false
+  },
+  "next_rebalance": "2026-07-28"
+}

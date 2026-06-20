@@ -3,6 +3,8 @@
 
 > **Paper trading is now live.** The strategy entered its first positions on June 18, 2026 on an Interactive Brokers paper account. Automated daily monitoring and monthly rebalancing are running via Windows Task Scheduler. First rebalance: July 28, 2026. Live results will be added here as data accumulates.
 
+**[View the live dashboard →](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html)**
+
 ---
 
 ## The idea
