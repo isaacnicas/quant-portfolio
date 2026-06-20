@@ -445,7 +445,7 @@
     <div class="flow-stat">
       <div class="flow-label">Rebalance</div>
       <div class="flow-value" id="countdown-mini">—</div>
-      <div class="flow-sub">days out</div>
+      <div class="flow-sub">trading days out</div>
     </div>
   </div>
 
@@ -602,7 +602,20 @@ async function loadDashboard() {
 
   const nextRebal = new Date(data.next_rebalance + 'T00:00:00');
   const today = new Date();
-  const daysLeft = Math.max(0, Math.ceil((nextRebal - today) / 86400000));
+  function countTradingDays(from, to) {
+    let count = 0;
+    const d = new Date(from);
+    d.setHours(0,0,0,0);
+    const end = new Date(to);
+    end.setHours(0,0,0,0);
+    while (d < end) {
+      d.setDate(d.getDate() + 1);
+      const day = d.getDay();
+      if (day !== 0 && day !== 6) count++;
+    }
+    return Math.max(0, count);
+  }
+  const daysLeft = countTradingDays(today, nextRebal);
   document.getElementById('countdown-mini').textContent = daysLeft;
   document.getElementById('rebalance-date').textContent =
     nextRebal.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
