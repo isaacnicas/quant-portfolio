@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live — Trend Following</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Ubuntu+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Ubuntu+Mono&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0B0F0C;
@@ -13,8 +13,8 @@
     --surface-2: #1A221B;
     --line: rgba(237,234,224,0.08);
     --gold: #C9A24B;
-    --sage: #7FA08A;
-    --rust: #B5634A;
+    --sage: #34D399;
+    --rust: #F4544A;
     --ink: #EDEAE0;
     --ink-dim: #8C958D;
     --ink-faint: #565E57;
@@ -32,22 +32,24 @@
   .field {
     position: relative;
     width: 100%;
-    height: 230px;
+    height: 210px;
     overflow: hidden;
     border-bottom: 1px solid var(--line);
+    background: var(--bg);
   }
   .field svg { display: block; width: 100%; height: 100%; }
   .field-veil {
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(11,15,12,0) 0%, var(--bg) 96%);
+    background: linear-gradient(180deg, rgba(11,15,12,0) 55%, var(--bg) 100%);
     pointer-events: none;
   }
   .field-content {
     position: absolute; inset: 0;
     display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 1.6rem 1.4rem;
-    max-width: 1040px; margin: 0 auto;
+    padding: 0 clamp(1.2rem, 4vw, 3rem) 1.3rem;
+    width: 100%;
   }
+  .field-inner { max-width: 1180px; margin: 0 auto; width: 100%; }
 
   .ticker-mask {
     position: absolute; top: 0; left: 0; right: 0;
@@ -118,7 +120,7 @@
     50% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(127,160,138,0); }
   }
 
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 1.6rem 4rem; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.2rem, 4vw, 3rem) 4rem; }
 
   .lede {
     font-size: 14px; color: var(--ink-dim); max-width: 460px;
@@ -131,12 +133,12 @@
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 2.2rem;
-    margin: 2.6rem 0 2.2rem;
+    margin: 2.4rem 0 1.4rem;
     padding: 1.6rem 0;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
-  .ring-wrap { position: relative; width: 132px; height: 132px; flex-shrink: 0; }
+  .ring-wrap { position: relative; width: 124px; height: 124px; flex-shrink: 0; }
   .ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
   .ring-bg { fill: none; stroke: var(--line); stroke-width: 3; }
   .ring-fg {
@@ -149,8 +151,8 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
   .ring-pct {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 600;
   }
   .ring-label {
     font-family: 'Ubuntu Mono', monospace;
@@ -161,19 +163,60 @@
   .pulse-numbers .eyebrow {
     font-family: 'Ubuntu Mono', monospace;
     font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-faint); margin: 0 0 0.4rem;
+    color: var(--ink-faint); margin: 0 0 0.5rem;
+  }
+  .pulse-amount-row {
+    display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap;
   }
   .pulse-amount {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(36px, 5vw, 50px);
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(38px, 5vw, 52px);
+    font-weight: 700;
     line-height: 1;
+    letter-spacing: -0.02em;
     display: inline-block;
   }
   .pulse-amount.pos { color: var(--sage); }
   .pulse-amount.neg { color: var(--rust); }
+  .pulse-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    flex-shrink: 0;
+  }
+  .pulse-pct-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 600;
+    padding: 3px 0;
+  }
+  .pulse-pct-pill.pos { color: var(--sage); }
+  .pulse-pct-pill.neg { color: var(--rust); }
   .pulse-meta {
-    font-size: 13px; color: var(--ink-dim); margin-top: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--ink-dim); margin-top: 0.6rem;
+  }
+
+  /* Timeframe toggles */
+  .tf-row {
+    display: flex; gap: 6px; margin: 1.4rem 0 0;
+    flex-wrap: wrap;
+  }
+  .tf-pill {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-dim);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tf-pill:hover { border-color: rgba(237,234,224,0.2); color: var(--ink); }
+  .tf-pill.active {
+    background: var(--surface-2);
+    border-color: rgba(237,234,224,0.18);
+    color: var(--ink);
   }
 
   .flow-stats {
@@ -193,8 +236,8 @@
     color: var(--ink-faint); margin-bottom: 0.5rem;
   }
   .flow-value {
-    font-family: 'Fraunces', serif;
-    font-size: 21px; font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px; font-weight: 600;
   }
   .flow-sub { font-size: 12px; color: var(--ink-dim); margin-top: 0.2rem; }
 
@@ -241,7 +284,7 @@
     padding-bottom: 10px;
   }
   .pos-symbol {
-    font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
   }
   .sig-track {
     height: 4px; background: var(--line); border-radius: 4px; overflow: hidden;
@@ -277,7 +320,7 @@
   }
   .regime-state-row {
     display: flex; align-items: center; gap: 8px;
-    font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500;
+    font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
     margin-top: 0.5rem;
   }
   .orb { width: 9px; height: 9px; border-radius: 50%; position: relative; }
@@ -303,7 +346,7 @@
     border-radius: 20px;
     padding: 1.5rem 1.7rem;
   }
-  .cd-num { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; color: var(--gold); }
+  .cd-num { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 700; color: var(--gold); }
   .cd-label { font-family: 'Ubuntu Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
   .cd-date { font-size: 13px; color: var(--ink-dim); margin-top: 2px; }
 
@@ -332,16 +375,19 @@
     <div class="ticker-track" id="ticker-track"></div>
   </div>
   <svg viewBox="0 0 1200 230" preserveAspectRatio="none" id="wave-svg">
-    <path id="wave-path-1" d="" fill="none" stroke="#C9A24B" stroke-width="1.4" opacity="0.55"/>
-    <path id="wave-path-2" d="" fill="none" stroke="#7FA08A" stroke-width="1" opacity="0.3"/>
+    <path id="wave-path-1" d="" fill="none" stroke="#C9A24B" stroke-width="1.4" opacity="0.5"/>
+    <path id="wave-path-2" d="" fill="none" stroke="#34D399" stroke-width="1" opacity="0.28"/>
+    <path id="wave-path-3" d="" fill="none" stroke="#EDEAE0" stroke-width="0.75" opacity="0.14"/>
   </svg>
   <div class="field-veil"></div>
   <div class="field-content">
-    <div class="wordmark-row">
-      <h1 class="wordmark">Live<span class="accent"> signal</span></h1>
-      <span class="status-chip"><span class="dot"></span><span id="market-state">reading the tape</span></span>
+    <div class="field-inner">
+      <div class="wordmark-row">
+        <h1 class="wordmark">Live<span class="accent"> signal</span></h1>
+        <span class="status-chip"><span class="dot"></span><span id="market-state">reading the tape</span></span>
+      </div>
+      <p class="lede">Systematic trend-following, tracked in real time. Paper account on Interactive Brokers, positions and signals updated after each close.</p>
     </div>
-    <p class="lede">Systematic trend-following, tracked in real time. Paper account on Interactive Brokers, positions and signals updated after each close.</p>
   </div>
 </div>
 
@@ -360,9 +406,24 @@
     </div>
     <div class="pulse-numbers">
       <div class="eyebrow" id="pulse-date">Session P&amp;L</div>
-      <div class="pulse-amount" id="pulse-amount">—</div>
+      <div class="pulse-amount-row">
+        <span class="pulse-amount" id="pulse-amount">—</span>
+        <span class="pulse-pct-pill" id="pulse-pct-pill">
+          <svg class="pulse-arrow" id="pulse-arrow" viewBox="0 0 24 24" fill="none">
+            <path id="arrow-path" d="M12 19V5M12 5L6 11M12 5L18 11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="pulse-pct-text">—</span>
+        </span>
+      </div>
       <div class="pulse-meta" id="pulse-meta">Loading live data…</div>
     </div>
+  </div>
+
+  <div class="tf-row">
+    <button class="tf-pill" data-days="1">1D</button>
+    <button class="tf-pill" data-days="7">1W</button>
+    <button class="tf-pill" data-days="30">1M</button>
+    <button class="tf-pill active" data-days="0">ALL</button>
   </div>
 
   <div class="flow-stats">
@@ -446,7 +507,7 @@
 <script>
 function buildWave(amplitude, freq, phase) {
   let d = 'M 0 ' + (115 + Math.sin(phase) * amplitude);
-  for (let x = 0; x <= 1200; x += 20) {
+  for (let x = 0; x <= 1200; x += 16) {
     const y = 115 + Math.sin((x / 1200) * Math.PI * freq + phase) * amplitude
               + Math.sin((x / 1200) * Math.PI * freq * 2.3 + phase * 1.5) * (amplitude * 0.3);
     d += ' L ' + x + ' ' + y.toFixed(1);
@@ -456,10 +517,12 @@ function buildWave(amplitude, freq, phase) {
 let t = 0;
 const p1 = document.getElementById('wave-path-1');
 const p2 = document.getElementById('wave-path-2');
+const p3 = document.getElementById('wave-path-3');
 function animateWave() {
   t += 0.012;
-  p1.setAttribute('d', buildWave(34, 2.2, t));
-  p2.setAttribute('d', buildWave(22, 3.1, t * 1.3 + 1));
+  p1.setAttribute('d', buildWave(36, 2.4, t));
+  p2.setAttribute('d', buildWave(24, 3.4, t * 1.3 + 1));
+  if (p3) p3.setAttribute('d', buildWave(14, 4.6, t * 0.7 + 2));
   requestAnimationFrame(animateWave);
 }
 animateWave();
@@ -499,7 +562,7 @@ async function loadDashboard() {
   const ringPct = Math.min(1, Math.abs(dailyChangePct) * 22);
   requestAnimationFrame(() => {
     ringFg.style.strokeDashoffset = circumference * (1 - ringPct);
-    ringFg.style.stroke = isNeg ? '#B5634A' : '#C9A24B';
+    ringFg.style.stroke = isNeg ? '#F4544A' : '#34D399';
   });
   document.getElementById('ring-pct').textContent =
     (dailyChangePct >= 0 ? '+' : '') + (dailyChangePct * 100).toFixed(2) + '%';
@@ -517,6 +580,13 @@ async function loadDashboard() {
     if (tt < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+
+  const pillEl = document.getElementById('pulse-pct-pill');
+  const arrowPath = document.getElementById('arrow-path');
+  pillEl.classList.add(isNeg ? 'neg' : 'pos');
+  arrowPath.setAttribute('d', isNeg ? 'M12 5V19M12 19L6 13M12 19L18 13' : 'M12 19V5M12 5L6 11M12 5L18 11');
+  document.getElementById('pulse-pct-text').textContent =
+    (dailyChangePct >= 0 ? '+' : '') + (dailyChangePct * 100).toFixed(2) + '%';
 
   const lastDate = lastTwo.length ? new Date(lastTwo[lastTwo.length-1].date + 'T00:00:00') : null;
   document.getElementById('pulse-date').textContent =
@@ -569,17 +639,21 @@ async function loadDashboard() {
 
   const labels = data.nav_history.map(h => h.date);
   const values = data.nav_history.map(h => h.nav);
-  new Chart(document.getElementById('navChart'), {
+  const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;
+  const lineColor = trendUp ? '#34D399' : '#F4544A';
+  const fillColor = trendUp ? 'rgba(52,211,153,0.08)' : 'rgba(244,84,74,0.08)';
+
+  window.__navChartInstance = new Chart(document.getElementById('navChart'), {
     type: 'line',
     data: {
       labels: labels,
       datasets: [{
         data: values,
-        borderColor: '#C9A24B',
-        backgroundColor: 'rgba(201,162,75,0.08)',
+        borderColor: lineColor,
+        backgroundColor: fillColor,
         borderWidth: 2,
         pointRadius: labels.length < 15 ? 3 : 0,
-        pointBackgroundColor: '#C9A24B',
+        pointBackgroundColor: lineColor,
         pointBorderColor: '#0B0F0C',
         tension: 0.25,
         fill: true,
@@ -606,7 +680,36 @@ async function loadDashboard() {
       }
     }
   });
+
+  window.__navHistory = data.nav_history;
 }
+
+function applyTimeframe(days) {
+  if (!window.__navChartInstance || !window.__navHistory) return;
+  const hist = window.__navHistory;
+  const sliced = days === 0 ? hist : hist.slice(-days);
+  const labels = sliced.map(h => h.date);
+  const values = sliced.map(h => h.nav);
+  const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;
+  const lineColor = trendUp ? '#34D399' : '#F4544A';
+  const fillColor = trendUp ? 'rgba(52,211,153,0.08)' : 'rgba(244,84,74,0.08)';
+  const chart = window.__navChartInstance;
+  chart.data.labels = labels;
+  chart.data.datasets[0].data = values;
+  chart.data.datasets[0].borderColor = lineColor;
+  chart.data.datasets[0].backgroundColor = fillColor;
+  chart.data.datasets[0].pointBackgroundColor = lineColor;
+  chart.data.datasets[0].pointRadius = labels.length < 15 ? 3 : 0;
+  chart.update();
+}
+
+document.querySelectorAll('.tf-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tf-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyTimeframe(parseInt(btn.dataset.days, 10));
+  });
+});
 
 loadDashboard();
 </script>
