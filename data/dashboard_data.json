@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-22T17:29:41.493592",
-  "nav": 1004843.32,
+  "last_updated": "2026-06-23T17:31:54.557994",
+  "nav": 940368.49,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -14,64 +14,68 @@
     {
       "date": "2026-06-22",
       "nav": 1004843.32
+    },
+    {
+      "date": "2026-06-23",
+      "nav": 940368.49
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
       "shares": 318,
-      "market_value": 212427.18,
-      "unrealized_pnl": 2539.23,
-      "weight": 0.2114,
-      "signal": 0.859
-    },
-    {
-      "symbol": "EEM",
-      "shares": 3221,
-      "market_value": 229297.74,
-      "unrealized_pnl": 1073.77,
-      "weight": 0.2282,
-      "signal": 0.609
+      "market_value": 198845.4,
+      "unrealized_pnl": -11042.55,
+      "weight": 0.2115,
+      "signal": 0.864
     },
     {
       "symbol": "XLK",
       "shares": 1065,
-      "market_value": 204788.24,
-      "unrealized_pnl": 941.91,
-      "weight": 0.2038,
-      "signal": 0.554
+      "market_value": 196960.97,
+      "unrealized_pnl": -6885.36,
+      "weight": 0.2095,
+      "signal": 0.669
     },
     {
-      "symbol": "IWM",
-      "shares": 872,
-      "market_value": 259947.62,
-      "unrealized_pnl": 3130.54,
-      "weight": 0.2587,
-      "signal": 0.45
+      "symbol": "EEM",
+      "shares": 3221,
+      "market_value": 216934.35,
+      "unrealized_pnl": -11289.62,
+      "weight": 0.2307,
+      "signal": 0.512
     },
     {
       "symbol": "QQQ",
       "shares": 211,
-      "market_value": 155720.11,
-      "unrealized_pnl": -366.08,
-      "weight": 0.155,
-      "signal": 0.317
+      "market_value": 151128.75,
+      "unrealized_pnl": -4957.45,
+      "weight": 0.1607,
+      "signal": 0.436
     },
     {
       "symbol": "EWJ",
       "shares": 1033,
-      "market_value": 100153.23,
-      "unrealized_pnl": 597.85,
-      "weight": 0.0997,
-      "signal": 0.189
+      "market_value": 95940.49,
+      "unrealized_pnl": -3614.89,
+      "weight": 0.102,
+      "signal": 0.289
+    },
+    {
+      "symbol": "IWM",
+      "shares": 872,
+      "market_value": 257754.48,
+      "unrealized_pnl": 937.39,
+      "weight": 0.2741,
+      "signal": 0.25
     },
     {
       "symbol": "SPY",
       "shares": 116,
-      "market_value": 86363.16,
-      "unrealized_pnl": -260.84,
-      "weight": 0.0859,
-      "signal": 0.116
+      "market_value": 85225.2,
+      "unrealized_pnl": -1398.8,
+      "weight": 0.0906,
+      "signal": 0.13
     }
   ],
   "regime": {
