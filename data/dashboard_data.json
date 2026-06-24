@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-24T16:15:15.534350",
-  "nav": 95.819,
+  "last_updated": "2026-06-24T16:35:16.521961",
+  "nav": 96.675,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -21,51 +21,51 @@
     },
     {
       "date": "2026-06-24",
-      "nav": 95.819
+      "nav": 96.675
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.2113,
+      "weight": 0.2115,
       "signal": 0.851,
-      "unrealized_pct": -0.907
+      "unrealized_pct": -0.696
     },
     {
       "symbol": "XLK",
-      "weight": 0.2075,
+      "weight": 0.2073,
       "signal": 0.659,
-      "unrealized_pct": -0.649
+      "unrealized_pct": -0.479
     },
     {
       "symbol": "EEM",
-      "weight": 0.2304,
+      "weight": 0.2301,
       "signal": 0.512,
-      "unrealized_pct": -0.92
+      "unrealized_pct": -0.743
     },
     {
       "symbol": "QQQ",
-      "weight": 0.1593,
+      "weight": 0.1586,
       "signal": 0.43,
-      "unrealized_pct": -0.454
+      "unrealized_pct": -0.386
     },
     {
       "symbol": "EWJ",
-      "weight": 0.1014,
+      "weight": 0.1003,
       "signal": 0.297,
-      "unrealized_pct": -0.314
+      "unrealized_pct": -0.326
     },
     {
       "symbol": "IWM",
-      "weight": 0.2723,
+      "weight": 0.2701,
       "signal": 0.259,
-      "unrealized_pct": 0.261
+      "unrealized_pct": 0.287
     },
     {
       "symbol": "SPY",
-      "weight": 0.0897,
+      "weight": 0.089,
       "signal": 0.136,
-      "unrealized_pct": -0.125
+      "unrealized_pct": -0.114
     }
   ],
   "regime": {
