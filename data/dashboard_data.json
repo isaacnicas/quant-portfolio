@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-24T16:15:15.534350",
-  "nav": 952411.21,
+  "last_updated": "2026-06-24T16:35:16.521961",
+  "nav": 960920.85,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -21,64 +21,64 @@
     },
     {
       "date": "2026-06-24",
-      "nav": 952411.21
+      "nav": 960920.85
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
       "shares": 318,
-      "market_value": 201252.66,
-      "unrealized_pnl": -8635.29,
-      "weight": 0.2113,
+      "market_value": 203202.0,
+      "unrealized_pnl": -6685.95,
+      "weight": 0.2115,
       "signal": 0.851
     },
     {
       "symbol": "XLK",
       "shares": 1065,
-      "market_value": 197669.82,
-      "unrealized_pnl": -6176.5,
-      "weight": 0.2075,
+      "market_value": 199245.91,
+      "unrealized_pnl": -4600.42,
+      "weight": 0.2073,
       "signal": 0.659
     },
     {
       "symbol": "EEM",
       "shares": 3221,
-      "market_value": 219460.95,
-      "unrealized_pnl": -8763.02,
-      "weight": 0.2304,
+      "market_value": 221085.51,
+      "unrealized_pnl": -7138.46,
+      "weight": 0.2301,
       "signal": 0.512
     },
     {
       "symbol": "QQQ",
       "shares": 211,
-      "market_value": 151761.75,
-      "unrealized_pnl": -4324.45,
-      "weight": 0.1593,
+      "market_value": 152375.75,
+      "unrealized_pnl": -3710.44,
+      "weight": 0.1586,
       "signal": 0.43
     },
     {
       "symbol": "EWJ",
       "shares": 1033,
-      "market_value": 96561.1,
-      "unrealized_pnl": -2994.28,
-      "weight": 0.1014,
+      "market_value": 96418.37,
+      "unrealized_pnl": -3137.01,
+      "weight": 0.1003,
       "signal": 0.297
     },
     {
       "symbol": "IWM",
       "shares": 872,
-      "market_value": 259306.64,
-      "unrealized_pnl": 2489.55,
-      "weight": 0.2723,
+      "market_value": 259570.97,
+      "unrealized_pnl": 2753.88,
+      "weight": 0.2701,
       "signal": 0.259
     },
     {
       "symbol": "SPY",
       "shares": 116,
-      "market_value": 85432.84,
-      "unrealized_pnl": -1191.16,
-      "weight": 0.0897,
+      "market_value": 85527.01,
+      "unrealized_pnl": -1096.99,
+      "weight": 0.089,
       "signal": 0.136
     }
   ],
