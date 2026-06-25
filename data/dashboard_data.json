@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-24T16:35:16.521961",
-  "nav": 960920.85,
+  "last_updated": "2026-06-24T22:58:56.624956",
+  "nav": 968671.3,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -21,64 +21,64 @@
     },
     {
       "date": "2026-06-24",
-      "nav": 960920.85
+      "nav": 968671.3
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
       "shares": 318,
-      "market_value": 203202.0,
-      "unrealized_pnl": -6685.95,
-      "weight": 0.2115,
+      "market_value": 206064.0,
+      "unrealized_pnl": -3823.95,
+      "weight": 0.2127,
       "signal": 0.851
     },
     {
       "symbol": "XLK",
       "shares": 1065,
-      "market_value": 199245.91,
-      "unrealized_pnl": -4600.42,
-      "weight": 0.2073,
+      "market_value": 200084.7,
+      "unrealized_pnl": -3761.63,
+      "weight": 0.2066,
       "signal": 0.659
     },
     {
       "symbol": "EEM",
       "shares": 3221,
-      "market_value": 221085.51,
-      "unrealized_pnl": -7138.46,
-      "weight": 0.2301,
+      "market_value": 221532.22,
+      "unrealized_pnl": -6691.75,
+      "weight": 0.2287,
       "signal": 0.512
     },
     {
       "symbol": "QQQ",
       "shares": 211,
-      "market_value": 152375.75,
-      "unrealized_pnl": -3710.44,
-      "weight": 0.1586,
+      "market_value": 152877.94,
+      "unrealized_pnl": -3208.26,
+      "weight": 0.1578,
       "signal": 0.43
     },
     {
       "symbol": "EWJ",
       "shares": 1033,
-      "market_value": 96418.37,
-      "unrealized_pnl": -3137.01,
-      "weight": 0.1003,
+      "market_value": 96949.93,
+      "unrealized_pnl": -2605.45,
+      "weight": 0.1001,
       "signal": 0.297
     },
     {
       "symbol": "IWM",
       "shares": 872,
-      "market_value": 259570.97,
-      "unrealized_pnl": 2753.88,
-      "weight": 0.2701,
+      "market_value": 259850.23,
+      "unrealized_pnl": 3033.14,
+      "weight": 0.2683,
       "signal": 0.259
     },
     {
       "symbol": "SPY",
       "shares": 116,
-      "market_value": 85527.01,
-      "unrealized_pnl": -1096.99,
-      "weight": 0.089,
+      "market_value": 85516.36,
+      "unrealized_pnl": -1107.64,
+      "weight": 0.0883,
       "signal": 0.136
     }
   ],
@@ -87,5 +87,40 @@
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
-  "next_rebalance": "2026-07-28"
+  "next_rebalance": "2026-07-28",
+  "multi_strategy": {
+    "date": "2026-06-24",
+    "blended_pnl_usd": 0,
+    "active_sleeves": [],
+    "gated_sleeves": [],
+    "sleeve_summary": [],
+    "gate_state": {
+      "date": "2026-06-24",
+      "spot_vix": 18.63,
+      "vix_200dma": 18.61,
+      "f1": 18.63,
+      "f2": 20.37,
+      "contango_pct": 9.34,
+      "vix_3d_change_pct": 13.6,
+      "gate_1_backwardation": false,
+      "gate_2_level": true,
+      "gate_3_shock": false,
+      "any_gate_active": true,
+      "in_confirmation": false,
+      "ism_pmi": null,
+      "credit_spread": null,
+      "yield_curve": null,
+      "macro_regime": "unknown",
+      "sleeve_actions": {
+        "VRP": "suspend",
+        "MeanReversion": "reduce_50pct",
+        "PEAD": "monitor_only",
+        "FactorTiming": "none",
+        "EquityCarry": "reduce_25pct"
+      }
+    },
+    "portfolio_risk": null,
+    "threshold_alerts": [],
+    "last_updated": "2026-06-25T02:58:57.678819Z"
+  }
 }
