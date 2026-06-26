@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-25T19:59:29.542058",
-  "nav": 942784.99,
+  "last_updated": "2026-06-26T16:07:55.300086",
+  "nav": 922265.85,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -26,64 +26,108 @@
     {
       "date": "2026-06-25",
       "nav": 942784.99
+    },
+    {
+      "date": "2026-06-26",
+      "nav": 922265.85
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "shares": 309,
-      "market_value": 195362.16,
-      "unrealized_pnl": -8585.57,
-      "weight": 0.2072,
-      "signal": 0.851
+      "shares": 305,
+      "market_value": 186355.0,
+      "unrealized_pnl": -14952.6,
+      "weight": 0.2021,
+      "signal": 0.899
     },
     {
       "symbol": "XLK",
-      "shares": 1683,
-      "market_value": 309713.14,
-      "unrealized_pnl": -10518.1,
-      "weight": 0.3285,
-      "signal": 0.659
+      "shares": 793,
+      "market_value": 143523.03,
+      "unrealized_pnl": -7364.3,
+      "weight": 0.1556,
+      "signal": 0.689
     },
     {
       "symbol": "EEM",
-      "shares": 1280,
-      "market_value": 86824.83,
-      "unrealized_pnl": -3869.57,
-      "weight": 0.0921,
-      "signal": 0.512
+      "shares": 3734,
+      "market_value": 250693.32,
+      "unrealized_pnl": -2836.26,
+      "weight": 0.2718,
+      "signal": 0.549
     },
     {
       "symbol": "QQQ",
-      "shares": 430,
-      "market_value": 307407.01,
-      "unrealized_pnl": -7691.52,
-      "weight": 0.3261,
-      "signal": 0.43
+      "shares": 123,
+      "market_value": 86819.55,
+      "unrealized_pnl": -3313.29,
+      "weight": 0.0941,
+      "signal": 0.454
     },
     {
       "symbol": "EWJ",
-      "shares": 2572,
-      "market_value": 240395.29,
-      "unrealized_pnl": -4193.55,
-      "weight": 0.255,
-      "signal": 0.297
+      "shares": 440,
+      "market_value": 40752.32,
+      "unrealized_pnl": -1090.25,
+      "weight": 0.0442,
+      "signal": 0.333
     },
     {
       "symbol": "IWM",
-      "shares": -241,
-      "market_value": -71918.8,
-      "unrealized_pnl": 284.2,
-      "weight": -0.0763,
-      "signal": 0.259
+      "shares": 1217,
+      "market_value": 362860.39,
+      "unrealized_pnl": 1920.01,
+      "weight": 0.3934,
+      "signal": 0.291
     },
     {
       "symbol": "SPY",
-      "shares": 212,
-      "market_value": 155335.64,
-      "unrealized_pnl": -2216.16,
-      "weight": 0.1648,
-      "signal": 0.136
+      "shares": 77,
+      "market_value": 56270.11,
+      "unrealized_pnl": -953.89,
+      "weight": 0.061,
+      "signal": 0.147
+    },
+    {
+      "symbol": "HD",
+      "shares": -26,
+      "market_value": -9049.56,
+      "unrealized_pnl": -29.75,
+      "weight": -0.0098,
+      "signal": 0.0
+    },
+    {
+      "symbol": "JPM",
+      "shares": -14,
+      "market_value": -4600.82,
+      "unrealized_pnl": 102.78,
+      "weight": -0.005,
+      "signal": 0.0
+    },
+    {
+      "symbol": "MSFT",
+      "shares": 44,
+      "market_value": 16372.4,
+      "unrealized_pnl": 670.32,
+      "weight": 0.0178,
+      "signal": 0.0
+    },
+    {
+      "symbol": "XLF",
+      "shares": -87,
+      "market_value": -4663.26,
+      "unrealized_pnl": -2.91,
+      "weight": -0.0051,
+      "signal": 0.0
+    },
+    {
+      "symbol": "XLV",
+      "shares": -30,
+      "market_value": -4805.42,
+      "unrealized_pnl": -117.23,
+      "weight": -0.0052,
+      "signal": 0.0
     }
   ],
   "regime": {
@@ -100,12 +144,12 @@
     "sleeve_summary": [],
     "gate_state": {
       "date": "2026-06-26",
-      "spot_vix": 18.5,
+      "spot_vix": 18.49,
       "vix_200dma": 18.64,
-      "f1": 18.5,
-      "f2": 20.14,
-      "contango_pct": 8.86,
-      "vix_3d_change_pct": -5.08,
+      "f1": 18.49,
+      "f2": 20.13,
+      "contango_pct": 8.87,
+      "vix_3d_change_pct": -5.13,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -126,6 +170,6 @@
     "portfolio_risk": null,
     "threshold_alerts": [],
     "pipeline_alert": null,
-    "last_updated": "2026-06-26T20:06:39.607016Z"
+    "last_updated": "2026-06-26T20:07:56.145938Z"
   }
 }
