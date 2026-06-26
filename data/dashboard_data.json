@@ -91,5 +91,41 @@
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
-  "next_rebalance": "2026-07-28"
+  "next_rebalance": "2026-07-28",
+  "multi_strategy": {
+    "date": "2026-06-26",
+    "blended_pnl_usd": 0,
+    "active_sleeves": [],
+    "gated_sleeves": [],
+    "sleeve_summary": [],
+    "gate_state": {
+      "date": "2026-06-26",
+      "spot_vix": 18.5,
+      "vix_200dma": 18.64,
+      "f1": 18.5,
+      "f2": 20.14,
+      "contango_pct": 8.86,
+      "vix_3d_change_pct": -5.08,
+      "gate_1_backwardation": false,
+      "gate_2_level": false,
+      "gate_3_shock": false,
+      "any_gate_active": true,
+      "in_confirmation": true,
+      "ism_pmi": null,
+      "credit_spread": null,
+      "yield_curve": null,
+      "macro_regime": "unknown",
+      "sleeve_actions": {
+        "VRP": "suspend",
+        "MeanReversion": "reduce_50pct",
+        "PEAD": "reduce_50pct",
+        "FactorTiming": "reduce_25pct",
+        "EquityCarry": "reduce_50pct"
+      }
+    },
+    "portfolio_risk": null,
+    "threshold_alerts": [],
+    "pipeline_alert": null,
+    "last_updated": "2026-06-26T20:06:39.607016Z"
+  }
 }
