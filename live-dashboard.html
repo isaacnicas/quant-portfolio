@@ -291,6 +291,7 @@
     position: relative;
   }
   .sig-fill {
+    display: block;
     height: 100%; border-radius: 4px;
     background: var(--gold);
     width: 0%;
@@ -637,7 +638,9 @@ async function loadDashboard() {
     '</div>';
   }).join('');
   requestAnimationFrame(() => {
-    document.querySelectorAll('.sig-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.sig-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    });
   });
 
   document.getElementById('bull-score').innerHTML =
