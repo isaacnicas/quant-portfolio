@@ -221,6 +221,11 @@
     border-color: rgba(237,234,224,0.18);
     color: var(--ink);
   }
+  .tf-pill:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   .flow-stats {
     display: grid;
@@ -778,6 +783,14 @@ async function loadDashboard() {
   });
 
   window.__navHistory = data.nav_history;
+
+  document.querySelectorAll('.tf-pill').forEach(btn => {
+    const d = parseInt(btn.dataset.days, 10);
+    if (d === 0) return;
+    const filtered = filterByDays(data.nav_history, d);
+    btn.disabled = filtered.length < 2;
+  });
+
   renderGatePanel(data);
   renderSleeveStrip(data);
 }
@@ -947,10 +960,19 @@ function renderGatePanel(data) {
   }
   statsEl.innerHTML = stripItems.join('');
 }
+function filterByDays(hist, days) {
+  if (days === 0 || hist.length === 0) return hist;
+  const latest = new Date(hist[hist.length - 1].date + 'T00:00:00');
+  const cutoff = new Date(latest);
+  cutoff.setDate(cutoff.getDate() - days);
+  return hist.filter(h => new Date(h.date + 'T00:00:00') >= cutoff);
+}
+
 function applyTimeframe(days) {
   if (!window.__navChartInstance || !window.__navHistory) return;
   const hist = window.__navHistory;
-  const sliced = days === 0 ? hist : hist.slice(-days);
+  let sliced = filterByDays(hist, days);
+  if (sliced.length < 2) sliced = hist;
   const labels = sliced.map(h => h.date);
   const values = sliced.map(h => h.nav);
   const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;
