@@ -2,7 +2,7 @@
 
 > **Paper trading is now live.** The strategy entered its first positions on June 18, 2026 on an Interactive Brokers paper account. Automated daily monitoring and monthly rebalancing are running via Windows Task Scheduler. First rebalance: July 28, 2026. Live results will be added here as data accumulates.
 >
-> *This README documents the original trend-following strategy and its backtest. The project has since grown into a multi-strategy system — see [Where it goes from here](#where-it-goes-from-here) for the short version, [CHANGELOG.md](CHANGELOG.md) for the full history of changes, and [OPERATIONS.md](OPERATIONS.md) for the current technical architecture.*
+> *This README documents the original trend-following strategy and its backtest. The project has since grown into a multi-strategy system — see [Where it goes from here](#where-it-goes-from-here) for the short version, [RESEARCH.md](RESEARCH.md) for the backtest process, results, and rationale behind each addition, [CHANGELOG.md](CHANGELOG.md) for the full history of changes, and [OPERATIONS.md](OPERATIONS.md) for the current technical architecture.*
 
 ---
 
@@ -126,7 +126,7 @@ What's documented above is the anchor: the original strategy, its eighteen-year 
 
 The execution stack has evolved alongside the research. The system now runs headless and unattended, rebalances on schedule, and pushes its own results to a live dashboard without me touching it.
 
-I keep a running record of every meaningful change as the project grows. If you want to follow the evolution rather than just the starting point, the full history lives in the [changelog](CHANGELOG.md), and the current technical architecture is documented in [OPERATIONS.md](OPERATIONS.md).
+I keep a running record of every meaningful change as the project grows. If you want to follow the evolution rather than just the starting point, the research and results behind each addition live in [RESEARCH.md](RESEARCH.md), the full history lives in the [changelog](CHANGELOG.md), and the current technical architecture is documented in [OPERATIONS.md](OPERATIONS.md).
 
 ---
 

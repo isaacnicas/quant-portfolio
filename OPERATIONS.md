@@ -3,7 +3,8 @@
 Current technical state of the running system. This document reflects the
 present architecture and is kept current; for the history of how it got here,
 see [CHANGELOG.md](CHANGELOG.md). For the project narrative and backtest, see
-[README.md](README.md).
+[README.md](README.md). For the backtest process and rationale behind each
+sleeve, see [RESEARCH.md](RESEARCH.md).
 
 Paper account: **DUP447680** (IBKR).
 Live dashboard: https://isaacnicas.github.io/quant-portfolio/live-dashboard.html
