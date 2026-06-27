@@ -359,6 +359,39 @@
   footer a { color: var(--sage); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
+  /* ── Sleeve-status strip ── */
+  .sleeve-strip {
+    display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: flex-start;
+  }
+  .sleeve-badge {
+    display: flex; flex-direction: column;
+    padding: 0.65rem 0.9rem;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  }
+  .sleeve-badge-head { display: flex; align-items: center; gap: 6px; }
+  .sleeve-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .sleeve-dot.live      { background: var(--sage); }
+  .sleeve-dot.reduced   { background: var(--gold); }
+  .sleeve-dot.suspended { background: var(--rust); }
+  .sleeve-dot.paused    { background: var(--ink-dim); }
+  .sleeve-dot.inactive  { background: var(--ink-faint); }
+  .sleeve-name {
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+  .sleeve-status-text {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 0.25rem;
+  }
+  .sleeve-status-text.live      { color: var(--sage); }
+  .sleeve-status-text.reduced   { color: var(--gold); }
+  .sleeve-status-text.suspended { color: var(--rust); }
+  .sleeve-status-text.paused    { color: var(--ink-dim); }
+  .sleeve-status-text.inactive  { color: var(--ink-faint); }
+  .sleeve-fig {
+    font-family: 'Ubuntu Mono', monospace; font-size: 10px;
+    color: var(--ink-dim); margin-top: 0.2rem;
+  }
+
   /* ── Risk-gate panel ── */
   .orb.clear { background: var(--sage); }
   .orb.clear::before { color: var(--sage); }
@@ -496,14 +529,20 @@
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Risk gate</span></div>
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Strategy sleeves</span></div>
+    <p class="sec-note">Governance action per sleeve — driven by live gate conditions each cycle.</p>
+    <div class="sleeve-strip" id="sleeve-strip"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Risk gate</span></div>
     <p class="sec-note">Live governance state — gate conditions recomputed each cycle from VIX term structure.</p>
     <div class="regime-row" id="gate-panel"></div>
     <div class="gate-strip" id="gate-stats"></div>
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Regime read</span></div>
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Regime read</span></div>
     <p class="sec-note">Recomputed daily from price trend and volatility structure.</p>
     <div class="regime-row">
       <div class="regime-card">
@@ -522,7 +561,7 @@
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Next move</span></div>
+    <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Next move</span></div>
     <div class="countdown-zone">
       <div>
         <div class="cd-label">Scheduled rebalance</div>
@@ -734,8 +773,90 @@ async function loadDashboard() {
 
   window.__navHistory = data.nav_history;
   renderGatePanel(data);
+  renderSleeveStrip(data);
 }
 
+function renderSleeveStrip(data) {
+  var ms = data.multi_strategy || {};
+  var actions = (ms.gate_state || {}).sleeve_actions || {};
+  var activeSleeves = ms.active_sleeves || [];
+  var gatedSleeves = ms.gated_sleeves || [];
+  var summary = ms.sleeve_summary || [];
+  var el = document.getElementById('sleeve-strip');
+
+  // Union of all known sleeves across every source
+  var sleeveSet = {};
+  Object.keys(actions).forEach(function(s) { sleeveSet[s] = true; });
+  activeSleeves.forEach(function(s) { sleeveSet[s] = true; });
+  gatedSleeves.forEach(function(s) { sleeveSet[s] = true; });
+  summary.forEach(function(r) { if (r.sleeve) sleeveSet[r.sleeve] = true; });
+  var sleeves = Object.keys(sleeveSet);
+
+  if (sleeves.length === 0) {
+    el.innerHTML = '<span style="color:var(--ink-faint);font-size:13px">Sleeves initialising - awaiting first session</span>';
+    return;
+  }
+
+  var actionLabel = {
+    run: 'Live', suspend: 'Suspended',
+    reduce_50pct: 'Reduced 50%', reduce_25pct: 'Reduced 25%',
+    monitor_only: 'Monitor only', none: 'Inactive'
+  };
+
+  // Summary keyed by sleeve name
+  var sumMap = {};
+  summary.forEach(function(r) { if (r.sleeve) sumMap[r.sleeve] = r; });
+
+  var badges = sleeves.map(function(sleeve) {
+    // Determine CSS class (live > suspended > action-based > inactive)
+    var cls;
+    if (activeSleeves.indexOf(sleeve) !== -1)      cls = 'live';
+    else if (gatedSleeves.indexOf(sleeve) !== -1)  cls = 'suspended';
+    else {
+      var a = actions[sleeve];
+      if (a === 'run')                              cls = 'live';
+      else if (a === 'suspend')                     cls = 'suspended';
+      else if (a === 'monitor_only')                cls = 'paused';
+      else if (a && a.indexOf('reduce') === 0)      cls = 'reduced';
+      else                                          cls = 'inactive';
+    }
+
+    // Label: prefer specific action string, fall back to class default
+    var label;
+    if (activeSleeves.indexOf(sleeve) !== -1)     label = 'Live';
+    else if (gatedSleeves.indexOf(sleeve) !== -1) label = 'Suspended';
+    else label = actionLabel[actions[sleeve]] || 'Inactive';
+
+    // Pretty display name: insert space before each uppercase run after lowercase
+    var name = sleeve.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+    // Optional live figures from sleeve_summary (rolling, not backtest)
+    var fig = sumMap[sleeve];
+    var figLine = '';
+    if (fig) {
+      var parts = [];
+      if (fig.pnl_usd != null && !isNaN(fig.pnl_usd)) {
+        var sign = fig.pnl_usd >= 0 ? '+' : '';
+        parts.push('P&L ' + sign + '$' + Math.round(Math.abs(fig.pnl_usd)).toLocaleString('en-US'));
+      }
+      if (fig.sharpe_21d != null && !isNaN(fig.sharpe_21d)) {
+        parts.push('21d Sh ' + Number(fig.sharpe_21d).toFixed(2));
+      }
+      if (parts.length) figLine = '<div class="sleeve-fig">' + parts.join(' / ') + '</div>';
+    }
+
+    return '<div class="sleeve-badge">' +
+      '<div class="sleeve-badge-head">' +
+        '<span class="sleeve-dot ' + cls + '"></span>' +
+        '<span class="sleeve-name">' + name + '</span>' +
+      '</div>' +
+      '<div class="sleeve-status-text ' + cls + '">' + label + '</div>' +
+      figLine +
+    '</div>';
+  }).join('');
+
+  el.innerHTML = badges;
+}
 function renderGatePanel(data) {
   const gs = (data.multi_strategy || {}).gate_state || null;
   const panel = document.getElementById('gate-panel');
