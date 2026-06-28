@@ -19,6 +19,8 @@ Live dashboard: https://isaacnicas.github.io/quant-portfolio/live-dashboard.html
 | Mean-reversion | LIVE | 50-day z-score, ±1.5 dead-band | Asymmetric momentum filter, 2-per-sector cap |
 | VRP (VIX contango) | GATED OUT | SVXY carry, ^VIX/^VIX3M | Currently disabled by governance gate |
 | PEAD | BUILT, ORDERS PAUSED | Cross-sectional cohort SUE ranking | Awaiting qualifying 5+ stock cohort (mid-July Q2 season) |
+| FactorTiming | PLANNED (Phase 1B) | — | Pre-registered in governance; no strategy file yet. Dashboard shows "Planned". |
+| EquityCarry | PLANNED (Phase 2) | — | Pre-registered in governance; no strategy file yet. Dashboard shows "Planned". |
 
 ---
 

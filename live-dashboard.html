@@ -384,6 +384,7 @@
   .sleeve-dot.suspended { background: var(--rust); }
   .sleeve-dot.paused    { background: var(--ink-dim); }
   .sleeve-dot.inactive  { background: var(--ink-faint); }
+  .sleeve-dot.planned   { background: var(--ink-faint); opacity: 0.45; }
   .sleeve-name {
     font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--ink);
   }
@@ -396,6 +397,7 @@
   .sleeve-status-text.suspended { color: var(--rust); }
   .sleeve-status-text.paused    { color: var(--ink-dim); }
   .sleeve-status-text.inactive  { color: var(--ink-faint); }
+  .sleeve-status-text.planned  { color: var(--ink-faint); opacity: 0.45; font-style: italic; }
   .sleeve-fig {
     font-family: 'Inter', sans-serif; font-size: 10px;
     color: var(--ink-dim); margin-top: 0.2rem;
@@ -826,7 +828,22 @@ function renderSleeveStrip(data) {
   var sumMap = {};
   summary.forEach(function(r) { if (r.sleeve) sumMap[r.sleeve] = r; });
 
+  // Sleeves with an actual strategy file. Stubs registered in governance
+  // ahead of implementation are excluded and rendered as "Planned".
+  var IMPLEMENTED = { Trend: true, MeanReversion: true, VRP: true, PEAD: true };
+
   var badges = sleeves.map(function(sleeve) {
+    if (!IMPLEMENTED[sleeve]) {
+      var n = sleeve.replace(/([a-z])([A-Z])/g, '$1 $2');
+      return '<div class="sleeve-badge">' +
+        '<div class="sleeve-badge-head">' +
+          '<span class="sleeve-dot planned"></span>' +
+          '<span class="sleeve-name">' + n + '</span>' +
+        '</div>' +
+        '<div class="sleeve-status-text planned">Planned</div>' +
+      '</div>';
+    }
+
     // Determine CSS class (live > suspended > action-based > inactive)
     var cls;
     if (activeSleeves.indexOf(sleeve) !== -1)      cls = 'live';
