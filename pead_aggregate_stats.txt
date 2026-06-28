@@ -1,0 +1,37 @@
+
+PEAD AGGREGATE BACKTEST STATS
+================================================================
+NOTE: Sample is small (~4 quarters, 24 trades) — indicative only,
+      not yet validated. Reassess when 5+ quarters accumulate.
+
+CURRENT VERSION: Cross-Sectional Cohort Ranking
+----------------------------------------------------------------
+  Backtest window:      2025-06-02 to 2026-06-01
+  Total trades:         24
+  Hit rate:             62.5%  (15W / 9L)
+  Avg return per trade: +1.23%
+  Std dev per trade:    7.44%
+  Aggregate Sharpe:     0.59  (annualised, sqrt(252/20) scaling)
+  CAGR (approx):        +28.8%
+  Max Drawdown:         -16.3%
+
+  Expectation-flag breakdown (adj_return):
+    high        mean=+0.10%  hit=100%  n=2
+    low         mean=+1.38%  hit=57%  n=7
+    neutral     mean=+1.31%  hit=60%  n=15
+
+EARLIER VERSION: Seasonal / Time-Series Z-Score SUE
+----------------------------------------------------------------
+  STATUS: NOT REPRODUCIBLE
+  The earlier time-series Z-score SUE version was replaced in-place in
+  pead_strategy.py; no separate file was retained and the working
+  directory has no git history. No head-to-head stats available.
+
+POINT-IN-TIME VERDICT (from pit_verification.py)
+----------------------------------------------------------------
+  CLEAN — yfinance serving original (point-in-time) estimates.
+  No lookahead bias detected on MKC (1 stock, 25d match gap).
+  Re-verify as more stocks accumulate in earnings_store.db.
+
+PEAD_ORDERS_ENABLED: False (unchanged)
+================================================================
