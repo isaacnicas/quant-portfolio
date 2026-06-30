@@ -534,9 +534,9 @@
 
   <div class="sec">
     <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">Open positions</span></div>
-    <p class="sec-note">Ranked by signal conviction — the bar shows relative strength, not allocation size.</p>
+    <p class="sec-note">Ranked by signal conviction — the bar shows relative strength, not allocation size. Unrealized P&amp;L is gain/loss since each position was opened, not since yesterday's close.</p>
     <div class="pos-row pos-head">
-      <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Shares</span><span class="col-mv">Value</span><span>P&amp;L</span>
+      <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Shares</span><span class="col-mv">Value</span><span>Unrealized</span>
     </div>
     <div id="positions-body"></div>
   </div>
@@ -629,8 +629,16 @@ async function loadDashboard() {
   const inceptionNav = data.inception_nav;
   const totalReturn = (nav - inceptionNav) / inceptionNav;
   const lastTwo = data.nav_history.slice(-2);
-  const dailyChange = lastTwo.length === 2 ? (lastTwo[1].nav - lastTwo[0].nav) : 0;
-  const dailyChangePct = lastTwo.length === 2 ? dailyChange / lastTwo[0].nav : 0;
+  // Use pre-computed daily_pnl from the data file when available — authoritative
+  // and correct even when the pipeline missed days (nav_history slice would then
+  // silently span multiple days and mislabel itself as "session").
+  const dailyChange = (data.daily_pnl != null)
+    ? data.daily_pnl
+    : (lastTwo.length === 2 ? lastTwo[1].nav - lastTwo[0].nav : 0);
+  const prevNav = data.prev_close_date
+    ? (data.nav_history.find(h => h.date === data.prev_close_date) || {}).nav
+    : (lastTwo.length === 2 ? lastTwo[0].nav : null);
+  const dailyChangePct = prevNav ? dailyChange / prevNav : 0;
   const isNeg = dailyChange < 0;
 
   document.getElementById('market-state').textContent =
@@ -679,9 +687,20 @@ async function loadDashboard() {
   const closeDate = data.close_date
     ? new Date(data.close_date + 'T00:00:00')
     : (lastTwo.length ? new Date(lastTwo[lastTwo.length-1].date + 'T00:00:00') : null);
-  document.getElementById('pulse-date').textContent = closeDate
-    ? 'As of close · ' + closeDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
-    : 'As of close';
+  const prevCloseDate = data.prev_close_date ? new Date(data.prev_close_date + 'T00:00:00') : null;
+  const closeFmt = closeDate
+    ? closeDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
+    : null;
+  // If prev_close_date is more than one weekday before close_date, label the gap explicitly
+  // so the user never mistakes a multi-day move for a single session move.
+  const prevFmt = prevCloseDate
+    ? prevCloseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    : null;
+  const isMultiDay = prevCloseDate && closeDate
+    && (closeDate - prevCloseDate) > 86400000 * 1.5;  // more than 1.5 calendar days apart
+  document.getElementById('pulse-date').textContent = closeFmt
+    ? (isMultiDay && prevFmt ? 'Since ' + prevFmt + ' close · ' + closeFmt : 'As of close · ' + closeFmt)
+    : 'P&L';
   const capturedAt = data.captured_at ? new Date(data.captured_at) : null;
   const capturedStr = capturedAt
     ? '  ·  refreshed ' + capturedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })

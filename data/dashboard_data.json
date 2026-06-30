@@ -1,8 +1,10 @@
 {
   "close_date": "2026-06-29",
-  "captured_at": "2026-06-30T00:25:26.815824-04:00",
-  "last_updated": "2026-06-30T00:25:26.815824-04:00",
-  "nav": 947870.75,
+  "captured_at": "2026-06-30T00:32:49.851409-04:00",
+  "last_updated": "2026-06-30T00:32:49.851409-04:00",
+  "daily_pnl": 24098.3,
+  "prev_close_date": "2026-06-26",
+  "nav": 947868.55,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -35,7 +37,7 @@
     },
     {
       "date": "2026-06-30",
-      "nav": 947870.75
+      "nav": 947868.55
     }
   ],
   "positions": [
@@ -165,43 +167,5 @@
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
-  "next_rebalance": "2026-07-28",
-  "multi_strategy": {
-    "date": "2026-06-29",
-    "close_date": "2026-06-29",
-    "captured_at": "2026-06-30T04:25:35.430669Z",
-    "blended_pnl_usd": 0,
-    "active_sleeves": [],
-    "gated_sleeves": [],
-    "sleeve_summary": [],
-    "gate_state": {
-      "date": "2026-06-30",
-      "spot_vix": 17.65,
-      "vix_200dma": 18.66,
-      "f1": 17.65,
-      "f2": 20.13,
-      "contango_pct": 14.05,
-      "vix_3d_change_pct": -5.26,
-      "gate_1_backwardation": false,
-      "gate_2_level": false,
-      "gate_3_shock": false,
-      "any_gate_active": true,
-      "in_confirmation": true,
-      "ism_pmi": null,
-      "credit_spread": null,
-      "yield_curve": null,
-      "macro_regime": "unknown",
-      "sleeve_actions": {
-        "VRP": "suspend",
-        "MeanReversion": "reduce_50pct",
-        "PEAD": "reduce_50pct",
-        "FactorTiming": "reduce_25pct",
-        "EquityCarry": "reduce_50pct"
-      }
-    },
-    "portfolio_risk": null,
-    "threshold_alerts": [],
-    "pipeline_alert": null,
-    "last_updated": "2026-06-30T04:25:35.430692Z"
-  }
+  "next_rebalance": "2026-07-28"
 }
