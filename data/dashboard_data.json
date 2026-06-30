@@ -1,6 +1,8 @@
 {
-  "last_updated": "2026-06-26T16:15:29.387864",
-  "nav": 923770.25,
+  "close_date": "2026-06-29",
+  "captured_at": "2026-06-30T00:25:26.815824-04:00",
+  "last_updated": "2026-06-30T00:25:26.815824-04:00",
+  "nav": 947870.75,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -30,103 +32,131 @@
     {
       "date": "2026-06-26",
       "nav": 923770.25
+    },
+    {
+      "date": "2026-06-30",
+      "nav": 947870.75
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "shares": 305,
-      "market_value": 185927.99,
-      "unrealized_pnl": -15379.61,
-      "weight": 0.2013,
+      "shares": 319,
+      "market_value": 201751.55,
+      "unrealized_pnl": -8088.91,
+      "weight": 0.2128,
       "signal": 0.899
     },
     {
       "symbol": "XLK",
-      "shares": 793,
-      "market_value": 143772.87,
-      "unrealized_pnl": -7114.45,
-      "weight": 0.1556,
+      "shares": 1296,
+      "market_value": 240472.57,
+      "unrealized_pnl": -632.18,
+      "weight": 0.2537,
       "signal": 0.689
     },
     {
       "symbol": "EEM",
-      "shares": 3734,
-      "market_value": 251036.83,
-      "unrealized_pnl": -2492.75,
-      "weight": 0.2718,
+      "shares": 2686,
+      "market_value": 180775.53,
+      "unrealized_pnl": -1597.38,
+      "weight": 0.1907,
       "signal": 0.549
     },
     {
       "symbol": "QQQ",
-      "shares": 123,
-      "market_value": 86947.47,
-      "unrealized_pnl": -3185.36,
-      "weight": 0.0941,
+      "shares": 292,
+      "market_value": 211413.85,
+      "unrealized_pnl": 1673.46,
+      "weight": 0.223,
       "signal": 0.454
     },
     {
       "symbol": "EWJ",
-      "shares": 440,
-      "market_value": 40834.67,
-      "unrealized_pnl": -1007.9,
-      "weight": 0.0442,
+      "shares": 1684,
+      "market_value": 157121.89,
+      "unrealized_pnl": 775.6,
+      "weight": 0.1658,
       "signal": 0.333
     },
     {
       "symbol": "IWM",
-      "shares": 1217,
-      "market_value": 363392.94,
-      "unrealized_pnl": 2452.56,
-      "weight": 0.3934,
+      "shares": 547,
+      "market_value": 163304.07,
+      "unrealized_pnl": 1073.68,
+      "weight": 0.1723,
       "signal": 0.291
     },
     {
       "symbol": "SPY",
-      "shares": 77,
-      "market_value": 56380.43,
-      "unrealized_pnl": -843.57,
-      "weight": 0.061,
+      "shares": 157,
+      "market_value": 116300.89,
+      "unrealized_pnl": 450.69,
+      "weight": 0.1227,
       "signal": 0.147
     },
     {
+      "symbol": "CVX",
+      "shares": 34,
+      "market_value": 5732.74,
+      "unrealized_pnl": -21.4,
+      "weight": 0.006,
+      "signal": 0.0
+    },
+    {
       "symbol": "HD",
-      "shares": -26,
-      "market_value": -9049.56,
-      "unrealized_pnl": -29.75,
-      "weight": -0.0098,
+      "shares": -42,
+      "market_value": -14727.3,
+      "unrealized_pnl": -138.21,
+      "weight": -0.0155,
       "signal": 0.0
     },
     {
       "symbol": "JPM",
-      "shares": -14,
-      "market_value": -4600.26,
-      "unrealized_pnl": 103.34,
-      "weight": -0.005,
+      "shares": -31,
+      "market_value": -10213.88,
+      "unrealized_pnl": 132.94,
+      "weight": -0.0108,
       "signal": 0.0
     },
     {
       "symbol": "MSFT",
-      "shares": 44,
-      "market_value": 16412.0,
-      "unrealized_pnl": 709.92,
-      "weight": 0.0178,
+      "shares": 59,
+      "market_value": 21912.01,
+      "unrealized_pnl": 572.68,
+      "weight": 0.0231,
+      "signal": 0.0
+    },
+    {
+      "symbol": "NVDA",
+      "shares": 29,
+      "market_value": 5658.77,
+      "unrealized_pnl": 31.19,
+      "weight": 0.006,
       "signal": 0.0
     },
     {
       "symbol": "XLF",
-      "shares": -87,
-      "market_value": -4659.34,
-      "unrealized_pnl": 1.01,
-      "weight": -0.005,
+      "shares": -193,
+      "market_value": -10374.5,
+      "unrealized_pnl": 8.71,
+      "weight": -0.0109,
       "signal": 0.0
     },
     {
       "symbol": "XLV",
-      "shares": -30,
-      "market_value": -4808.27,
-      "unrealized_pnl": -120.07,
-      "weight": -0.0052,
+      "shares": -65,
+      "market_value": -10436.76,
+      "unrealized_pnl": -115.38,
+      "weight": -0.011,
+      "signal": 0.0
+    },
+    {
+      "symbol": "XOM",
+      "shares": 42,
+      "market_value": 5716.2,
+      "unrealized_pnl": -4.78,
+      "weight": 0.006,
       "signal": 0.0
     }
   ],
@@ -137,7 +167,9 @@
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-06-30",
+    "date": "2026-06-29",
+    "close_date": "2026-06-29",
+    "captured_at": "2026-06-30T04:25:35.430669Z",
     "blended_pnl_usd": 0,
     "active_sleeves": [],
     "gated_sleeves": [],
@@ -170,6 +202,6 @@
     "portfolio_risk": null,
     "threshold_alerts": [],
     "pipeline_alert": null,
-    "last_updated": "2026-06-30T04:12:58.786985Z"
+    "last_updated": "2026-06-30T04:25:35.430692Z"
   }
 }

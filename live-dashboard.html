@@ -476,7 +476,7 @@
       </svg>
       <div class="ring-center">
         <div class="ring-pct" id="ring-pct">—</div>
-        <div class="ring-label">session</div>
+        <div class="ring-label">vs close</div>
       </div>
     </div>
     <div class="pulse-numbers">
@@ -676,11 +676,18 @@ async function loadDashboard() {
   document.getElementById('pulse-pct-text').textContent =
     (dailyChangePct >= 0 ? '+' : '') + (dailyChangePct * 100).toFixed(2) + '%';
 
-  const lastDate = lastTwo.length ? new Date(lastTwo[lastTwo.length-1].date + 'T00:00:00') : null;
-  document.getElementById('pulse-date').textContent =
-    lastDate ? lastDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }) + ' · session p&l' : 'Session P&L';
+  const closeDate = data.close_date
+    ? new Date(data.close_date + 'T00:00:00')
+    : (lastTwo.length ? new Date(lastTwo[lastTwo.length-1].date + 'T00:00:00') : null);
+  document.getElementById('pulse-date').textContent = closeDate
+    ? 'As of close · ' + closeDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
+    : 'As of close';
+  const capturedAt = data.captured_at ? new Date(data.captured_at) : null;
+  const capturedStr = capturedAt
+    ? '  ·  refreshed ' + capturedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })
+    : '';
   document.getElementById('pulse-meta').textContent =
-    'NAV $' + nav.toLocaleString('en-US', {maximumFractionDigits: 0}) + ' as of last close';
+    'NAV $' + nav.toLocaleString('en-US', {maximumFractionDigits: 0}) + capturedStr;
 
   document.getElementById('nav-value').textContent = '$' + nav.toLocaleString('en-US', {maximumFractionDigits: 0});
   document.getElementById('total-return').textContent =
