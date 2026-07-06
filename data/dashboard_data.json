@@ -1,6 +1,10 @@
 {
-  "last_updated": "2026-06-24T16:35:16.521961",
-  "nav": 96.675,
+  "close_date": "2026-07-06",
+  "captured_at": "2026-07-06T16:18:49.673952-04:00",
+  "last_updated": "2026-07-06T16:18:49.673952-04:00",
+  "daily_pnl": 3.286,
+  "prev_close_date": "2026-07-03",
+  "nav": 94.757,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -21,51 +25,127 @@
     },
     {
       "date": "2026-06-24",
-      "nav": 96.675
+      "nav": 97.454
+    },
+    {
+      "date": "2026-06-25",
+      "nav": 94.85
+    },
+    {
+      "date": "2026-06-26",
+      "nav": 92.937
+    },
+    {
+      "date": "2026-06-30",
+      "nav": 98.901
+    },
+    {
+      "date": "2026-07-01",
+      "nav": 94.514
+    },
+    {
+      "date": "2026-07-02",
+      "nav": 91.101
+    },
+    {
+      "date": "2026-07-03",
+      "nav": 91.471
+    },
+    {
+      "date": "2026-07-06",
+      "nav": 94.757
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.2115,
-      "signal": 0.851,
-      "unrealized_pct": -0.696
+      "weight": 0.2139,
+      "signal": 0.834,
+      "unrealized_pct": -1.835
     },
     {
       "symbol": "XLK",
-      "weight": 0.2073,
-      "signal": 0.659,
-      "unrealized_pct": -0.479
+      "weight": 0.3511,
+      "signal": 0.634,
+      "unrealized_pct": -0.414
     },
     {
       "symbol": "EEM",
-      "weight": 0.2301,
-      "signal": 0.512,
-      "unrealized_pct": -0.743
-    },
-    {
-      "symbol": "QQQ",
-      "weight": 0.1586,
-      "signal": 0.43,
-      "unrealized_pct": -0.386
-    },
-    {
-      "symbol": "EWJ",
-      "weight": 0.1003,
-      "signal": 0.297,
-      "unrealized_pct": -0.326
+      "weight": 0.1175,
+      "signal": 0.5,
+      "unrealized_pct": 0.21
     },
     {
       "symbol": "IWM",
-      "weight": 0.2701,
-      "signal": 0.259,
-      "unrealized_pct": 0.287
+      "weight": -0.0391,
+      "signal": 0.483,
+      "unrealized_pct": -0.012
+    },
+    {
+      "symbol": "EWJ",
+      "weight": 0.2964,
+      "signal": 0.301,
+      "unrealized_pct": 0.776
+    },
+    {
+      "symbol": "QQQ",
+      "weight": 0.3539,
+      "signal": 0.197,
+      "unrealized_pct": 0.116
     },
     {
       "symbol": "SPY",
-      "weight": 0.089,
-      "signal": 0.136,
-      "unrealized_pct": -0.114
+      "weight": 0.1891,
+      "signal": 0.1,
+      "unrealized_pct": 0.318
+    },
+    {
+      "symbol": "CVX",
+      "weight": 0.0121,
+      "signal": 0.0,
+      "unrealized_pct": -0.012
+    },
+    {
+      "symbol": "HD",
+      "weight": -0.0216,
+      "signal": 0.0,
+      "unrealized_pct": -0.015
+    },
+    {
+      "symbol": "JPM",
+      "weight": -0.0172,
+      "signal": 0.0,
+      "unrealized_pct": -0.03
+    },
+    {
+      "symbol": "MSFT",
+      "weight": 0.0304,
+      "signal": 0.0,
+      "unrealized_pct": 0.186
+    },
+    {
+      "symbol": "NVDA",
+      "weight": 0.012,
+      "signal": 0.0,
+      "unrealized_pct": -0.001
+    },
+    {
+      "symbol": "XLF",
+      "weight": -0.0178,
+      "signal": 0.0,
+      "unrealized_pct": -0.076
+    },
+    {
+      "symbol": "XLV",
+      "weight": -0.0172,
+      "signal": 0.0,
+      "unrealized_pct": -0.027
+    },
+    {
+      "symbol": "XOM",
+      "weight": 0.0122,
+      "signal": 0.0,
+      "unrealized_pct": -0.002
     }
   ],
   "regime": {
@@ -73,5 +153,73 @@
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
-  "next_rebalance": "2026-07-28"
+  "next_rebalance": "2026-07-28",
+  "multi_strategy": {
+    "date": "2026-07-06",
+    "close_date": "2026-07-06",
+    "captured_at": "2026-07-06T20:18:56.783360+00:00",
+    "blended_pnl_usd": -588.13,
+    "active_sleeves": [
+      "MeanReversion",
+      "VRP"
+    ],
+    "gated_sleeves": [],
+    "sleeve_summary": [
+      {
+        "sleeve": "MeanReversion",
+        "is_active": true,
+        "vol_21d": 0.0,
+        "sharpe_21d": 0.0
+      },
+      {
+        "sleeve": "VRP",
+        "is_active": true,
+        "vol_21d": 0.0,
+        "sharpe_21d": 0.0
+      }
+    ],
+    "gate_state": {
+      "date": "2026-07-06",
+      "spot_vix": 15.62,
+      "vix_200dma": 18.67,
+      "f1": 15.62,
+      "f2": 18.79,
+      "contango_pct": 20.29,
+      "vix_3d_change_pct": -5.05,
+      "gate_1_backwardation": false,
+      "gate_2_level": false,
+      "gate_3_shock": false,
+      "any_gate_active": true,
+      "in_confirmation": true,
+      "ism_pmi": null,
+      "credit_spread": null,
+      "yield_curve": null,
+      "macro_regime": "unknown",
+      "sleeve_actions": {
+        "VRP": "suspend",
+        "MeanReversion": "reduce_50pct",
+        "FactorTiming": "reduce_25pct",
+        "EquityCarry": "reduce_50pct"
+      }
+    },
+    "portfolio_risk": null,
+    "threshold_alerts": [
+      {
+        "sleeve": "MeanReversion",
+        "metric": "sharpe_21d",
+        "value": 0.0,
+        "threshold": 0.2,
+        "action": "Review \u2014 consider reducing allocation"
+      },
+      {
+        "sleeve": "VRP",
+        "metric": "sharpe_21d",
+        "value": 0.0,
+        "threshold": 0.5,
+        "action": "Review \u2014 consider reducing allocation"
+      }
+    ],
+    "pipeline_alert": null,
+    "last_updated": "2026-07-06T20:18:56.783416+00:00"
+  }
 }
