@@ -530,7 +530,7 @@ animateWave();
 async function loadDashboard() {
   let data;
   try {
-    const res = await fetch('data/dashboard_data.json');
+    const res = await fetch(`data/dashboard_data.json?v=${Date.now()}`);
     data = await res.json();
   } catch (e) {
     document.getElementById('pulse-meta').textContent = 'Could not load live data.';
