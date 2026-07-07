@@ -1,9 +1,9 @@
-[Trend_Following_Project_README.md](https://github.com/user-attachments/files/29113383/Trend_Following_Project_README.md)
-# Building a Smoother Ride: What I Learned Designing a Trend-Following Strategy
+[README.md](https://github.com/user-attachments/files/29614179/README.md)
+# Building a Smoother Ride: From One Trend-Following Strategy to a Multi-Sleeve Trading System
 
-> **Paper trading is now live.** The strategy entered its first positions on June 18, 2026 on an Interactive Brokers paper account. Automated daily monitoring and monthly rebalancing are running via Windows Task Scheduler. First rebalance: July 28, 2026. Live results will be added here as data accumulates.
-
-**[View the live dashboard →](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html)**
+> **Paper trading is live and running.** The trend-following anchor entered its first positions on June 18, 2026 on an Interactive Brokers paper account (~$994K starting NAV). Since then the account has moved with the market, including drawdown weeks. That's expected, and it's the actual point of paper trading before any capital is real. Automated daily monitoring and monthly rebalancing run via Windows Task Scheduler, with the [live dashboard](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html) updating daily. First rebalance: July 28, 2026.
+>
+> *This README documents the original trend-following anchor and its eighteen-year backtest, the strategy the rest of the system is built around. It has since grown into a multi-sleeve system: a mean-reversion sleeve is live alongside the anchor, a volatility-risk-premium sleeve is built and deliberately gated out, and a post-earnings-drift sleeve is mid-revalidation after a forensic audit caught lookahead bias in its early backtest. See [Where the system stands now](#where-the-system-stands-now) for all three, [RESEARCH.md](RESEARCH.md) for the full backtest process and honest results behind each addition, [CHANGELOG.md](CHANGELOG.md) for the full history, and [OPERATIONS.md](OPERATIONS.md) for the current architecture.*
 
 ---
 
@@ -105,15 +105,53 @@ Both moments taught me the same thing: the gap between a strategy that looks wel
 
 **Backtesting is complete** across eighteen years of daily price data with realistic trading costs built in.
 
-**Paper trading is live.** The strategy is running on a simulated brokerage account through Interactive Brokers, with 7 positions entered on June 18, 2026. The pipeline runs automatically: prices refresh daily after market close, performance is logged, and the strategy rebalances on the last trading day of each month. The key question paper trading answers that backtesting cannot is whether real fill prices, data feeds, and order execution match the assumptions built into the backtest. Results and a comparison against backtest expectations will be added here as data accumulates.
+**Paper trading is live.** The strategy is running on a simulated brokerage account through Interactive Brokers, with positions entered in June 2026. The pipeline runs automatically: prices refresh daily after market close, performance is logged, and the strategy rebalances on the last trading day of each month. The key question paper trading answers that backtesting cannot is whether real fill prices, data feeds, and order execution match the assumptions built into the backtest. Results and a comparison against backtest expectations will be added here as data accumulates.
 
-The live execution stack runs across five Python scripts:
+The original trend-following strategy launched on a five-script execution stack:
 
-- `data_feed.py` — pulls daily price history for all 12 assets from Interactive Brokers
-- `signal_engine.py` — computes TSMOM and CS-Mom signals, regime filter, and fast-exit trigger
-- `position_sizer.py` — converts signals to target portfolio weights using vol-targeting and exposure caps
-- `order_engine.py` — sizes orders in shares, applies the tiered dead-band, and submits to IBKR
-- `monitor.py` — logs daily NAV and P&L, saves current weights for the next rebalance
+- `data_feed.py`: pulls daily price history for all 12 assets from Interactive Brokers
+- `signal_engine.py`: computes TSMOM and CS-Mom signals, regime filter, and fast-exit trigger
+- `position_sizer.py`: converts signals to target portfolio weights using vol-targeting and exposure caps
+- `order_engine.py`: sizes orders in shares, applies the tiered dead-band, and submits to IBKR
+- `monitor.py`: logs daily NAV and P&L, saves current weights for the next rebalance
+
+That five-script stack was the starting point. It has since grown, and the current architecture is documented in [OPERATIONS.md](OPERATIONS.md).
+
+---
+
+## Where the system stands now
+
+This started as one trend-following strategy. It hasn't stayed that way, and the honest version of "what happened next" includes a sleeve that earned its place, one that's built but deliberately not trusted yet, and one that got caught in a mistake and pulled back for repair.
+
+A single strategy, however well-tested, is still a single bet: it draws down when its own edge stops working, full stop. Everything added since the anchor is an attempt at return streams that don't draw down at the same time, for the same reason. That only counts if it's measured, not assumed. Here's what the measurement actually showed for each addition.
+
+### Mean-reversion: live, and it does what it was built to do
+
+The mean-reversion sleeve buys what's fallen too far and sells what's risen too far, on the theory that it should struggle in different conditions than trend-following struggles in. The first version of this sleeve lost money (−3.2% annualised, Sharpe −0.30) because trading costs from constant re-entry were eating the edge alive. Adding a dead-band (hold the position until the signal fully resets, instead of re-trading on every wiggle) cut weekly turnover from 70% to 17% and turned it into a real, if modest, standalone strategy: +0.45 Sharpe in-sample, +0.24 out-of-sample. That decay is expected and it's the bar the strategy had to clear on data it never saw during design.
+
+A +0.24 Sharpe wouldn't be worth running alone. The case for it is diversification, and that case is measured, not assumed:
+
+![Bar charts comparing max drawdown and Sharpe ratio between the trend-following anchor alone, the mean-reversion sleeve alone, and the two blended together](images/chart7_mr_diversification.png)
+
+Blending the anchor with the mean-reversion sleeve under live portfolio weighting cuts the max drawdown from −26.96% to −17.73%, 9.2 percentage points shallower, while giving up only a little Sharpe (1.07 → 0.95). That's the trade the sleeve exists to make: a meaningfully smoother ride, bought with a small amount of standalone return.
+
+### Volatility risk premium: built, and staying gated on purpose
+
+The VRP sleeve harvests the tendency of implied volatility to trade above realised volatility, via a 0.5× inverse VIX-futures ETF (SVXY). It's a genuinely different return source from the other two sleeves, and it's also the most dangerous thing on the book: rare, violent left-tail losses are the whole risk profile.
+
+![Bar charts showing the sleeve's standalone drawdown versus its portfolio-level impact at a 15% position cap, and confirmation that the risk gate fired during both required historical stress events](images/chart8_vrp_gate_and_cap.png)
+
+The risk gate correctly fired during both required historical stress events (February 2018's "Volmageddon" and the March 2020 crash), but the sleeve still drew down −65.4% standalone. That's not a contradiction, it's the central lesson: on 2018-02-05, SVXY gapped down roughly 80% at the open, and a daily-bar gate generates its exit on the close, after the loss is already locked in. The gate is a regime detector, not a gap-loss preventer. The real protection is the position cap: at a 15% portfolio allocation, that same −65.4% standalone drawdown becomes roughly −6.5% at the total-portfolio level. That's why this sleeve stays gated out until there's an explicit, enforced cap at the portfolio level. The entire investment case rests on the cap holding, and that's a decision to make deliberately, not one to default into.
+
+### Post-earnings drift: built, and currently being re-audited
+
+The PEAD sleeve trades the tendency of stocks to keep drifting after an earnings surprise. Its first backtest looked promising, until a forensic audit of the underlying earnings-timestamp data found that a majority of the historical trades had been generated using data that wouldn't actually have been available on the trade date. That's lookahead bias, and it's exactly the kind of thing a backtest can hide if you don't go looking for it. The sample was rebuilt on verified point-in-time data, which cut it down substantially and confirmed that most of the strategy's apparent edge was a methodological artifact, not signal. A sealed pre-registration policy now governs what evidence bar the strategy has to clear (set before seeing the results) before it's allowed to place a single live order. It currently isn't. I'd rather show that process than a number I don't trust yet.
+
+### Shared infrastructure
+
+Underneath all three sleeves sits a governance layer that pulls risk when conditions deteriorate (a three-condition VIX gate with two-day confirmation) and a portfolio allocator that weights each sleeve by its contribution to total risk rather than by conviction. The execution stack runs headless and unattended: it rebalances on schedule and pushes its own results to the [live dashboard](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html) without anyone touching it day to day.
+
+I keep a running record of every meaningful change as the project grows. The full backtest process and results behind each addition live in [RESEARCH.md](RESEARCH.md), the dated history lives in the [changelog](CHANGELOG.md), and the current technical architecture is documented in [OPERATIONS.md](OPERATIONS.md).
 
 ---
 
