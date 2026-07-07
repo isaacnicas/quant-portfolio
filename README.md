@@ -129,7 +129,7 @@ A single strategy, however well-tested, is still a single bet: it draws down whe
 
 The mean-reversion sleeve buys what's fallen too far and sells what's risen too far, on the theory that it should struggle in different conditions than trend-following struggles in. The first version of this sleeve lost money (−3.2% annualised, Sharpe −0.30) because trading costs from constant re-entry were eating the edge alive. Adding a dead-band (hold the position until the signal fully resets, instead of re-trading on every wiggle) cut weekly turnover from 70% to 17% and turned it into a real, if modest, standalone strategy: +0.45 Sharpe in-sample, +0.24 out-of-sample. That decay is expected and it's the bar the strategy had to clear on data it never saw during design.
 
-A +0.24 Sharpe wouldn't be worth running alone. The case for it is diversification, and that case is measured, not assumed:
+A +0.24 Sharpe wouldn't be worth running alone. The case for it is diversification, and that case is measured:
 
 ![Bar charts comparing max drawdown and Sharpe ratio between the trend-following anchor alone, the mean-reversion sleeve alone, and the two blended together](images/chart7_mr_diversification.png)
 
