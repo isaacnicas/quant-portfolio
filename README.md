@@ -3,13 +3,13 @@
 
 > **Paper trading is live and running.** The trend-following anchor entered its first positions on June 18, 2026 on an Interactive Brokers paper account (~$994K starting NAV). Since then the account has moved with the market, including drawdown weeks. That's expected, and it's the actual point of paper trading before any capital is real. Automated daily monitoring and monthly rebalancing run via Windows Task Scheduler, with the [live dashboard](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html) updating daily. First rebalance: July 28, 2026.
 >
-> *This README documents the original trend-following anchor and its eighteen-year backtest, the strategy the rest of the system is built around. It has since grown into a multi-sleeve system: a mean-reversion sleeve is live alongside the anchor, a volatility-risk-premium sleeve is built and deliberately gated out, and a post-earnings-drift sleeve is mid-revalidation after a forensic audit caught lookahead bias in its early backtest. See [Where the system stands now](#where-the-system-stands-now) for all three, [RESEARCH.md](RESEARCH.md) for the full backtest process and honest results behind each addition, [CHANGELOG.md](CHANGELOG.md) for the full history, and [OPERATIONS.md](OPERATIONS.md) for the current architecture.*
+> *This README documents the original trend-following anchor and its eighteen-year backtest, the strategy the rest of the system is built around. It has since grown into a multi-sleeve system: a mean-reversion sleeve is live alongside the anchor, a volatility-risk-premium sleeve is built and deliberately gated out, and a post-earnings-drift sleeve is mid-revalidation after a forensic audit caught lookahead bias in its early backtest. See [Where the system stands now](#where-the-system-stands-now) for all three, [RESEARCH.md](RESEARCH.md) for the full backtest process and results behind each addition, [CHANGELOG.md](CHANGELOG.md) for the full history, and [OPERATIONS.md](OPERATIONS.md) for the current architecture.*
 
 ---
 
 ## The idea
 
-Most long-term investing advice boils down to: buy a broad index fund and hold it through the ups and downs. It's reasonable advice. But "the ups and downs" hides a lot. The Nasdaq-100 lost nearly 41% in its worst year over the period I studied. The S&P 500 dropped more than 50% from peak to trough during the 2008 financial crisis. Living through that with a "hold forever" mindset is a lot harder than it sounds on paper, which is exactly why so many people sell at the bottom and miss the recovery.
+Most long-term investing advice boils down to: buy a broad index fund and hold it through the ups and downs. It's reasonable advice. But "the ups and downs" hides a lot. The Nasdaq-100 lost nearly 41% in its worst year over the 2008–2026 period I studied. The S&P 500 dropped more than 50% from peak to trough during the 2008 financial crisis. Living through that with a "hold forever" mindset is a lot harder than it sounds on paper, which is exactly why so many people sell at the bottom and miss the recovery.
 
 Trend following takes a different approach. Instead of holding everything all the time, the strategy adjusts how much it owns based on whether prices are generally rising or falling, and how calm or chaotic the market currently feels. The goal isn't to predict crashes. It's to participate in the good times while gradually stepping back during sustained downturns, so the overall ride is less likely to wreck your nerves or your retirement timeline.
 
@@ -23,13 +23,13 @@ Here's the headline comparison using eighteen years of historical data (2008–2
 
 ![Growth of $10,000 chart comparing the strategy to SPY and QQQ from 2008 to 2026](images/chart1_growth.png)
 
-A $10,000 investment in 2008 would have grown to roughly $148,000 with this strategy, landing almost exactly between the S&P 500 ($71,670) and the Nasdaq-100 ($166,373). On pure growth, it's competitive with two of the best-performing benchmarks of the last two decades.
+A $10,000 investment in 2008 would have grown to roughly $148,000 with this strategy, landing almost exactly between the S&P 500 ($71,670) and the Nasdaq-100 ($166,373). On pure growth, it lands between the two major equity benchmarks I compared it against.
 
 But growth alone doesn't tell the real story. Here's the number that matters more:
 
 ![Bar chart showing the worst single year for the strategy versus SPY and QQQ](images/chart2_worst_year.png)
 
-In the worst calendar year of the entire backtest, this strategy lost 22%. Over the same period, the S&P 500's worst year was a 36% loss and the Nasdaq-100's was 41%. That's roughly half the pain in the worst-case scenario, for a return that's nearly identical to the S&P 500's average.
+In the worst calendar year of the entire backtest, this strategy lost 22%. Over the same period, the S&P 500's worst year was a 36% loss and the Nasdaq-100's was 41%. That's roughly half the pain in the worst-case scenario, for a return that's nearly identical to the S&P 500's average. Though 22% drawdowns are far from painless — that still means watching more than a fifth of your portfolio disappear before it recovers.
 
 And it's not just about single bad years. It's about how long and how deep the underwater periods get:
 
@@ -41,7 +41,16 @@ Here's the whole picture in one frame:
 
 ![Scorecard summarizing average yearly return, worst single year, and largest drawdown](images/chart4_scorecard.png)
 
-The honest summary: you give up a little of the spectacular years in exchange for cutting your worst-case losses roughly in half. Whether that trade-off is worth it depends entirely on how you'd actually feel and behave watching your account drop 40% versus 22%.
+| Metric | Strategy | SPY | QQQ |
+|---|---|---|---|
+| CAGR (2008–2026) | ~16.1% | ~11.6% | ~16.9% |
+| Sharpe Ratio | — | — | — |
+| Max Drawdown | ~27% | >50% | — |
+| Worst Year | −22% | −36% | −41% |
+
+The real trade-off: you give up a little of the spectacular years in exchange for cutting your worst-case losses roughly in half. Whether that trade-off is worth it depends entirely on how you'd actually feel and behave watching your account drop 40% versus 22%.
+
+> *Backtested performance is hypothetical. Real trading involves slippage, commissions, taxes, and the behavioral difficulty of staying invested through drawdowns. Past results do not guarantee future performance. Nothing here is investment advice.*
 
 ---
 
@@ -93,7 +102,7 @@ Both moments taught me the same thing: the gap between a strategy that looks wel
 
 ## What this means for the average investor
 
-**If you've ever sold during a crash and regretted it later,** this is the kind of thing that exists for you. The entire premise is reducing how bad the worst years feel. An investor who doesn't panic-sell during a 22% drawdown is going to come out ahead of one who panic-sells during a 40% one, even if the smoother strategy's average return is a touch lower.
+**If you've ever sold during a crash and regretted it later,** this is the kind of thing that exists for you. The entire premise is reducing how bad the worst years feel. An investor who doesn't panic-sell during a 22% drawdown is going to come out ahead of one who panic-sells during a 40% one, even if the smoother strategy's average return is a touch lower. But even a 22% drawdown is enough to shake many investors out — that's still more than a fifth of the account erased before recovery begins. The smoother ride only helps if you actually stay on it.
 
 **If you're young, have a long time horizon, and genuinely don't check your portfolio during crashes,** a simple index fund might serve you better. Historically, that investor ends up with more money in the Nasdaq-100 than in this strategy, full stop. The smoother ride has a real cost, and if you don't need the smoothing, you're paying for something you don't use.
 
@@ -117,11 +126,54 @@ The original trend-following strategy launched on a five-script execution stack:
 
 That five-script stack was the starting point. It has since grown, and the current architecture is documented in [OPERATIONS.md](OPERATIONS.md).
 
+```
+┌──────────────────────────────────────────────────────────┐
+│                     data_feed.py                         │
+│          pulls daily prices from IB → prices.csv         │
+└──────────────────────────┬───────────────────────────────┘
+                           │
+┌──────────────────────────▼───────────────────────────────┐
+│                   signal_engine.py                        │
+│        TSMOM + CS-Mom signals + VIX regime filter         │
+└──────────────┬───────────────────────────┬───────────────┘
+               │                           │
+┌──────────────▼────────────┐  ┌───────────▼───────────────┐
+│      Trend Sleeve         │  │      MR Sleeve             │
+│      (Proposer)           │  │      (Proposer)            │
+│   target weights per ETF  │  │   z-score entries/exits    │
+└──────────────┬────────────┘  └───────────┬───────────────┘
+               └─────────────┬─────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────┐
+│                       Governor                            │
+│     VIX gate · reduce_50pct · position caps               │
+│     dead-band filter · order sizing                       │
+└────────────────────────────┬─────────────────────────────┘
+                             │  pending_orders.json
+┌────────────────────────────▼─────────────────────────────┐
+│             submit_orders_premarket.py                    │
+│               places market orders at IBKR                │
+└────────────────────────────┬─────────────────────────────┘
+                             │
+┌────────────────────────────▼─────────────────────────────┐
+│                      monitor.py                           │
+│            logs NAV and P&L · pushes dashboard            │
+└──────────────────────────────────────────────────────────┘
+```
+
+The sleeves are designed to be independent return sources. The trend sleeve takes long positions in whichever of its 12 ETFs are trending upward and reduces exposure when momentum fades. The mean-reversion sleeve enters counter-trend positions — buying what has fallen too far, selling what has risen too far. The two strategies tend to struggle in different conditions: trend-following underperforms in choppy, sideways markets where no sustained direction forms, while mean-reversion tends to underperform during extended directional runs. Running them side by side is an attempt to smooth the combined equity curve.
+
+Each sleeve acts as a Proposer — it generates the orders it would like to place based purely on its own signal, without awareness of what the other sleeve is doing. The trend sleeve computes target portfolio weights from momentum and volatility readings, then sizes each position in shares. The mean-reversion sleeve computes z-score-based entries and exits for its universe and does the same. Both sets of proposed orders pass to a shared execution layer.
+
+Between the Proposers and the live orders sits a governance layer. A three-condition VIX gate can reduce overall exposure if volatility spikes above thresholds and holds there for two or more consecutive days. A separate reduce_50pct flag cuts mean-reversion capital in half during elevated regimes. A dead-band filter suppresses small rebalancing trades below a minimum threshold — trades that would cost more in spread and slippage than they could recover in expected signal. Position caps prevent any single name from dominating a sleeve's risk budget.
+
+Every order the system places is tagged with the sleeve that generated it, the signal date, and the intended target quantity. This per-order attribution makes it possible to separate what trend-following contributed from what mean-reversion contributed on any given day, and to trace a specific P&L outcome back to its originating signal. If a sleeve's live performance diverges from backtest expectations, the per-sleeve logs are where the investigation starts.
+
 ---
 
 ## Where the system stands now
 
-This started as one trend-following strategy. It hasn't stayed that way, and the honest version of "what happened next" includes a sleeve that earned its place, one that's built but deliberately not trusted yet, and one that got caught in a mistake and pulled back for repair.
+This started as one trend-following strategy. It hasn't stayed that way. What actually happened next: a sleeve that earned its place, one that's built but deliberately not trusted yet, and one that got caught in a mistake and pulled back for repair.
 
 A single strategy, however well-tested, is still a single bet: it draws down when its own edge stops working, full stop. Everything added since the anchor is an attempt at return streams that don't draw down at the same time, for the same reason. That only counts if it's measured, not assumed. Here's what the measurement actually showed for each addition.
 
@@ -141,7 +193,7 @@ The VRP sleeve harvests the tendency of implied volatility to trade above realis
 
 ![Bar charts showing the sleeve's standalone drawdown versus its portfolio-level impact at a 15% position cap, and confirmation that the risk gate fired during both required historical stress events](images/chart8_vrp_gate_and_cap.png)
 
-The risk gate correctly fired during both required historical stress events (February 2018's "Volmageddon" and the March 2020 crash), but the sleeve still drew down −65.4% standalone. That's not a contradiction, it's the central lesson: on 2018-02-05, SVXY gapped down roughly 80% at the open, and a daily-bar gate generates its exit on the close, after the loss is already locked in. The gate is a regime detector, not a gap-loss preventer. The real protection is the position cap: at a 15% portfolio allocation, that same −65.4% standalone drawdown becomes roughly −6.5% at the total-portfolio level. That's why this sleeve stays gated out until there's an explicit, enforced cap at the portfolio level. The entire investment case rests on the cap holding, and that's a decision to make deliberately, not one to default into.
+The risk gate correctly fired during both required historical stress events (February 2018's "Volmageddon" and the March 2020 crash), but the sleeve still drew down −65.4% standalone. The central lesson: on 2018-02-05, SVXY gapped down roughly 80% at the open, and a daily-bar gate generates its exit on the close, after the loss is already locked in. The gate detects regimes; it cannot prevent gap losses. The real protection is the position cap: at a 15% portfolio allocation, that same −65.4% standalone drawdown becomes roughly −6.5% at the total-portfolio level. That's why this sleeve stays gated out until there's an explicit, enforced cap at the portfolio level. The entire investment case rests on the cap holding, and that's a decision to make deliberately, not one to default into.
 
 ### Post-earnings drift: built, and currently being re-audited
 
