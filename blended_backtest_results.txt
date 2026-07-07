@@ -1,0 +1,28 @@
+BLENDED BACKTEST: Trend-Following Anchor + Mean-Reversion Sleeve
+========================================================================
+  Overlap window:              2019-07-08 to 2026-06-17
+  Trading days in window:      1747
+
+  ERC Weighting (inverse-vol, matching portfolio_risk.py)
+    Anchor realized vol:        21.7%
+    MR realized vol:            10.7%
+    Anchor ERC weight:          33.1%
+    MR ERC weight:              66.9%
+
+  Metric                                  Anchor        MR   Blended
+  ---------------------------------------------------------------
+  CAGR                                    23.24%     3.13%    10.04%
+  Sharpe Ratio                            1.0724    0.3415    0.9495
+  Max Drawdown                           -26.96%   -23.31%   -17.73%
+
+  Blended worst-DD period:     2020-02-19 to 2020-03-23
+
+  KEY: Does adding MR reduce drawdown?
+    Anchor standalone (full 2008-2026):        -26.96%
+    Anchor in overlap window (2019-present):  -26.96%
+    Blended max DD (overlap window):           -17.73%
+    DD change (blended vs anchor in window):   +9.23% pp
+
+  RESULT: Diversification thesis HOLDS
+    MR sleeve reduces max drawdown in the overlap window.
+========================================================================

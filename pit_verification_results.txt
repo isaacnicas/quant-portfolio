@@ -1,0 +1,22 @@
+
+POINT-IN-TIME VERIFICATION — PEAD EARNINGS DATA
+====================================================================
+Method: match yfinance row closest to stored announcement_date
+        (fixes earlier iloc[0]/iloc[-1] fiscal-quarter mismatch)
+Stocks in DB tested: 1
+
+  MKC: CLEAN
+    DB announcement date:       2026-06-25
+    Matched yfinance quarter:   2026-05-31  (25d gap)
+    Stored estimate (at signal):   0.69690
+    yfinance estimate (now):       0.69690
+    Divergence:                 +0.00%
+
+--------------------------------------------------------------------
+SUMMARY: 1 CLEAN  |  0 DIVERGED  |  0 skipped (no match / no DB row)
+
+VERDICT: yfinance is serving ORIGINAL (point-in-time) estimates.
+         No lookahead bias detected.
+ACTION:  PEAD backtest figures can be trusted.
+         Re-run full backtest for definitive stats when 5+ events are in DB.
+====================================================================

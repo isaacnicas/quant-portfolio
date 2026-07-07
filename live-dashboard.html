@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live — Trend Following</title>
+<title>Live: Systematic Trading System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Ubuntu+Mono&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Ubuntu+Mono&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0B0F0C;
@@ -25,7 +25,7 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'Source Serif 4', serif;
+    font-family: 'Inter', sans-serif;
     overflow-x: hidden;
   }
 
@@ -104,7 +104,7 @@
   .wordmark .accent { color: var(--gold); font-style: italic; font-weight: 400; }
   .status-chip {
     display: inline-flex; align-items: center; gap: 7px;
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--sage);
     border: 1px solid rgba(127,160,138,0.35);
@@ -123,6 +123,7 @@
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.2rem, 4vw, 3rem) 4rem; }
 
   .lede {
+    font-family: 'Inter', sans-serif;
     font-size: 14px; color: var(--ink-dim); max-width: 460px;
     margin: 1.1rem 0 0;
     line-height: 1.65;
@@ -153,15 +154,16 @@
   .ring-pct {
     font-family: 'Inter', sans-serif;
     font-size: 15px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
   .ring-label {
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--ink-faint); margin-top: 3px;
   }
 
   .pulse-numbers .eyebrow {
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--ink-faint); margin: 0 0 0.5rem;
   }
@@ -175,6 +177,7 @@
     line-height: 1;
     letter-spacing: -0.02em;
     display: inline-block;
+    font-variant-numeric: tabular-nums;
   }
   .pulse-amount.pos { color: var(--sage); }
   .pulse-amount.neg { color: var(--rust); }
@@ -188,6 +191,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 15px; font-weight: 600;
     padding: 3px 0;
+    font-variant-numeric: tabular-nums;
   }
   .pulse-pct-pill.pos { color: var(--sage); }
   .pulse-pct-pill.neg { color: var(--rust); }
@@ -218,6 +222,11 @@
     border-color: rgba(237,234,224,0.18);
     color: var(--ink);
   }
+  .tf-pill:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   .flow-stats {
     display: grid;
@@ -231,15 +240,16 @@
   .flow-stat:last-child { border-right: none; padding-right: 0; }
   .flow-stat:not(:first-child) { padding-left: 1.4rem; }
   .flow-label {
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--ink-faint); margin-bottom: 0.5rem;
   }
   .flow-value {
     font-family: 'Inter', sans-serif;
     font-size: 20px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
-  .flow-sub { font-size: 12px; color: var(--ink-dim); margin-top: 0.2rem; }
+  .flow-sub { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-dim); margin-top: 0.2rem; }
 
   .sec {
     margin-top: 3.2rem;
@@ -249,19 +259,19 @@
     margin-bottom: 1.2rem;
   }
   .sec-num {
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 11px; color: var(--gold);
   }
   .sec-title {
-    font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500;
+    font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 600; letter-spacing: -0.01em;
   }
-  .sec-note { font-size: 13px; color: var(--ink-dim); margin: -0.6rem 0 1.3rem; }
+  .sec-note { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-dim); margin: -0.6rem 0 1.3rem; }
 
   .curve-card {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 1.6rem 1.6rem 1.2rem;
+    border-radius: 16px;
+    padding: 1.5rem 1.5rem 1.2rem;
     height: 280px;
     position: relative;
   }
@@ -278,7 +288,7 @@
     border-top: 1px solid var(--line);
   }
   .pos-head {
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--ink-faint);
     padding-bottom: 10px;
@@ -291,6 +301,7 @@
     position: relative;
   }
   .sig-fill {
+    display: block;
     height: 100%; border-radius: 4px;
     background: var(--gold);
     width: 0%;
@@ -304,7 +315,7 @@
     animation: shimmer 1.8s ease-in-out infinite;
   }
   @keyframes shimmer { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
-  .mono { font-family: 'Ubuntu Mono', monospace; font-size: 12.5px; }
+  .mono { font-family: 'Inter', sans-serif; font-size: 12.5px; font-variant-numeric: tabular-nums; }
   .pos-pnl.pos { color: var(--sage); }
   .pos-pnl.neg { color: var(--rust); }
 
@@ -316,12 +327,13 @@
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 1.2rem 1.3rem;
+    padding: 1.4rem 1.5rem;
   }
   .regime-state-row {
     display: flex; align-items: center; gap: 8px;
     font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
     margin-top: 0.5rem;
+    font-variant-numeric: tabular-nums;
   }
   .orb { width: 9px; height: 9px; border-radius: 50%; position: relative; }
   .orb.bull { background: var(--gold); }
@@ -343,20 +355,86 @@
     gap: 1.5rem; flex-wrap: wrap;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 1.5rem 1.7rem;
+    border-radius: 16px;
+    padding: 1.4rem 1.5rem;
   }
-  .cd-num { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 700; color: var(--gold); }
-  .cd-label { font-family: 'Ubuntu Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
-  .cd-date { font-size: 13px; color: var(--ink-dim); margin-top: 2px; }
+  .cd-num { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .cd-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  .cd-date { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-dim); margin-top: 2px; font-variant-numeric: tabular-nums; }
 
   footer {
     margin-top: 3.5rem; padding-top: 1.6rem;
     border-top: 1px solid var(--line);
+    font-family: 'Inter', sans-serif;
     font-size: 12px; color: var(--ink-faint); line-height: 1.7;
   }
   footer a { color: var(--sage); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
+  /* ── Sleeve-status strip ── */
+  .sleeve-strip {
+    display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: flex-start;
+  }
+  .sleeve-badge {
+    display: flex; flex-direction: column;
+    padding: 0.75rem 1rem;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  }
+  .sleeve-badge-head { display: flex; align-items: center; gap: 6px; }
+  .sleeve-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .sleeve-dot.live      { background: var(--sage); }
+  .sleeve-dot.reduced   { background: var(--gold); }
+  .sleeve-dot.suspended { background: var(--rust); }
+  .sleeve-dot.paused    { background: var(--ink-dim); }
+  .sleeve-dot.inactive  { background: var(--ink-faint); }
+  .sleeve-dot.planned   { background: var(--ink-faint); opacity: 0.45; }
+  .sleeve-name {
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+  .sleeve-status-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 0.25rem;
+  }
+  .sleeve-status-text.live      { color: var(--sage); }
+  .sleeve-status-text.reduced   { color: var(--gold); }
+  .sleeve-status-text.suspended { color: var(--rust); }
+  .sleeve-status-text.paused    { color: var(--ink-dim); }
+  .sleeve-status-text.inactive  { color: var(--ink-faint); }
+  .sleeve-status-text.planned  { color: var(--ink-faint); opacity: 0.45; font-style: italic; }
+  .sleeve-fig {
+    font-family: 'Inter', sans-serif; font-size: 10px;
+    color: var(--ink-dim); margin-top: 0.2rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Risk-gate panel ── */
+  .orb.clear { background: var(--sage); }
+  .orb.clear::before { color: var(--sage); }
+  .orb.warn  { background: var(--gold); }
+  .orb.warn::before  { color: var(--gold); }
+  .gate-headline-card { flex: 0 0 100%; }
+  .gate-row-card { flex: 1; min-width: 180px; }
+  .gate-indicator {
+    display: inline-block;
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  }
+  .gate-indicator.pass { background: var(--sage); }
+  .gate-indicator.trip { background: var(--rust); }
+  .gate-value {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; color: var(--ink-dim); margin-top: 0.45rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .gate-sleeve-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; color: var(--ink-dim); margin-top: 0.3rem; line-height: 1.55;
+  }
+  .gate-strip {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--line);
+  }
+  .gate-strip-item { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .gate-strip-item b { font-weight: 500; color: var(--ink); }
 
   @media (max-width: 700px) {
     .flow-stats { grid-template-columns: repeat(2, 1fr); row-gap: 1.2rem; }
@@ -386,7 +464,7 @@
         <h1 class="wordmark">Live<span class="accent"> signal</span></h1>
         <span class="status-chip"><span class="dot"></span><span id="market-state">reading the tape</span></span>
       </div>
-      <p class="lede">Systematic trend-following, tracked in real time. Paper account on Interactive Brokers, positions and signals updated after each close.</p>
+      <p class="lede">A multi-sleeve systematic trading system, tracked in real time. Trend-following anchor and mean-reversion sleeve live now; VRP built and deliberately gated; PEAD paused pending re-audit. Paper account on Interactive Brokers, positions and signals updated after each close.</p>
     </div>
   </div>
 </div>
@@ -401,7 +479,7 @@
       </svg>
       <div class="ring-center">
         <div class="ring-pct" id="ring-pct">—</div>
-        <div class="ring-label">session</div>
+        <div class="ring-label">vs close</div>
       </div>
     </div>
     <div class="pulse-numbers">
@@ -459,15 +537,28 @@
 
   <div class="sec">
     <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">Open positions</span></div>
-    <p class="sec-note">Ranked by signal conviction — the bar shows relative strength, not allocation size.</p>
+    <p class="sec-note">Ranked by signal conviction. The bar shows relative strength, not allocation size. Unrealized P&amp;L is gain/loss since each position was opened, not since yesterday's close.</p>
     <div class="pos-row pos-head">
-      <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Shares</span><span class="col-mv">Value</span><span>P&amp;L</span>
+      <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Shares</span><span class="col-mv">Value</span><span>Unrealized</span>
     </div>
     <div id="positions-body"></div>
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Regime read</span></div>
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Strategy sleeves</span></div>
+    <p class="sec-note">Governance action per sleeve, driven by live gate conditions each cycle.</p>
+    <div class="sleeve-strip" id="sleeve-strip"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Risk gate</span></div>
+    <p class="sec-note">Live governance state, gate conditions recomputed each cycle from VIX term structure.</p>
+    <div class="regime-row" id="gate-panel"></div>
+    <div class="gate-strip" id="gate-stats"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Regime read</span></div>
     <p class="sec-note">Recomputed daily from price trend and volatility structure.</p>
     <div class="regime-row">
       <div class="regime-card">
@@ -486,7 +577,7 @@
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Next move</span></div>
+    <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Next move</span></div>
     <div class="countdown-zone">
       <div>
         <div class="cd-label">Scheduled rebalance</div>
@@ -497,7 +588,7 @@
   </div>
 
   <footer>
-    Data refreshes once per trading day after market close. This is a simulated paper trading account — no real capital is at risk.
+    Data refreshes once per trading day after market close. This is a simulated paper trading account; no real capital is at risk.
     Full backtest and methodology at <a href="https://isaacnicas.github.io/quant-portfolio/">isaacnicas.github.io/quant-portfolio</a>.
   </footer>
 
@@ -541,8 +632,16 @@ async function loadDashboard() {
   const inceptionNav = data.inception_nav;
   const totalReturn = (nav - inceptionNav) / inceptionNav;
   const lastTwo = data.nav_history.slice(-2);
-  const dailyChange = lastTwo.length === 2 ? (lastTwo[1].nav - lastTwo[0].nav) : 0;
-  const dailyChangePct = lastTwo.length === 2 ? dailyChange / lastTwo[0].nav : 0;
+  // Use pre-computed daily_pnl from the data file when available; authoritative
+  // and correct even when the pipeline missed days (nav_history slice would then
+  // silently span multiple days and mislabel itself as "session").
+  const dailyChange = (data.daily_pnl != null)
+    ? data.daily_pnl
+    : (lastTwo.length === 2 ? lastTwo[1].nav - lastTwo[0].nav : 0);
+  const prevNav = data.prev_close_date
+    ? (data.nav_history.find(h => h.date === data.prev_close_date) || {}).nav
+    : (lastTwo.length === 2 ? lastTwo[0].nav : null);
+  const dailyChangePct = prevNav ? dailyChange / prevNav : 0;
   const isNeg = dailyChange < 0;
 
   document.getElementById('market-state').textContent =
@@ -588,11 +687,29 @@ async function loadDashboard() {
   document.getElementById('pulse-pct-text').textContent =
     (dailyChangePct >= 0 ? '+' : '') + (dailyChangePct * 100).toFixed(2) + '%';
 
-  const lastDate = lastTwo.length ? new Date(lastTwo[lastTwo.length-1].date + 'T00:00:00') : null;
-  document.getElementById('pulse-date').textContent =
-    lastDate ? lastDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }) + ' · session p&l' : 'Session P&L';
+  const closeDate = data.close_date
+    ? new Date(data.close_date + 'T00:00:00')
+    : (lastTwo.length ? new Date(lastTwo[lastTwo.length-1].date + 'T00:00:00') : null);
+  const prevCloseDate = data.prev_close_date ? new Date(data.prev_close_date + 'T00:00:00') : null;
+  const closeFmt = closeDate
+    ? closeDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
+    : null;
+  // If prev_close_date is more than one weekday before close_date, label the gap explicitly
+  // so the user never mistakes a multi-day move for a single session move.
+  const prevFmt = prevCloseDate
+    ? prevCloseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    : null;
+  const isMultiDay = prevCloseDate && closeDate
+    && (closeDate - prevCloseDate) > 86400000 * 1.5;  // more than 1.5 calendar days apart
+  document.getElementById('pulse-date').textContent = closeFmt
+    ? (isMultiDay && prevFmt ? 'Since ' + prevFmt + ' close · ' + closeFmt : 'As of close · ' + closeFmt)
+    : 'P&L';
+  const capturedAt = data.captured_at ? new Date(data.captured_at) : null;
+  const capturedStr = capturedAt
+    ? '  ·  refreshed ' + capturedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })
+    : '';
   document.getElementById('pulse-meta').textContent =
-    'NAV $' + nav.toLocaleString('en-US', {maximumFractionDigits: 0}) + ' as of last close';
+    'NAV $' + nav.toLocaleString('en-US', {maximumFractionDigits: 0}) + capturedStr;
 
   document.getElementById('nav-value').textContent = '$' + nav.toLocaleString('en-US', {maximumFractionDigits: 0});
   document.getElementById('total-return').textContent =
@@ -637,7 +754,9 @@ async function loadDashboard() {
     '</div>';
   }).join('');
   requestAnimationFrame(() => {
-    document.querySelectorAll('.sig-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.sig-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    });
   });
 
   document.getElementById('bull-score').innerHTML =
@@ -695,12 +814,211 @@ async function loadDashboard() {
   });
 
   window.__navHistory = data.nav_history;
+
+  document.querySelectorAll('.tf-pill').forEach(btn => {
+    const d = parseInt(btn.dataset.days, 10);
+    if (d === 0) return;
+    const filtered = filterByDays(data.nav_history, d);
+    btn.disabled = filtered.length < 2;
+  });
+
+  renderGatePanel(data);
+  renderSleeveStrip(data);
+}
+
+function renderSleeveStrip(data) {
+  var ms = data.multi_strategy || {};
+  var actions = (ms.gate_state || {}).sleeve_actions || {};
+  var activeSleeves = ms.active_sleeves || [];
+  var gatedSleeves = ms.gated_sleeves || [];
+  var summary = ms.sleeve_summary || [];
+  var el = document.getElementById('sleeve-strip');
+
+  // Union of all known sleeves across every source
+  var sleeveSet = {};
+  Object.keys(actions).forEach(function(s) { sleeveSet[s] = true; });
+  activeSleeves.forEach(function(s) { sleeveSet[s] = true; });
+  gatedSleeves.forEach(function(s) { sleeveSet[s] = true; });
+  summary.forEach(function(r) { if (r.sleeve) sleeveSet[r.sleeve] = true; });
+  var sleeves = Object.keys(sleeveSet);
+
+  if (sleeves.length === 0) {
+    el.innerHTML = '<span style="color:var(--ink-faint);font-size:13px">Sleeves initialising - awaiting first session</span>';
+    return;
+  }
+
+  var actionLabel = {
+    run: 'Live', suspend: 'Suspended',
+    reduce_50pct: 'Reduced 50%', reduce_25pct: 'Reduced 25%',
+    monitor_only: 'Monitor only', none: 'Inactive'
+  };
+
+  // Summary keyed by sleeve name
+  var sumMap = {};
+  summary.forEach(function(r) { if (r.sleeve) sumMap[r.sleeve] = r; });
+
+  // Sleeves with an actual strategy file. Stubs registered in governance
+  // ahead of implementation are excluded and rendered as "Planned".
+  var IMPLEMENTED = { Trend: true, MeanReversion: true, VRP: true, PEAD: true };
+
+  var badges = sleeves.map(function(sleeve) {
+    if (!IMPLEMENTED[sleeve]) {
+      var n = sleeve.replace(/([a-z])([A-Z])/g, '$1 $2');
+      return '<div class="sleeve-badge">' +
+        '<div class="sleeve-badge-head">' +
+          '<span class="sleeve-dot planned"></span>' +
+          '<span class="sleeve-name">' + n + '</span>' +
+        '</div>' +
+        '<div class="sleeve-status-text planned">Planned</div>' +
+      '</div>';
+    }
+
+    // Determine CSS class (live > suspended > action-based > inactive)
+    var cls;
+    if (activeSleeves.indexOf(sleeve) !== -1)      cls = 'live';
+    else if (gatedSleeves.indexOf(sleeve) !== -1)  cls = 'suspended';
+    else {
+      var a = actions[sleeve];
+      if (a === 'run')                              cls = 'live';
+      else if (a === 'suspend')                     cls = 'suspended';
+      else if (a === 'monitor_only')                cls = 'paused';
+      else if (a && a.indexOf('reduce') === 0)      cls = 'reduced';
+      else                                          cls = 'inactive';
+    }
+
+    // Label: prefer specific action string, fall back to class default
+    var label;
+    if (activeSleeves.indexOf(sleeve) !== -1)     label = 'Live';
+    else if (gatedSleeves.indexOf(sleeve) !== -1) label = 'Suspended';
+    else label = actionLabel[actions[sleeve]] || 'Inactive';
+
+    // Pretty display name: insert space before each uppercase run after lowercase
+    var name = sleeve.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+    // Optional live figures from sleeve_summary (rolling, not backtest)
+    var fig = sumMap[sleeve];
+    var figLine = '';
+    if (fig) {
+      var parts = [];
+      if (fig.pnl_usd != null && !isNaN(fig.pnl_usd)) {
+        var sign = fig.pnl_usd >= 0 ? '+' : '';
+        parts.push('P&L ' + sign + '$' + Math.round(Math.abs(fig.pnl_usd)).toLocaleString('en-US'));
+      }
+      if (fig.sharpe_21d != null && !isNaN(fig.sharpe_21d)) {
+        parts.push('21d Sh ' + Number(fig.sharpe_21d).toFixed(2));
+      }
+      if (parts.length) figLine = '<div class="sleeve-fig">' + parts.join(' / ') + '</div>';
+    }
+
+    return '<div class="sleeve-badge">' +
+      '<div class="sleeve-badge-head">' +
+        '<span class="sleeve-dot ' + cls + '"></span>' +
+        '<span class="sleeve-name">' + name + '</span>' +
+      '</div>' +
+      '<div class="sleeve-status-text ' + cls + '">' + label + '</div>' +
+      figLine +
+    '</div>';
+  }).join('');
+
+  el.innerHTML = badges;
+}
+function renderGatePanel(data) {
+  const gs = (data.multi_strategy || {}).gate_state || null;
+  const panel = document.getElementById('gate-panel');
+  const statsEl = document.getElementById('gate-stats');
+  const fmt = (v, dec) => (v != null && !isNaN(v)) ? Number(v).toFixed(dec) : '';
+  const fmtSgn = (v, dec) => (v != null && !isNaN(v)) ? (v >= 0 ? '+' : '') + Number(v).toFixed(dec) : '';
+
+  if (!gs) {
+    panel.innerHTML =
+      '<div class="regime-card gate-headline-card">' +
+        '<div class="flow-label">Overall gate state</div>' +
+        '<div class="regime-state-row" style="color:var(--ink-faint)">Awaiting data</div>' +
+      '</div>';
+    statsEl.innerHTML = '';
+    return;
+  }
+
+  const anyActive = !!gs.any_gate_active;
+  const orbClass = anyActive ? 'warn' : 'clear';
+  const headlineText = anyActive ? 'Gate active' : 'Gate clear - sleeves running';
+
+  const actionLabel = {
+    suspend: 'suspended', reduce_50pct: 'reduced 50%',
+    reduce_25pct: 'reduced 25%', monitor_only: 'monitor only', exit: 'exited'
+  };
+  const actions = gs.sleeve_actions || {};
+  const affected = Object.entries(actions)
+    .filter(([, a]) => a && a !== 'none' && a !== 'run')
+    .map(([s, a]) => s + ' ' + (actionLabel[a] || a));
+  const sleeveLine = affected.join(', ');
+
+  const gates = [
+    {
+      label: 'Backwardation',
+      tripped: !!gs.gate_1_backwardation,
+      value: (gs.f1 != null && gs.f2 != null)
+        ? 'F1 ' + fmt(gs.f1, 2) + '  F2 ' + fmt(gs.f2, 2) : ''
+    },
+    {
+      label: 'VIX level',
+      tripped: !!gs.gate_2_level,
+      value: (gs.spot_vix != null && gs.vix_200dma != null)
+        ? 'VIX ' + fmt(gs.spot_vix, 1) + '  DMA ' + fmt(gs.vix_200dma, 1) : ''
+    },
+    {
+      label: 'VIX shock',
+      tripped: !!gs.gate_3_shock,
+      value: gs.vix_3d_change_pct != null
+        ? '3d ' + fmtSgn(gs.vix_3d_change_pct, 1) + '%' : ''
+    }
+  ];
+
+  const gateCards = gates.map(g =>
+    '<div class="regime-card gate-row-card">' +
+      '<div class="flow-label">' + g.label + '</div>' +
+      '<div class="regime-state-row">' +
+        '<span class="gate-indicator ' + (g.tripped ? 'trip' : 'pass') + '"></span>' +
+        (g.tripped ? 'Tripped' : 'Clear') +
+      '</div>' +
+      (g.value ? '<div class="gate-value">' + g.value + '</div>' : '') +
+    '</div>'
+  ).join('');
+
+  panel.innerHTML =
+    '<div class="regime-card gate-headline-card">' +
+      '<div class="flow-label">Overall gate state</div>' +
+      '<div class="regime-state-row">' +
+        '<span class="orb ' + orbClass + '"></span>' + headlineText +
+      '</div>' +
+      (sleeveLine ? '<div class="gate-sleeve-line">' + sleeveLine + '</div>' : '') +
+    '</div>' +
+    gateCards;
+
+  const stripItems = [];
+  if (gs.contango_pct != null) {
+    const f1f2 = (gs.f1 != null && gs.f2 != null)
+      ? ' (F1 ' + fmt(gs.f1, 2) + ' / F2 ' + fmt(gs.f2, 2) + ')' : '';
+    stripItems.push('<span class="gate-strip-item"><b>Contango</b> ' + fmtSgn(gs.contango_pct, 2) + '%' + f1f2 + '</span>');
+  }
+  if (gs.macro_regime && gs.macro_regime !== 'unknown') {
+    stripItems.push('<span class="gate-strip-item"><b>Macro regime</b> ' + gs.macro_regime.toUpperCase() + '</span>');
+  }
+  statsEl.innerHTML = stripItems.join('');
+}
+function filterByDays(hist, days) {
+  if (days === 0 || hist.length === 0) return hist;
+  const latest = new Date(hist[hist.length - 1].date + 'T00:00:00');
+  const cutoff = new Date(latest);
+  cutoff.setDate(cutoff.getDate() - days);
+  return hist.filter(h => new Date(h.date + 'T00:00:00') >= cutoff);
 }
 
 function applyTimeframe(days) {
   if (!window.__navChartInstance || !window.__navHistory) return;
   const hist = window.__navHistory;
-  const sliced = days === 0 ? hist : hist.slice(-days);
+  let sliced = filterByDays(hist, days);
+  if (sliced.length < 2) sliced = hist;
   const labels = sliced.map(h => h.date);
   const values = sliced.map(h => h.nav);
   const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;

@@ -1,0 +1,10 @@
+﻿
+VRP BACKTEST SUMMARY
+  Period:        2015-01-01 → 2026-06-26
+  CAGR:          7.5%
+  Sharpe:        0.39
+  Max Drawdown:  -65.4%
+  Active (% days): 80.6%
+
+  Gate fired Feb 2018: True (required per action plan)
+  Gate fired Mar 2020: True (required per action plan)
