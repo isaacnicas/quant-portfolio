@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-06",
-  "captured_at": "2026-07-06T16:18:49.673952-04:00",
-  "last_updated": "2026-07-06T16:18:49.673952-04:00",
-  "daily_pnl": 3.286,
-  "prev_close_date": "2026-07-03",
-  "nav": 94.757,
+  "close_date": "2026-07-07",
+  "captured_at": "2026-07-07T16:16:42.065309-04:00",
+  "last_updated": "2026-07-07T16:16:42.065309-04:00",
+  "daily_pnl": -4.681,
+  "prev_close_date": "2026-07-06",
+  "nav": 90.076,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -54,111 +54,115 @@
     {
       "date": "2026-07-06",
       "nav": 94.757
+    },
+    {
+      "date": "2026-07-07",
+      "nav": 90.076
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.2139,
-      "signal": 0.834,
-      "unrealized_pct": -1.835
+      "weight": 0.1917,
+      "signal": 0.814,
+      "unrealized_pct": -2.479
     },
     {
       "symbol": "XLK",
-      "weight": 0.3511,
-      "signal": 0.634,
-      "unrealized_pct": -0.414
-    },
-    {
-      "symbol": "EEM",
-      "weight": 0.1175,
-      "signal": 0.5,
-      "unrealized_pct": 0.21
+      "weight": 0.2369,
+      "signal": 0.625,
+      "unrealized_pct": -0.863
     },
     {
       "symbol": "IWM",
-      "weight": -0.0391,
-      "signal": 0.483,
-      "unrealized_pct": -0.012
+      "weight": 0.3487,
+      "signal": 0.503,
+      "unrealized_pct": -0.429
+    },
+    {
+      "symbol": "EEM",
+      "weight": 0.1866,
+      "signal": 0.495,
+      "unrealized_pct": -0.146
     },
     {
       "symbol": "EWJ",
-      "weight": 0.2964,
-      "signal": 0.301,
-      "unrealized_pct": 0.776
+      "weight": 0.1661,
+      "signal": 0.298,
+      "unrealized_pct": 0.043
     },
     {
       "symbol": "QQQ",
-      "weight": 0.3539,
-      "signal": 0.197,
-      "unrealized_pct": 0.116
+      "weight": 0.096,
+      "signal": 0.189,
+      "unrealized_pct": -0.143
     },
     {
       "symbol": "SPY",
-      "weight": 0.1891,
-      "signal": 0.1,
-      "unrealized_pct": 0.318
+      "weight": 0.086,
+      "signal": 0.094,
+      "unrealized_pct": 0.098
     },
     {
       "symbol": "CVX",
-      "weight": 0.0121,
+      "weight": 0.0198,
       "signal": 0.0,
-      "unrealized_pct": -0.012
+      "unrealized_pct": 0.048
     },
     {
       "symbol": "HD",
-      "weight": -0.0216,
+      "weight": -0.0286,
       "signal": 0.0,
-      "unrealized_pct": -0.015
+      "unrealized_pct": 0.03
     },
     {
       "symbol": "JPM",
-      "weight": -0.0172,
+      "weight": -0.0246,
       "signal": 0.0,
-      "unrealized_pct": -0.03
+      "unrealized_pct": -0.034
     },
     {
       "symbol": "MSFT",
-      "weight": 0.0304,
+      "weight": 0.0386,
       "signal": 0.0,
-      "unrealized_pct": 0.186
+      "unrealized_pct": 0.203
     },
     {
       "symbol": "NVDA",
-      "weight": 0.012,
+      "weight": 0.0193,
       "signal": 0.0,
-      "unrealized_pct": -0.001
+      "unrealized_pct": 0.022
     },
     {
       "symbol": "XLF",
-      "weight": -0.0178,
+      "weight": -0.0252,
       "signal": 0.0,
-      "unrealized_pct": -0.076
+      "unrealized_pct": -0.072
     },
     {
       "symbol": "XLV",
-      "weight": -0.0172,
+      "weight": -0.025,
       "signal": 0.0,
-      "unrealized_pct": -0.027
+      "unrealized_pct": -0.054
     },
     {
       "symbol": "XOM",
-      "weight": 0.0122,
+      "weight": 0.0201,
       "signal": 0.0,
-      "unrealized_pct": -0.002
+      "unrealized_pct": 0.055
     }
   ],
   "regime": {
-    "raw_bull_score": 0.84,
+    "raw_bull_score": 0.856,
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-06",
-    "close_date": "2026-07-06",
-    "captured_at": "2026-07-06T20:18:56.783360+00:00",
-    "blended_pnl_usd": -588.13,
+    "date": "2026-07-07",
+    "close_date": "2026-07-07",
+    "captured_at": "2026-07-07T20:16:51.854460+00:00",
+    "blended_pnl_usd": 7853.87,
     "active_sleeves": [
       "MeanReversion",
       "VRP"
@@ -179,13 +183,13 @@
       }
     ],
     "gate_state": {
-      "date": "2026-07-06",
-      "spot_vix": 15.62,
+      "date": "2026-07-07",
+      "spot_vix": 16.19,
       "vix_200dma": 18.67,
-      "f1": 15.62,
-      "f2": 18.79,
-      "contango_pct": 20.29,
-      "vix_3d_change_pct": -5.05,
+      "f1": 16.19,
+      "f2": 19.03,
+      "contango_pct": 17.54,
+      "vix_3d_change_pct": -2.41,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -220,6 +224,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-06T20:18:56.783416+00:00"
+    "last_updated": "2026-07-07T20:16:51.854483+00:00"
   }
 }
