@@ -1,1 +1,2 @@
 config/email_config.json
+*.bundle
