@@ -110,7 +110,7 @@ Both moments taught me the same thing: the gap between a strategy that looks wel
 
 ---
 
-## Where this stands now
+## Project Lifecycle & Infrastructure
 
 **Backtesting is complete** across eighteen years of daily price data with realistic trading costs built in.
 
