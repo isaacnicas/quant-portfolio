@@ -187,7 +187,8 @@
     }
   ],
   "regime": {
-    "raw_bull_score": 0.888,
+    "regime_scalar": 0.888,
+    "raw_bull_score": 0.72,
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
