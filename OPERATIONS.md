@@ -17,7 +17,7 @@ Live dashboard: https://isaacnicas.github.io/quant-portfolio/live-dashboard.html
 |---|---|---|---|
 | Trend-following (anchor) | LIVE | TSMOM + CS-Mom, regime filter, fast-exit | Monthly rebalance; ETF universe |
 | Mean-reversion | LIVE | 50-day z-score, ±1.5 dead-band | Asymmetric momentum filter, 2-per-sector cap |
-| VRP (VIX contango) | GATED OUT | SVXY carry, ^VIX/^VIX3M | Currently disabled by governance gate |
+| VRP (VIX contango) | LIVE | SVXY carry, ^VIX/^VIX3M | Gate-governed: suspend / reduce 50% / full size. All three VIX gates currently clear; running at full 10% NAV allocation. |
 | PEAD | BUILT, ORDERS PAUSED | Cross-sectional cohort SUE ranking | Awaiting qualifying 5+ stock cohort (mid-July Q2 season) |
 | FactorTiming | PLANNED (Phase 1B) | — | Pre-registered in governance; no strategy file yet. Dashboard shows "Planned". |
 | EquityCarry | PLANNED (Phase 2) | — | Pre-registered in governance; no strategy file yet. Dashboard shows "Planned". |
@@ -31,8 +31,8 @@ Live dashboard: https://isaacnicas.github.io/quant-portfolio/live-dashboard.html
 - `mean_reversion_strategy.py` — mean-reversion sleeve
 - `vrp_strategy.py` — SVXY-based VRP sleeve
 - `governance_gates.py` — VIX risk governor (3-condition gate, 2-day deactivation confirm)
-- `portfolio_risk.py` — ERC weighting, 11% vol target
-- `order_engine.py` — order submission (MKT+OPG), port 4002
+- `portfolio_risk.py` — ERC weighting, 11% vol target (observation mode: computes risk-parity weights daily and logs to `portfolio_state.jsonl`, but does not size live orders; fixed sleeve fractions are used instead)
+- `order_engine.py` — order submission (MKT DAY), port 4002
 - `monitor.py` — NAV/position read + dashboard JSON, port 4002
 - `multi_strategy_monitor.py` — daily blended report
 
@@ -42,11 +42,13 @@ Live dashboard: https://isaacnicas.github.io/quant-portfolio/live-dashboard.html
 
 Two-stage split to satisfy order-type timing constraints:
 
-- **4:15 PM ET — `daily_routine_v2.bat`:** data feed → signals (all sleeves) →
-  governance → ERC risk → orders staged to `pending_orders.json` → monitor →
-  dashboard push.
-- **7:00 AM ET — `premarket_submit.bat`:** submits staged orders as MKT+OPG
-  (open auction). Health-check email at 7:15 AM.
+- **4:15 PM ET — `daily_routine_v2.bat`:** data feed → signals (all sleeves,
+  including `trend_following_strategy.py` which persists regime state) →
+  governance → orders staged to `pending_orders.json` → monitor → dashboard push.
+  A consistency check (C1-C8) runs automatically and flags any structural
+  integrity failures.
+- **7:00 AM ET — `premarket_submit.bat`:** submits staged orders as MKT DAY.
+  Health-check email at 7:15 AM.
 
 Automated via Windows Task Scheduler (weekday triggers, AC-power only, 30-min
 limit, no concurrent instances).
