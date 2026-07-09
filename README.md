@@ -44,8 +44,8 @@ Here's the whole picture in one frame:
 | Metric | Strategy | SPY | QQQ |
 |---|---|---|---|
 | CAGR (2008–2026) | ~16.1% | ~11.6% | ~16.9% |
-| Sharpe Ratio | — | — | — |
-| Max Drawdown | ~27% | >50% | — |
+| Sharpe Ratio | 0.87 | 0.64 | 0.79 |
+| Max Drawdown | ~27% | >50% | −49.4% |
 | Worst Year | −22% | −36% | −41% |
 
 The real trade-off: you give up a little of the spectacular years in exchange for cutting your worst-case losses roughly in half. Whether that trade-off is worth it depends entirely on how you'd actually feel and behave watching your account drop 40% versus 22%.
