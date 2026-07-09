@@ -25,11 +25,11 @@ Backtest 2008-01-03 → 2026-06-12, roughly eighteen years, net of costs:
 | Metric | Net | Gross |
 |---|---|---|
 | Annualised return (CAGR) | 16.45% | 16.88% |
-| Annualised volatility | 18.98% | — |
+| Annualised volatility | 18.98% | 18.97% |
 | Sharpe | 0.87 | 0.89 |
 | Max drawdown | −26.96% | −26.64% |
-| Worst year | −22.09% | — |
-| Best year | +41.38% | — |
+| Worst year | −22.09% | −21.85% |
+| Best year | +41.38% | +41.96% |
 
 The anchor is a single bet on trend persistence. However well-tested, one return
 stream draws down when its own edge stops working. Everything that follows is an
