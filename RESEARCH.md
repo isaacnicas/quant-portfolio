@@ -156,10 +156,10 @@ sleeve's own drawdown is no shallower than the anchor's. The blended backtest
 below confirms this is a measured result, not just an expectation.
 
 **The blended result is measured, and the diversification case holds.** Combining
-the anchor and the sleeve under the live ERC weighting (which assigns the
-lower-volatility MR sleeve the larger allocation, roughly 67% MR / 33% anchor,
-because MR runs at ~10.7% vol versus the anchor's ~21.7%) produces a portfolio
-whose max drawdown is materially shallower than the anchor alone:
+the anchor and the sleeve at a risk-parity-inspired fixed weighting (lower-volatility
+MR sleeve gets the larger allocation, roughly 67% MR / 33% anchor, because MR runs
+at ~10.7% vol versus the anchor's ~21.7%) produces a portfolio whose max drawdown is
+materially shallower than the anchor alone:
 
 | Metric | Anchor | MR sleeve | Blended |
 |---|---|---|---|
@@ -184,11 +184,20 @@ is +0.45 Sharpe / −28.6% MDD. The blended drawdown reduction is the measured
 result; the per-component columns are shown only for in-window comparison. Saved to
 `blended_backtest_results.txt`.)*
 
+*(Note on live sizing: the blended backtest above uses fixed weights derived from
+the historical volatility ratio. The live system includes an ERC engine
+(`portfolio_risk.py`) that computes risk-parity weights daily and logs them to
+`portfolio_state.jsonl`. It currently runs in **observation mode** — weights are
+computed and recorded but do not drive live order sizing. Fixed sleeve fractions
+are used instead, pending a defined observation period that proves the weights are
+stable and sane. ERC's live-sizing authority is a staged decision tracked by the
+system's maturity counter.)*
+
 ---
 
 ## 2. Volatility-risk-premium (VRP) sleeve
 
-**Status: BUILT, GATED OUT**
+**Status: LIVE — order path active, VIX-gate governed**
 
 ### Rationale
 
@@ -282,16 +291,21 @@ slower-developing events. For the fastest and most dangerous ones, the gate is a
 detector and the position cap is the seatbelt. Both are needed; neither alone is
 sufficient.
 
-### Why it stays gated out
+### Live deployment: gate-governed order path
 
-The gate logic is now validated, which clears the *first* hurdle. But a sleeve
-whose standalone drawdown is −65% and whose protection rests entirely on never
-being sized above ~10% of NAV is one to deploy slowly and deliberately, not on the
-strength of a passing gate check. It remains gated out until there is an explicit,
-documented position-cap enforcement at the portfolio level and a deliberate
-decision to allocate. The carry (CAGR 7.5%, Sharpe 0.39) is modest; the tail is
-extreme; the entire investment case rests on the cap holding. That is a decision
-to make with eyes open, not a default-on.
+The gate logic is validated, the position cap is enforced at 10% of NAV within
+the order path, and VRP has been live since Phase C-2. The sleeve runs a full order
+path: orders are staged daily and submitted premarket. Sizing is governed by the
+same three-gate VIX system validated in backtesting: a `suspend` action returns no
+orders; `reduce_50pct` halves sleeve capital before computing share count; `active`
+runs at the full 10% NAV allocation.
+
+The investment case remains what it always was: the carry is modest (CAGR 7.5%,
+Sharpe 0.39 in backtest), the tail is extreme, and the entire case rests on the
+position cap holding. That cap is now explicitly enforced in code, not just
+documented in design. As of 2026-07-08, all three VIX gates are clear, roll yield
+is 15.5% (well above the 5% entry threshold), and the sleeve is running at full
+size.
 
 ---
 
@@ -428,7 +442,7 @@ fault.
 |---|---|---|---|
 | Trend-following (anchor) | LIVE | Sharpe 0.87, MDD −26.96% (18yr) | Live-vs-backtest fill comparison |
 | Mean-reversion | LIVE | OOS Sharpe +0.24; blended MDD −17.73% (9.23pp shallower) | Diversification case confirmed, none outstanding |
-| VRP | GATED OUT | Sharpe 0.39, MDD −65.4% (≈−6.5% at 10% cap) | Portfolio-level cap enforcement before any allocation |
+| VRP | LIVE (gate-governed) | Sharpe 0.39, MDD −65.4% (≈−6.5% at 10% cap) | Cap enforced in code; gate controls sizing (suspend / reduce / active) |
 | PEAD | ORDERS PAUSED | Sharpe 0.59, hit rate 62.5%, 24 trades (indicative) | Re-confirm after Q2 2026 adds ~5–6 events |
 
 The pattern across the additions is the same one that runs through the anchor's
@@ -439,9 +453,10 @@ case is confirmed (blended drawdown −17.73%, 9.23pp shallower than the anchor)
 VRP gates are validated with the tail risk correctly attributed to position sizing
 rather than the gate, and the PEAD lookahead concern was investigated and cleared.
 What remains is not unfinished research but accumulating evidence: the PEAD sample
-(24 trades) is still small and should be re-confirmed after Q2 2026 earnings season,
-and VRP needs portfolio-level position-cap enforcement before any allocation. Both
-are about deployment discipline and sample size, not open questions of method.
+(24 trades) is still small and should be re-confirmed after Q2 2026 earnings season.
+VRP is now live with the position cap enforced in code and sizing governed by the
+three-condition VIX gate. Both remaining items are about deployment discipline and
+sample size, not open questions of method.
 
 ---
 

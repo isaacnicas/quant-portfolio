@@ -3,7 +3,7 @@
 
 > **Paper trading is live and running.** The trend-following anchor entered its first positions on June 18, 2026 on an Interactive Brokers paper account (~$994K starting NAV). Since then the account has moved with the market, including drawdown weeks. That's expected, and it's the actual point of paper trading before any capital is real. Automated daily monitoring and monthly rebalancing run via Windows Task Scheduler, with the [live dashboard](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html) updating daily. First rebalance: July 28, 2026.
 >
-> *This README documents the original trend-following anchor and its eighteen-year backtest, the strategy the rest of the system is built around. It has since grown into a multi-sleeve system: a mean-reversion sleeve is live alongside the anchor, a volatility-risk-premium sleeve is built and deliberately gated out, and a post-earnings-drift sleeve is mid-revalidation after a forensic audit caught lookahead bias in its early backtest. See [Where the system stands now](#where-the-system-stands-now) for all three, [RESEARCH.md](RESEARCH.md) for the full backtest process and results behind each addition, [CHANGELOG.md](CHANGELOG.md) for the full history, and [OPERATIONS.md](OPERATIONS.md) for the current architecture.*
+> *This README documents the original trend-following anchor and its eighteen-year backtest, the strategy the rest of the system is built around. It has since grown into a multi-sleeve system: a mean-reversion sleeve is live alongside the anchor, a volatility-risk-premium sleeve is live with a gate-governed order path, and a post-earnings-drift sleeve is mid-revalidation after a forensic audit caught lookahead bias in its early backtest. See [Where the system stands now](#where-the-system-stands-now) for all three, [RESEARCH.md](RESEARCH.md) for the full backtest process and results behind each addition, [CHANGELOG.md](CHANGELOG.md) for the full history, and [OPERATIONS.md](OPERATIONS.md) for the current architecture.*
 
 ---
 
@@ -135,27 +135,28 @@ That five-script stack was the starting point. It has since grown, and the curre
 ┌──────────────────────────▼───────────────────────────────┐
 │                   signal_engine.py                        │
 │        TSMOM + CS-Mom signals + VIX regime filter         │
-└──────────────┬───────────────────────────┬───────────────┘
-               │                           │
-┌──────────────▼────────────┐  ┌───────────▼───────────────┐
-│      Trend Sleeve         │  │      MR Sleeve             │
-│      (Proposer)           │  │      (Proposer)            │
-│   target weights per ETF  │  │   z-score entries/exits    │
-└──────────────┬────────────┘  └───────────┬───────────────┘
-               └─────────────┬─────────────┘
-                             │
-┌────────────────────────────▼─────────────────────────────┐
+└──────────┬────────────────────────────┬──────────┬───────┘
+           │                            │          │
+┌──────────▼──────────┐  ┌─────────────▼────┐  ┌──▼────────────────┐
+│    Trend Sleeve     │  │    MR Sleeve      │  │    VRP Sleeve     │
+│    (Proposer)       │  │    (Proposer)     │  │    (Proposer)     │
+│ target weights per  │  │ z-score entries   │  │  SVXY carry,      │
+│       ETF           │  │     & exits       │  │  VIX-gate sized   │
+└──────────┬──────────┘  └──────────┬────────┘  └──────┬────────────┘
+           └──────────────────┬──────────────────────────┘
+                              │
+┌─────────────────────────────▼────────────────────────────┐
 │                       Governor                            │
 │     VIX gate · reduce_50pct · position caps               │
 │     dead-band filter · order sizing                       │
-└────────────────────────────┬─────────────────────────────┘
-                             │  pending_orders.json
-┌────────────────────────────▼─────────────────────────────┐
+└─────────────────────────────┬────────────────────────────┘
+                              │  pending_orders.json
+┌─────────────────────────────▼────────────────────────────┐
 │             submit_orders_premarket.py                    │
 │               places market orders at IBKR                │
-└────────────────────────────┬─────────────────────────────┘
-                             │
-┌────────────────────────────▼─────────────────────────────┐
+└─────────────────────────────┬────────────────────────────┘
+                              │
+┌─────────────────────────────▼────────────────────────────┐
 │                      monitor.py                           │
 │            logs NAV and P&L · pushes dashboard            │
 └──────────────────────────────────────────────────────────┘
@@ -187,13 +188,15 @@ A +0.24 Sharpe wouldn't be worth running alone. The case for it is diversificati
 
 Blending the anchor with the mean-reversion sleeve under live portfolio weighting cuts the max drawdown from −26.96% to −17.73%, 9.2 percentage points shallower, while giving up only a little Sharpe (1.07 → 0.95). That's the trade the sleeve exists to make: a meaningfully smoother ride, bought with a small amount of standalone return.
 
-### Volatility risk premium: built, and staying gated on purpose
+### Volatility risk premium: live, gate-governed
 
 The VRP sleeve harvests the tendency of implied volatility to trade above realised volatility, via a 0.5× inverse VIX-futures ETF (SVXY). It's a genuinely different return source from the other two sleeves, and it's also the most dangerous thing on the book: rare, violent left-tail losses are the whole risk profile.
 
 ![Bar charts showing the sleeve's standalone drawdown versus its portfolio-level impact at a 15% position cap, and confirmation that the risk gate fired during both required historical stress events](images/chart8_vrp_gate_and_cap.png)
 
-The risk gate correctly fired during both required historical stress events (February 2018's "Volmageddon" and the March 2020 crash), but the sleeve still drew down −65.4% standalone. The central lesson: on 2018-02-05, SVXY gapped down roughly 80% at the open, and a daily-bar gate generates its exit on the close, after the loss is already locked in. The gate detects regimes; it cannot prevent gap losses. The real protection is the position cap: at a 15% portfolio allocation, that same −65.4% standalone drawdown becomes roughly −6.5% at the total-portfolio level. That's why this sleeve stays gated out until there's an explicit, enforced cap at the portfolio level. The entire investment case rests on the cap holding, and that's a decision to make deliberately, not one to default into.
+The risk gate correctly fired during both required historical stress events (February 2018's "Volmageddon" and the March 2020 crash), but the sleeve still drew down −65.4% standalone. The central lesson: on 2018-02-05, SVXY gapped down roughly 80% at the open, and a daily-bar gate generates its exit on the close, after the loss is already locked in. The gate detects regimes; it cannot prevent gap losses. The real protection is the position cap: at a 10% NAV allocation, that same −65.4% standalone drawdown becomes roughly −6.5% at the total-portfolio level.
+
+The sleeve has a live order path. Sizing is governed by the three-condition VIX gate: `suspend` (no orders), `reduce_50pct` (sleeve capital halved), or `active` (full 10% NAV allocation). The cap is enforced in code, not just documented in design. As of 2026-07-08, all three VIX gates are clear and the sleeve is running at full size.
 
 ### Post-earnings drift: built, and currently being re-audited
 
@@ -201,7 +204,7 @@ The PEAD sleeve trades the tendency of stocks to keep drifting after an earnings
 
 ### Shared infrastructure
 
-Underneath all three sleeves sits a governance layer that pulls risk when conditions deteriorate (a three-condition VIX gate with two-day confirmation) and a portfolio allocator that weights each sleeve by its contribution to total risk rather than by conviction. The execution stack runs headless and unattended: it rebalances on schedule and pushes its own results to the [live dashboard](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html) without anyone touching it day to day.
+Underneath all three sleeves sits a governance layer that pulls risk when conditions deteriorate (a three-condition VIX gate with two-day confirmation) and a risk engine (ERC) that computes each sleeve's risk-parity weight daily and logs it — currently in observation mode, building track record before being granted live sizing authority; live orders use fixed sleeve fractions in the meantime. The execution stack runs headless and unattended: it rebalances on schedule and pushes its own results to the [live dashboard](https://isaacnicas.github.io/quant-portfolio/live-dashboard.html) without anyone touching it day to day.
 
 I keep a running record of every meaningful change as the project grows. The full backtest process and results behind each addition live in [RESEARCH.md](RESEARCH.md), the dated history lives in the [changelog](CHANGELOG.md), and the current technical architecture is documented in [OPERATIONS.md](OPERATIONS.md).
 
