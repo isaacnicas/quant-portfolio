@@ -126,41 +126,9 @@ The original trend-following strategy launched on a five-script execution stack:
 
 That five-script stack was the starting point. It has since grown, and the current architecture is documented in [OPERATIONS.md](OPERATIONS.md).
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                     data_feed.py                         │
-│          pulls daily prices from IB → prices.csv         │
-└──────────────────────────┬───────────────────────────────┘
-                           │
-┌──────────────────────────▼───────────────────────────────┐
-│                   signal_engine.py                        │
-│        TSMOM + CS-Mom signals + VIX regime filter         │
-└──────────┬────────────────────────────┬──────────┬───────┘
-           │                            │          │
-┌──────────▼──────────┐  ┌─────────────▼────┐  ┌──▼────────────────┐
-│    Trend Sleeve     │  │    MR Sleeve      │  │    VRP Sleeve     │
-│    (Proposer)       │  │    (Proposer)     │  │    (Proposer)     │
-│ target weights per  │  │ z-score entries   │  │  SVXY carry,      │
-│       ETF           │  │     & exits       │  │  VIX-gate sized   │
-└──────────┬──────────┘  └──────────┬────────┘  └──────┬────────────┘
-           └──────────────────┬──────────────────────────┘
-                              │
-┌─────────────────────────────▼────────────────────────────┐
-│                       Governor                            │
-│     VIX gate · reduce_50pct · position caps               │
-│     dead-band filter · order sizing                       │
-└─────────────────────────────┬────────────────────────────┘
-                              │  pending_orders.json
-┌─────────────────────────────▼────────────────────────────┐
-│             submit_orders_premarket.py                    │
-│               places market orders at IBKR                │
-└─────────────────────────────┬────────────────────────────┘
-                              │
-┌─────────────────────────────▼────────────────────────────┐
-│                      monitor.py                           │
-│            logs NAV and P&L · pushes dashboard            │
-└──────────────────────────────────────────────────────────┘
-```
+![Architecture_chart_of_multi_sleeve_system](images/architecture_diagram.png)
+
+---
 
 The sleeves are designed to be independent return sources. The trend sleeve takes long positions in whichever of its 12 ETFs are trending upward and reduces exposure when momentum fades. The mean-reversion sleeve enters counter-trend positions, buying what has fallen too far and selling what has risen too far. The two strategies tend to struggle in different conditions: trend-following underperforms in choppy, sideways markets where no sustained direction forms, while mean-reversion tends to underperform during extended directional runs. Running them side by side is an attempt to smooth the combined equity curve.
 
