@@ -74,5 +74,25 @@ Under the **custom (IV) weights, Risk Contributions are not equal** (5.07%, -1.3
 
 `portfolio_risk.py`'s `compute_erc_weights()` produces inverse-volatility weights, not true equal-risk-contribution weights, and the divergence from Riskfolio-Lib's RP optimizer (up to 11.75 percentage points on MeanReversion) is fully explained by this: the custom method has no mechanism to account for the negative correlation between MeanReversion and the other two sleeves, so it cannot detect that MeanReversion is a risk-reducing diversifier rather than treating it purely as a low-volatility sleeve deserving more capital. This is not evidence of an implementation bug relative to what the code is actually written to do — the code correctly computes inverse-volatility weights as written — but it is evidence that the "ERC" naming throughout `portfolio_risk.py` (module docstring, method name, code comments) does not match what the method computes, which is directly relevant to any Phase-E decision that assumes `ERC_LIVE_SIZING` weights are true risk-parity weights.
 
+## Post-Fix Re-Validation (2026-07-13)
+
+Method updated to: Riskfolio-Lib RP (MV, equal budgets)
+
+`compute_erc_weights()` was replaced to delegate directly to Riskfolio-Lib's `rp_optimization(model='Classic', rm='MV', rf=0, b=None, hist=True)`, using full-sample historical covariance (`assets_stats(method_cov='hist')` over the entire aligned matrix) rather than the last-21-day window used for the pre-fix IV comparison above. `b=None` yields equal risk budgets by Riskfolio-Lib's own default (`rb = ones(N,1)/N`). Falls back to equal weights when joint history is below the 21-day minimum (this is the expected/correct behavior during C8 immaturity, not a defect).
+
+Re-run using the exact same input as the original study — `docs/erc_validation_sleeve_returns.csv`, unchanged, not rebuilt (2019-07-08 → 2026-06-16, 1,746 observations) — with an independent re-derivation of Riskfolio RP against the same full-sample covariance basis the fixed method now uses internally.
+
+**Result: CONVERGED** (all three |Delta| = 0.0000)
+
+| Sleeve | Custom (post-fix) | Riskfolio RP | Riskfolio HRP | Delta (Custom vs RP) |
+|---|---:|---:|---:|---:|
+| Trend | 0.2286 | 0.2286 | 0.1292 | 0.0000 |
+| MeanReversion | 0.5816 | 0.5816 | 0.7940 | 0.0000 |
+| VRP | 0.1898 | 0.1898 | 0.0768 | 0.0000 |
+
+Max |Delta| (Custom vs Riskfolio RP): **0.0000**. (HRP is a different clustering-based method entirely and is not expected to match RP — shown for reference only, unchanged from the original study.)
+
+MRC equality confirmed under new weights: **Risk Contributions are equal across all three sleeves under the post-fix custom weights** (3.7247%, 3.7246%, 3.7245% — matching to 4 decimal places, portfolio vol 11.17% annualized), identical to Riskfolio RP's own risk contributions computed against the same weights and covariance matrix — the defining signature of true ERC, and a direct contrast to the pre-fix IV weights' unequal (and for MeanReversion, negative) risk contributions above.
+
 ## Files
 docs/erc_validation_sleeve_returns.csv — sleeve return matrix used
