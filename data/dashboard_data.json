@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-14",
-  "captured_at": "2026-07-14T16:16:12.830268-04:00",
-  "last_updated": "2026-07-14T16:16:12.830268-04:00",
-  "daily_pnl": 21380.28,
-  "prev_close_date": "2026-07-13",
-  "nav": 915071.94,
+  "close_date": "2026-07-15",
+  "captured_at": "2026-07-15T16:15:45.594447-04:00",
+  "last_updated": "2026-07-15T16:15:45.594447-04:00",
+  "daily_pnl": -5703.1,
+  "prev_close_date": "2026-07-14",
+  "nav": 909368.84,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -78,166 +78,170 @@
     {
       "date": "2026-07-14",
       "nav": 915071.94
+    },
+    {
+      "date": "2026-07-15",
+      "nav": 909368.84
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
       "shares": 315,
-      "market_value": 189034.65,
-      "unrealized_pnl": -15915.91,
-      "weight": 0.2066,
-      "signal": 0.766
+      "market_value": 185963.4,
+      "unrealized_pnl": -18987.16,
+      "weight": 0.2045,
+      "signal": 0.79
     },
     {
       "symbol": "XLK",
       "shares": 1257,
-      "market_value": 230667.13,
-      "unrealized_pnl": -727.95,
-      "weight": 0.2521,
-      "signal": 0.602
-    },
-    {
-      "symbol": "IWM",
-      "shares": 1122,
-      "market_value": 330367.4,
-      "unrealized_pnl": -5530.67,
-      "weight": 0.361,
-      "signal": 0.573
+      "market_value": 228348.98,
+      "unrealized_pnl": -3046.1,
+      "weight": 0.2511,
+      "signal": 0.625
     },
     {
       "symbol": "EEM",
       "shares": 2737,
-      "market_value": 179610.07,
-      "unrealized_pnl": -1650.36,
-      "weight": 0.1963,
-      "signal": 0.36
+      "market_value": 179355.61,
+      "unrealized_pnl": -1904.82,
+      "weight": 0.1972,
+      "signal": 0.481
+    },
+    {
+      "symbol": "IWM",
+      "shares": 1122,
+      "market_value": 331796.54,
+      "unrealized_pnl": -4101.53,
+      "weight": 0.3649,
+      "signal": 0.472
     },
     {
       "symbol": "QQQ",
       "shares": 140,
-      "market_value": 100760.8,
-      "unrealized_pnl": -232.46,
-      "weight": 0.1101,
-      "signal": 0.285
+      "market_value": 100469.6,
+      "unrealized_pnl": -305.97,
+      "weight": 0.1105,
+      "signal": 0.3
     },
     {
       "symbol": "EWJ",
       "shares": 1732,
-      "market_value": 162573.2,
-      "unrealized_pnl": 770.2,
-      "weight": 0.1777,
-      "signal": 0.176
+      "market_value": 162040.37,
+      "unrealized_pnl": 237.37,
+      "weight": 0.1782,
+      "signal": 0.182
     },
     {
       "symbol": "SPY",
       "shares": 162,
-      "market_value": 121805.5,
-      "unrealized_pnl": 1188.84,
-      "weight": 0.1331,
-      "signal": 0.122
+      "market_value": 122221.53,
+      "unrealized_pnl": 1604.87,
+      "weight": 0.1344,
+      "signal": 0.13
     },
     {
       "symbol": "COST",
       "shares": 9,
-      "market_value": 8293.5,
-      "unrealized_pnl": -32.05,
+      "market_value": 8244.0,
+      "unrealized_pnl": -81.55,
       "weight": 0.0091,
       "signal": 0.0
     },
     {
       "symbol": "CVX",
       "shares": 312,
-      "market_value": 56721.6,
-      "unrealized_pnl": 2102.28,
-      "weight": 0.062,
+      "market_value": 56612.4,
+      "unrealized_pnl": 1993.08,
+      "weight": 0.0623,
       "signal": 0.0
     },
     {
       "symbol": "HD",
       "shares": -190,
-      "market_value": -64125.0,
-      "unrealized_pnl": 856.05,
-      "weight": -0.0701,
+      "market_value": -64876.5,
+      "unrealized_pnl": 104.55,
+      "weight": -0.0713,
       "signal": 0.0
     },
     {
       "symbol": "JPM",
       "shares": -182,
-      "market_value": -62280.4,
-      "unrealized_pnl": -1706.47,
-      "weight": -0.0681,
+      "market_value": -63132.16,
+      "unrealized_pnl": -2558.22,
+      "weight": -0.0694,
       "signal": 0.0
     },
     {
       "symbol": "MSFT",
       "shares": 184,
-      "market_value": 70858.4,
-      "unrealized_pnl": 1849.96,
-      "weight": 0.0774,
+      "market_value": 72716.8,
+      "unrealized_pnl": 3708.36,
+      "weight": 0.08,
       "signal": 0.0
     },
     {
       "symbol": "NVDA",
       "shares": 228,
-      "market_value": 48301.8,
-      "unrealized_pnl": 2918.06,
-      "weight": 0.0528,
+      "market_value": 48395.28,
+      "unrealized_pnl": 3011.54,
+      "weight": 0.0532,
       "signal": 0.0
     },
     {
       "symbol": "PEP",
       "shares": 64,
-      "market_value": 8672.0,
-      "unrealized_pnl": -199.4,
+      "market_value": 8666.88,
+      "unrealized_pnl": -204.52,
       "weight": 0.0095,
       "signal": 0.0
     },
     {
       "symbol": "SVXY",
       "shares": 1549,
-      "market_value": 89896.21,
-      "unrealized_pnl": -139.41,
-      "weight": 0.0982,
+      "market_value": 91162.07,
+      "unrealized_pnl": 1126.44,
+      "weight": 0.1002,
       "signal": 0.0
     },
     {
       "symbol": "XLF",
       "shares": -1113,
-      "market_value": -62432.93,
-      "unrealized_pnl": -1047.58,
-      "weight": -0.0682,
+      "market_value": -62956.35,
+      "unrealized_pnl": -1571.0,
+      "weight": -0.0692,
       "signal": 0.0
     },
     {
       "symbol": "XLV",
       "shares": -379,
-      "market_value": -59990.07,
-      "unrealized_pnl": 1140.86,
-      "weight": -0.0656,
+      "market_value": -60008.23,
+      "unrealized_pnl": 1122.71,
+      "weight": -0.066,
       "signal": 0.0
     },
     {
       "symbol": "XOM",
       "shares": 390,
-      "market_value": 56581.2,
-      "unrealized_pnl": 2008.02,
-      "weight": 0.0618,
+      "market_value": 56304.3,
+      "unrealized_pnl": 1731.12,
+      "weight": 0.0619,
       "signal": 0.0
     }
   ],
   "regime": {
-    "regime_scalar": 0.952,
-    "raw_bull_score": 0.88,
+    "regime_scalar": 0.968,
+    "raw_bull_score": 0.92,
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-14",
-    "close_date": "2026-07-14",
-    "captured_at": "2026-07-14T20:16:19.125544+00:00",
-    "blended_pnl_usd": 24255.87,
+    "date": "2026-07-15",
+    "close_date": "2026-07-15",
+    "captured_at": "2026-07-15T20:15:47.446826+00:00",
+    "blended_pnl_usd": -17262.39,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -248,7 +252,7 @@
       {
         "sleeve": "Trend",
         "is_active": true,
-        "pnl_usd": 28702.92,
+        "pnl_usd": -17477.44,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.6
@@ -256,7 +260,7 @@
       {
         "sleeve": "MeanReversion",
         "is_active": true,
-        "pnl_usd": -5036.71,
+        "pnl_usd": -1215.99,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.3
@@ -264,20 +268,20 @@
       {
         "sleeve": "VRP",
         "is_active": true,
-        "pnl_usd": 589.66,
+        "pnl_usd": 1431.04,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.1
       }
     ],
     "gate_state": {
-      "date": "2026-07-14",
-      "spot_vix": 16.42,
+      "date": "2026-07-15",
+      "spot_vix": 15.68,
       "vix_200dma": 18.67,
-      "f1": 16.42,
-      "f2": 19.26,
-      "contango_pct": 17.3,
-      "vix_3d_change_pct": 3.66,
+      "f1": 15.68,
+      "f2": 18.87,
+      "contango_pct": 20.34,
+      "vix_3d_change_pct": 4.32,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -298,8 +302,8 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-14T16:15:54.079487",
-      "date": "2026-07-14",
+      "timestamp": "2026-07-15T16:15:38.725049",
+      "date": "2026-07-15",
       "nav": 968671.3,
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
@@ -309,9 +313,9 @@
         "VRP": 0.3333
       },
       "risk_contributions": {
-        "Trend": 0.0755,
-        "MeanReversion": 0.6468,
-        "VRP": 0.2776
+        "Trend": 0.0779,
+        "MeanReversion": 0.6338,
+        "VRP": 0.2883
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -320,20 +324,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.4282,
-          "sharpe_21d": 7.046,
+          "vol_21d": 0.4067,
+          "sharpe_21d": 6.1674,
           "max_dd_21d": -0.025,
-          "hit_rate_21d": 0.5714
+          "hit_rate_21d": 0.5
         },
         "VRP": {
-          "vol_21d": 0.1838,
-          "sharpe_21d": 2.4987,
+          "vol_21d": 0.185,
+          "sharpe_21d": 4.6868,
           "max_dd_21d": -0.0155,
-          "hit_rate_21d": 0.5714
+          "hit_rate_21d": 0.625
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.8014
+        "MeanReversion_vs_VRP": -0.806
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -374,6 +378,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-14T20:16:19.125600+00:00"
+    "last_updated": "2026-07-15T20:15:47.446862+00:00"
   }
 }
