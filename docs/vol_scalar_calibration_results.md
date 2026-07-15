@@ -56,3 +56,55 @@ This calibration project is paused at the pre-registered escalation point, not c
 1. Widen the candidate set beyond 90th percentile (a new, separately pre-registered calibration, since the current set is locked and "will not be added to").
 2. Accept a per-sleeve tradeoff explicitly — e.g., use MeanReversion's p75-p90 candidates (viable) while treating Trend and VRP as still needing a different mechanism entirely, since no percentile-based `vol_target` works for them within this design.
 3. Reconsider whether full (8/8 or per-sleeve-full) correction is the right non-negotiable floor, versus accepting partial correction in exchange for a usable false-positive rate — this would mean loosening criterion 1 itself, which the pre-registration deliberately fixed as non-negotiable and explicitly did not allow trading off.
+
+---
+
+# Amendment 1 Results
+Amendment text: `docs/vol_scalar_calibration_prereg.md` § AMENDMENT 1 (committed `f7e15d5`, before any re-evaluation below).
+
+## MeanReversion — Resolved
+
+Reused the existing 7-candidate results above (no re-run needed). Applying the corrected Fix A rule (lowest false-positive rate among all candidates clearing the correction floor, not a stop at the first one found): all 7 candidates clear full correction (2/2), so the search runs across the entire set. **p90 has the lowest false-positive rate (9.51%)**, and no other candidate ties within 2 percentage points of it (the next-closest, p85, is 14.03% — a 4.5pp gap). Selection is unambiguous.
+
+**Selected: p90, vol_target = 0.1349, false-positive rate = 9.51%.** This resolves cleanly, exactly as the amendment anticipated, with no further judgment calls needed.
+
+## Trend and VRP — Remain Unresolved
+
+Applied Fix B's weaker standard ("no episode leaves the sleeve's post-scalar weight worse than its ERC baseline weight") per-episode, across all 7 candidates for both sleeves, using the same underlying per-episode weight data as the original run (not a re-simulation).
+
+**Empirical finding: the weaker standard produced byte-identical pass/fail results to the original strict standard, at every single percentile, for both sleeves.** This is not an approximation — it was checked episode-by-episode:
+
+| Sleeve | Percentile | Episodes Meeting Weaker Standard (of 3) | Episodes Meeting Original Strict Standard (of 3) | False-Positive Rate |
+|---|---|---|---|---|
+| Trend | 60 | 3/3 | 3/3 | 37.23% |
+| Trend | 65 | 3/3 | 3/3 | 32.65% |
+| Trend | 70 | 2/3 | 2/3 | 28.06% |
+| Trend | 75 | 2/3 | 2/3 | 23.20% |
+| Trend | 80 | 2/3 | 2/3 | 18.56% |
+| Trend | 85 | 2/3 | 2/3 | 13.92% |
+| Trend | 90 | 0/3 | 0/3 | 9.97% |
+| VRP | 60 | 3/3 | 3/3 | 39.69% |
+| VRP | 65 | 2/3 | 2/3 | 35.05% |
+| VRP | 70 | 2/3 | 2/3 | 30.41% |
+| VRP | 75 | 1/3 | 1/3 | 26.06% |
+| VRP | 80 | 1/3 | 1/3 | 22.05% |
+| VRP | 85 | 0/3 | 0/3 | 18.27% |
+| VRP | 90 | 0/3 | 0/3 | 14.26% |
+
+**Why they're identical, not approximately close:** the original standard was already defined as "final post-scalar weight below ERC baseline" for episodes where the tilt had pushed weight *above* baseline. Fix B's weaker standard — "not worse than ERC baseline" — is the same comparison, just non-strict (`≤` instead of `<`). Checked directly at the per-episode level (all 21 candidate/episode combinations for both sleeves), no case landed close enough to baseline for the strict/non-strict distinction to matter; every episode is cleanly on one side or the other. The relaxation, as literally specified, does not change which candidates clear the floor.
+
+Applying the corrected Fix A rule to the candidates that do clear (weaker = strict) floor: for Trend, only p60 and p65 clear at all, and the lowest-FP among them is **p65 (32.65%)** — still above the 25% ceiling. For VRP, only p60 clears, at **39.69%** — also above the ceiling.
+
+**Per the pre-registered abandonment condition (Step 0 of this amendment): no percentile in the 60-90 range clears both the weaker correction floor and the 25% false-positive ceiling, for either Trend or VRP. STOPPING here, as instructed — not widening the candidate range or loosening the ceiling further in this pass.** This is consistent with the original empirical check's own finding that some of Trend's and VRP's worst historical drawdowns showed neither elevated vol nor elevated correlation (e.g. Trend 2022-03-14, VRP 2022-07-14) — no vol-based signal, at any threshold, can be expected to catch a dislocation its own inputs never flagged as unusual.
+
+## Implication
+
+**The vol scalar mechanism, as designed, should apply to MeanReversion only for now.** Trend and VRP continue to rely on the VIX gate alone — the same governance they had before this project began — until either a different signal (not a percentile of forecast_vol) is designed for their specific unfixable episodes, or a future, separately pre-registered calibration project revisits the candidate range with a clear rationale for doing so. This is not a partial or approximate fix for Trend/VRP; it is a clean decision not to apply an under-validated mechanism to two of the three sleeves, while still shipping the one sleeve where the evidence is unambiguous.
+
+## Frozen: vol_scalar_v1
+
+`vol_scalar_observer.py`, `VOL_TARGET_PERCENTILE`:
+```python
+VOL_TARGET_PERCENTILE = {"Trend": None, "MeanReversion": 90, "VRP": None}
+```
+Trend and VRP entries are `None`, not defaulted to any percentile or to the old mean-based approach — the observer's EWMA component is forced to a 1.0 no-op for both, and each logged observation record for these sleeves carries an explicit `"calibrated": false` flag plus a note explaining why, so this is never silently mistaken for a working calibration.

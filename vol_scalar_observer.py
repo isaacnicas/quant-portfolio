@@ -64,6 +64,27 @@ history — expected for this early-stage live system, whose state logs
 currently hold single-digit record counts), the scalar defaults to 1.0
 (no-op, matching the existing platform's thin-history convention in
 SleeveForecastMixin) and a thin_history flag is set.
+
+--- vol_target calibration (frozen per-sleeve, see VOL_TARGET_PERCENTILE) ---
+
+docs/vol_scalar_calibration_prereg.md and its Amendment 1, plus
+docs/vol_scalar_calibration_results.md, ran a pre-registered calibration
+of vol_target as a PERCENTILE of the sleeve's own historical forecast_vol
+distribution (replacing an earlier, too-permissive mean-based vol_target
+that triggered on 34-54% of all trading days). Only MeanReversion
+resolved: p90 clears full correction on the known wrong-direction
+episodes with a 9.5% false-positive rate. Trend and VRP did NOT resolve
+— even under Amendment 1's explicitly weaker per-episode standard, no
+percentile in the tested 60-90 range clears the correction floor at an
+acceptable false-positive rate (only p60 clears it for either sleeve,
+at 37-40% false-positive, well above the 25% ceiling). Their
+VOL_TARGET_PERCENTILE entries are None: the EWMA component is disabled
+(forced to a 1.0 no-op) for Trend and VRP until a separate calibration
+or mechanism resolves this, NOT silently defaulted to some arbitrary
+percentile or to the old mean-based approach. The fast-spike component
+is independent of this calibration (its own 2.0x threshold was frozen
+separately and applies uniformly) and remains active for all sleeves
+regardless of vol_target calibration status.
 """
 
 import json
@@ -84,6 +105,16 @@ OBSERVATION_LOG_NAME = "vol_scalar_observation.jsonl"
 MIN_RECORDS_VOL_TARGET = 20   # matches MIN_RECORDS_CORR convention in sleeve_forecast_mixin.py
 MIN_RECORDS_FAST_VOL = 5
 FAST_SPIKE_THRESHOLD = 2.0    # see design doc for 1.5x / 2.0x / 2.5x comparison
+
+# PRODUCTION CALIBRATION — frozen 2026-07-15 per
+# docs/vol_scalar_calibration_prereg.md (+ Amendment 1) and
+# docs/vol_scalar_calibration_results.md.
+# Selected via the pre-registered rule, not post-hoc selection.
+# Do not modify without a new, separately pre-registered calibration project.
+# vol_scalar_v1.
+# None = sleeve did not resolve; EWMA vol_target component stays disabled
+# (forced to a 1.0 no-op) for that sleeve until a future calibration.
+VOL_TARGET_PERCENTILE = {"Trend": None, "MeanReversion": 90, "VRP": None}
 
 
 def _load_state_records(sleeve: str, log_dir: str) -> list:
@@ -112,11 +143,22 @@ def _load_state_records(sleeve: str, log_dir: str) -> list:
     return [r for r in records if r.get("date", "") < today]
 
 
-def compute_vol_target(sleeve: str, log_dir: str) -> tuple[Optional[float], bool]:
+def compute_vol_target(sleeve: str, log_dir: str) -> tuple[Optional[float], bool, bool]:
     """
-    Sleeve's own long-run mean forecast_vol, estimated from all available
-    vol_21d history in {sleeve}_state.jsonl. Returns (vol_target, thin_history).
+    Sleeve's own historical forecast_vol distribution, evaluated at its
+    frozen VOL_TARGET_PERCENTILE (see calibration docs), estimated from
+    all available vol_21d history in {sleeve}_state.jsonl.
+
+    Returns (vol_target, thin_history, calibrated).
+    calibrated=False means this sleeve has no frozen percentile (Trend,
+    VRP as of vol_scalar_v1) — vol_target is None and NOT silently
+    defaulted to a mean or any other percentile; the caller must disable
+    the EWMA component rather than guess.
     """
+    percentile = VOL_TARGET_PERCENTILE.get(sleeve)
+    if percentile is None:
+        return None, False, False
+
     records = _load_state_records(sleeve, log_dir)
     vols = [
         r["vol_21d"] for r in records
@@ -125,8 +167,8 @@ def compute_vol_target(sleeve: str, log_dir: str) -> tuple[Optional[float], bool
         and r.get("vol_21d", 0.0) > 0
     ]
     if len(vols) < MIN_RECORDS_VOL_TARGET:
-        return None, True
-    return round(float(np.mean(vols)), 6), False
+        return None, True, True
+    return round(float(np.percentile(vols, percentile)), 6), False, True
 
 
 def get_latest_nav(log_dir: str) -> Optional[float]:
@@ -238,12 +280,14 @@ def compute_vol_scalar(sleeve: str, log_dir: str,
     all intermediate and final values (for logging/inspection).
     """
     forecast_vol = get_latest_forecast_vol(sleeve, log_dir)
-    vol_target, target_thin = compute_vol_target(sleeve, log_dir)
+    vol_target, target_thin, calibrated = compute_vol_target(sleeve, log_dir)
     fast_vol_5d, fast_thin = compute_fast_vol_5d(sleeve, log_dir)
 
     thin_history = target_thin or fast_thin or (forecast_vol is None)
 
-    if forecast_vol is None or forecast_vol <= 0 or vol_target is None:
+    if not calibrated:
+        scalar_ewma = 1.0  # EWMA component disabled: no frozen vol_target for this sleeve
+    elif forecast_vol is None or forecast_vol <= 0 or vol_target is None:
         scalar_ewma = 1.0
     else:
         scalar_ewma = float(min(1.0, vol_target / forecast_vol))
@@ -260,11 +304,13 @@ def compute_vol_scalar(sleeve: str, log_dir: str,
         "sleeve": sleeve,
         "forecast_vol": forecast_vol,
         "vol_target": vol_target,
+        "vol_target_percentile": VOL_TARGET_PERCENTILE.get(sleeve),
         "fast_vol_5d": fast_vol_5d,
         "vol_scalar_ewma": round(scalar_ewma, 6),
         "vol_scalar_fast_spike": round(scalar_fast_spike, 6),
         "vol_scalar_combined": round(scalar_combined, 6),
         "thin_history": thin_history,
+        "calibrated": calibrated,
     }
 
 
@@ -295,6 +341,13 @@ def run_observation(log_dir: str = None) -> list:
             round(weight_pre * scalar_data["vol_scalar_combined"], 6)
             if weight_pre is not None else None
         )
+        note = "Logged only. Does not feed order_engine.py or ERC_LIVE_SIZING."
+        if not scalar_data["calibrated"]:
+            note += (
+                " UNCALIBRATED: no frozen vol_target percentile for this sleeve "
+                "(see docs/vol_scalar_calibration_results.md) — EWMA component "
+                "forced to a 1.0 no-op; only the fast-spike component can act."
+            )
         record = {
             "timestamp": timestamp,
             "date": today,
@@ -306,10 +359,12 @@ def run_observation(log_dir: str = None) -> list:
             "weight_post_scalar_observation_only": weight_post,
             "forecast_vol": scalar_data["forecast_vol"],
             "vol_target": scalar_data["vol_target"],
+            "vol_target_percentile": scalar_data["vol_target_percentile"],
             "fast_vol_5d": scalar_data["fast_vol_5d"],
             "thin_history": scalar_data["thin_history"],
+            "calibrated": scalar_data["calibrated"],
             "observation_only": True,
-            "note": "Logged only. Does not feed order_engine.py or ERC_LIVE_SIZING.",
+            "note": note,
         }
         records.append(record)
 
@@ -329,7 +384,7 @@ def print_observation(records: list):
     print(f"  VOL SCALAR OBSERVATION (log-only, no live authority)  {records[0]['date'] if records else ''}")
     print("=" * W)
     hdr = (f"  {'Sleeve':<16} {'Pre-Scalar':>11} {'EWMA':>7} {'Fast':>7} "
-           f"{'Combined':>9} {'Post-Scalar':>12} {'Thin?':>6}")
+           f"{'Combined':>9} {'Post-Scalar':>12} {'Thin?':>6} {'Calibrated?':>12}")
     print(hdr)
     print("  " + "-" * (W - 2))
     for r in records:
@@ -338,7 +393,7 @@ def print_observation(records: list):
         print(
             f"  {r['sleeve']:<16} {pre:>11} {r['vol_scalar_ewma']:>7.3f} "
             f"{r['vol_scalar_fast_spike']:>7.3f} {r['vol_scalar_combined']:>9.3f} "
-            f"{post:>12} {str(r['thin_history']):>6}"
+            f"{post:>12} {str(r['thin_history']):>6} {str(r['calibrated']):>12}"
         )
     print("  " + "-" * (W - 2))
     print("=" * W)
