@@ -1,0 +1,26 @@
+# Why Endogenous Risk Monitoring Was Never Built
+Date: 2026-07-14
+
+## Finding
+
+**C) UNEXAMINED.** No evidence anywhere in commit history or design documentation that endogenous, self-referential, per-sleeve risk monitoring (a sleeve watching its own realized vol, correlation, or turnover for anomalous shifts, independent of the VIX gate) was ever raised as a question — let alone considered and deferred, or genuinely blocked by a prerequisite. The six-field allocator-forecast interface already computes exactly this data (`forecast_vol`, `turnover_estimate`, `correlation_to_portfolio`) for every sleeve, daily — but it was scoped from the start as an allocator-tilt input, and nothing in the historical record shows anyone connecting those same fields to a governance trigger, or explicitly declining to.
+
+## Evidence
+
+**Commit history (quant-portfolio, 82 commits, full history searched):**
+- `git log --all --oneline -i --grep=` for `endogenous`, `sleeve.*risk`, `correlation.*shock`, `vol.*shock`, `governance` — **zero hits** on all five.
+- `git log --all -S"endogenous" -i` (diff pickaxe, not just messages) — the **only** hit across all history is `db0d92a`, "Add pysystemtrade reference architecture comparison" — the document from the *previous* session that first raised this concept. Nothing before it.
+- `git log --all -S"self-monitor"`, `-S"watchdog"`, `-S"sleeve-specific"`, `-S"per-sleeve risk"`, `-S"correlation_shock"` — **zero hits**, ever.
+- TrendFollowing has no git repository at all (confirmed directly); the only history that exists is whatever was later copied into quant-portfolio, so this history is the complete searchable record.
+
+**Design documentation:**
+- `docs/META_ALLOCATOR_ARCHITECTURE_SPEC.md` (§2.2, §3.1, and the closing "Does Existing Governance Need New Capabilities?"): explicitly states **"No structural additions required. The existing ERC weighting, 11% vol target, and three-condition VIX gate can act as a proper gate as-is."** This is a real, deliberate conclusion — but its scope is narrow: the question actually asked was "does the meta-allocator proposer need new governance capabilities to be gated," not "is governance complete as general per-sleeve risk management." §3.1's own table lists `Realized vol (trailing 21d)` as a per-sleeve metric with its stated purpose given explicitly as `"Feeds into 11% vol target gate"` — a portfolio-level aggregate check, not a sleeve-level anomaly detector.
+- §6 ("What the Paper Warns Against / Failure Modes") covers regime-shift robustness, overfitting to regime labels, reallocation instability, LLM limitations, a proposer/sleeve feedback loop, and transaction costs — six explicit failure-mode subsections, thoughtfully argued, and **none of them raise sleeve-level endogenous risk monitoring** as a concept, even adjacently.
+- `RESEARCH.md`'s VRP section is the most self-critical governance writing in the record — it explicitly walks back its own earlier claim that the VIX gate "fires before the worst of a volatility spike," concluding instead "the gate detects, the cap protects," after finding the gate can't outrun a Monday-morning gap (Feb 2018). This shows real, present critical engagement with governance limitations — but the entire discussion stays inside the VRP/VIX-gate box. It never generalizes to "what about Trend or MeanReversion's own idiosyncratic risk, independent of VIX."
+- `sleeve_forecast_mixin.py`'s own module docstring names itself **"the six-field meta-allocator forecast interface"** — the purpose is in the name. Its six fields include `forecast_vol` (EWMA vol_21d), `turnover_estimate`, and `correlation_to_portfolio` (rolling 63d correlation to the rest of the book) — precisely the three signals endogenous monitoring would need. The data pipeline already exists; it was simply never wired to anything but the allocator's tilt score.
+
+**Structural dependency check (Step 3):** confirmed no code-level coupling exists between C8/ERC-maturity and governance. `governance_gate_wiring.py` and `meta_allocator_v0.py` contain zero references to `ERC_LIVE_SIZING`, `portfolio_risk.py`, `C8`, or `Phase E` — the governance gate's ERC anchor is a hardcoded `ERC_WEIGHTS` dict in `meta_allocator_v0.py`, entirely decoupled from `portfolio_risk.py`'s live computation and its maturity-gating. `portfolio_risk.py` never imports or is blocked by `governance_gate_wiring.py`. Endogenous monitoring could have been built at any point, independent of C8 or Phase E status, with no shared blocking state. **Rules out verdict B.**
+
+## Implication
+
+This is not a case where a risk tradeoff was consciously made and needs revisiting — no one decided endogenous monitoring wasn't worth building, or that it should wait for something else. It simply never entered the design conversation, likely because governance was designed and validated against VRP's specific, well-documented, historically-precedented blowup mode (Feb 2018, Mar 2020), and every subsequent governance discussion inherited that VRP-shaped frame rather than re-asking the question generally. The data needed already exists in `sleeve_forecasts.jsonl`; this is a build task, not a decision that needs to be re-litigated first.
