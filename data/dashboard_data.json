@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-14",
-  "captured_at": "2026-07-14T16:16:12.830268-04:00",
-  "last_updated": "2026-07-14T16:16:12.830268-04:00",
-  "daily_pnl": 2.151,
-  "prev_close_date": "2026-07-13",
-  "nav": 92.062,
+  "close_date": "2026-07-15",
+  "captured_at": "2026-07-15T16:15:45.594447-04:00",
+  "last_updated": "2026-07-15T16:15:45.594447-04:00",
+  "daily_pnl": -0.574,
+  "prev_close_date": "2026-07-14",
+  "nav": 91.488,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -78,86 +78,90 @@
     {
       "date": "2026-07-14",
       "nav": 92.062
+    },
+    {
+      "date": "2026-07-15",
+      "nav": 91.488
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.2066,
-      "signal": 0.766,
-      "unrealized_pct": -1.739
+      "weight": 0.2045,
+      "signal": 0.79,
+      "unrealized_pct": -2.088
     },
     {
       "symbol": "XLK",
-      "weight": 0.2521,
-      "signal": 0.602,
-      "unrealized_pct": -0.08
-    },
-    {
-      "symbol": "IWM",
-      "weight": 0.361,
-      "signal": 0.573,
-      "unrealized_pct": -0.604
+      "weight": 0.2511,
+      "signal": 0.625,
+      "unrealized_pct": -0.335
     },
     {
       "symbol": "EEM",
-      "weight": 0.1963,
-      "signal": 0.36,
-      "unrealized_pct": -0.18
+      "weight": 0.1972,
+      "signal": 0.481,
+      "unrealized_pct": -0.209
+    },
+    {
+      "symbol": "IWM",
+      "weight": 0.3649,
+      "signal": 0.472,
+      "unrealized_pct": -0.451
     },
     {
       "symbol": "QQQ",
-      "weight": 0.1101,
-      "signal": 0.285,
-      "unrealized_pct": -0.025
+      "weight": 0.1105,
+      "signal": 0.3,
+      "unrealized_pct": -0.034
     },
     {
       "symbol": "EWJ",
-      "weight": 0.1777,
-      "signal": 0.176,
-      "unrealized_pct": 0.084
+      "weight": 0.1782,
+      "signal": 0.182,
+      "unrealized_pct": 0.026
     },
     {
       "symbol": "SPY",
-      "weight": 0.1331,
-      "signal": 0.122,
-      "unrealized_pct": 0.13
+      "weight": 0.1344,
+      "signal": 0.13,
+      "unrealized_pct": 0.176
     },
     {
       "symbol": "COST",
       "weight": 0.0091,
       "signal": 0.0,
-      "unrealized_pct": -0.004
+      "unrealized_pct": -0.009
     },
     {
       "symbol": "CVX",
-      "weight": 0.062,
+      "weight": 0.0623,
       "signal": 0.0,
-      "unrealized_pct": 0.23
+      "unrealized_pct": 0.219
     },
     {
       "symbol": "HD",
-      "weight": -0.0701,
+      "weight": -0.0713,
       "signal": 0.0,
-      "unrealized_pct": 0.094
+      "unrealized_pct": 0.011
     },
     {
       "symbol": "JPM",
-      "weight": -0.0681,
+      "weight": -0.0694,
       "signal": 0.0,
-      "unrealized_pct": -0.186
+      "unrealized_pct": -0.281
     },
     {
       "symbol": "MSFT",
-      "weight": 0.0774,
+      "weight": 0.08,
       "signal": 0.0,
-      "unrealized_pct": 0.202
+      "unrealized_pct": 0.408
     },
     {
       "symbol": "NVDA",
-      "weight": 0.0528,
+      "weight": 0.0532,
       "signal": 0.0,
-      "unrealized_pct": 0.319
+      "unrealized_pct": 0.331
     },
     {
       "symbol": "PEP",
@@ -167,41 +171,41 @@
     },
     {
       "symbol": "SVXY",
-      "weight": 0.0982,
+      "weight": 0.1002,
       "signal": 0.0,
-      "unrealized_pct": -0.015
+      "unrealized_pct": 0.124
     },
     {
       "symbol": "XLF",
-      "weight": -0.0682,
+      "weight": -0.0692,
       "signal": 0.0,
-      "unrealized_pct": -0.114
+      "unrealized_pct": -0.173
     },
     {
       "symbol": "XLV",
-      "weight": -0.0656,
+      "weight": -0.066,
       "signal": 0.0,
-      "unrealized_pct": 0.125
+      "unrealized_pct": 0.123
     },
     {
       "symbol": "XOM",
-      "weight": 0.0618,
+      "weight": 0.0619,
       "signal": 0.0,
-      "unrealized_pct": 0.219
+      "unrealized_pct": 0.19
     }
   ],
   "regime": {
-    "regime_scalar": 0.952,
-    "raw_bull_score": 0.88,
+    "regime_scalar": 0.968,
+    "raw_bull_score": 0.92,
     "leverage_scalar": 1.5,
     "fast_exit_triggered": false
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-14",
-    "close_date": "2026-07-14",
-    "captured_at": "2026-07-14T20:16:19.125544+00:00",
-    "blended_pnl_usd": 24255.87,
+    "date": "2026-07-15",
+    "close_date": "2026-07-15",
+    "captured_at": "2026-07-15T20:15:47.446826+00:00",
+    "blended_pnl_usd": -17262.39,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -229,13 +233,13 @@
       }
     ],
     "gate_state": {
-      "date": "2026-07-14",
-      "spot_vix": 16.42,
+      "date": "2026-07-15",
+      "spot_vix": 15.68,
       "vix_200dma": 18.67,
-      "f1": 16.42,
-      "f2": 19.26,
-      "contango_pct": 17.3,
-      "vix_3d_change_pct": 3.66,
+      "f1": 15.68,
+      "f2": 18.87,
+      "contango_pct": 20.34,
+      "vix_3d_change_pct": 4.32,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -256,8 +260,8 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-14T16:15:54.079487",
-      "date": "2026-07-14",
+      "timestamp": "2026-07-15T16:15:38.725049",
+      "date": "2026-07-15",
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
       "sleeve_weights": {
@@ -266,9 +270,9 @@
         "VRP": 0.3333
       },
       "risk_contributions": {
-        "Trend": 0.0755,
-        "MeanReversion": 0.6468,
-        "VRP": 0.2776
+        "Trend": 0.0779,
+        "MeanReversion": 0.6338,
+        "VRP": 0.2883
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -277,20 +281,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.4282,
-          "sharpe_21d": 7.046,
+          "vol_21d": 0.4067,
+          "sharpe_21d": 6.1674,
           "max_dd_21d": -0.025,
-          "hit_rate_21d": 0.5714
+          "hit_rate_21d": 0.5
         },
         "VRP": {
-          "vol_21d": 0.1838,
-          "sharpe_21d": 2.4987,
+          "vol_21d": 0.185,
+          "sharpe_21d": 4.6868,
           "max_dd_21d": -0.0155,
-          "hit_rate_21d": 0.5714
+          "hit_rate_21d": 0.625
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.8014
+        "MeanReversion_vs_VRP": -0.806
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -331,6 +335,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-14T20:16:19.125600+00:00"
+    "last_updated": "2026-07-15T20:15:47.446862+00:00"
   }
 }
