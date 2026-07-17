@@ -242,10 +242,10 @@
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-16",
-    "close_date": "2026-07-16",
-    "captured_at": "2026-07-16T20:15:52.241688+00:00",
-    "blended_pnl_usd": -37448.74,
+    "date": "2026-07-17",
+    "close_date": "2026-07-17",
+    "captured_at": "2026-07-17T20:15:46.999301+00:00",
+    "blended_pnl_usd": -42421.34,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -256,7 +256,7 @@
       {
         "sleeve": "Trend",
         "is_active": true,
-        "pnl_usd": -42686.8,
+        "pnl_usd": -43246.66,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.6
@@ -264,7 +264,7 @@
       {
         "sleeve": "MeanReversion",
         "is_active": true,
-        "pnl_usd": 6444.93,
+        "pnl_usd": 3440.6,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.3
@@ -272,24 +272,24 @@
       {
         "sleeve": "VRP",
         "is_active": true,
-        "pnl_usd": -1206.87,
+        "pnl_usd": -2615.28,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.1
       }
     ],
     "gate_state": {
-      "date": "2026-07-16",
-      "spot_vix": 16.58,
-      "vix_200dma": 18.68,
-      "f1": 16.58,
-      "f2": 19.4,
-      "contango_pct": 17.01,
-      "vix_3d_change_pct": -3.38,
+      "date": "2026-07-17",
+      "spot_vix": 18.7,
+      "vix_200dma": 18.69,
+      "f1": 18.7,
+      "f2": 20.56,
+      "contango_pct": 9.95,
+      "vix_3d_change_pct": 13.33,
       "gate_1_backwardation": false,
-      "gate_2_level": false,
+      "gate_2_level": true,
       "gate_3_shock": false,
-      "any_gate_active": false,
+      "any_gate_active": true,
       "in_confirmation": false,
       "g1_clear_days": 0,
       "g2_clear_days": 0,
@@ -299,27 +299,25 @@
       "yield_curve": null,
       "macro_regime": "unknown",
       "sleeve_actions": {
-        "VRP": "active",
-        "MeanReversion": "active",
-        "FactorTiming": "active",
-        "EquityCarry": "active"
+        "VRP": "suspend",
+        "MeanReversion": "reduce_50pct",
+        "FactorTiming": "none",
+        "EquityCarry": "reduce_25pct"
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-16T16:15:34.828219",
-      "date": "2026-07-16",
+      "timestamp": "2026-07-17T16:15:34.206660",
+      "date": "2026-07-17",
       "nav": 968671.3,
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
       "sleeve_weights": {
-        "Trend": 0.3333,
-        "MeanReversion": 0.3333,
-        "VRP": 0.3333
+        "Trend": 0.5,
+        "MeanReversion": 0.5
       },
       "risk_contributions": {
-        "Trend": 0.0796,
-        "MeanReversion": 0.6142,
-        "VRP": 0.3062
+        "Trend": 0.1208,
+        "MeanReversion": 0.8792
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -328,20 +326,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.3859,
-          "sharpe_21d": 7.3871,
+          "vol_21d": 0.3638,
+          "sharpe_21d": 7.8716,
           "max_dd_21d": -0.025,
-          "hit_rate_21d": 0.5556
+          "hit_rate_21d": 0.6
         },
         "VRP": {
-          "vol_21d": 0.1924,
-          "sharpe_21d": 2.1927,
-          "max_dd_21d": -0.0155,
-          "hit_rate_21d": 0.5556
+          "vol_21d": 0.2316,
+          "sharpe_21d": -1.298,
+          "max_dd_21d": -0.0391,
+          "hit_rate_21d": 0.5
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.7879
+        "MeanReversion_vs_VRP": -0.6218
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -358,7 +356,7 @@
         }
       },
       "gate_summary": {
-        "any_gate_active": false,
+        "any_gate_active": true,
         "macro_regime": "unknown"
       },
       "erc_live_sizing": false,
@@ -381,7 +379,7 @@
         "action": "Review \u2014 consider reducing allocation"
       }
     ],
-    "pipeline_alert": "ALERT: 15 orders rejected on 2026-07-16\nCheck premarket.log for details.",
-    "last_updated": "2026-07-16T20:15:52.241726+00:00"
+    "pipeline_alert": null,
+    "last_updated": "2026-07-17T20:15:46.999330+00:00"
   }
 }
