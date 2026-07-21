@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-20",
-  "captured_at": "2026-07-20T16:15:51.676345-04:00",
-  "last_updated": "2026-07-20T16:15:51.676345-04:00",
-  "daily_pnl": -1.656,
-  "prev_close_date": "2026-07-16",
-  "nav": 86.42,
+  "close_date": "2026-07-21",
+  "captured_at": "2026-07-21T16:18:01.266864-04:00",
+  "last_updated": "2026-07-21T16:18:01.266864-04:00",
+  "daily_pnl": 2.633,
+  "prev_close_date": "2026-07-20",
+  "nav": 89.053,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -90,116 +90,120 @@
     {
       "date": "2026-07-20",
       "nav": 86.42
+    },
+    {
+      "date": "2026-07-21",
+      "nav": 89.053
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.0175,
+      "weight": 0.0178,
       "signal": 0.766,
-      "unrealized_pct": -0.181
+      "unrealized_pct": -0.095
     },
     {
       "symbol": "XLK",
-      "weight": 0.1063,
-      "signal": 0.622,
-      "unrealized_pct": -0.598
-    },
-    {
-      "symbol": "QQQ",
-      "weight": 0.0737,
-      "signal": 0.497,
-      "unrealized_pct": -0.225
-    },
-    {
-      "symbol": "IWM",
-      "weight": 0.3792,
-      "signal": 0.451,
-      "unrealized_pct": -0.944
+      "weight": 0.1062,
+      "signal": 0.619,
+      "unrealized_pct": -0.284
     },
     {
       "symbol": "EEM",
-      "weight": 0.2001,
-      "signal": 0.247,
-      "unrealized_pct": -0.854
+      "weight": 0.1997,
+      "signal": 0.455,
+      "unrealized_pct": -0.278
+    },
+    {
+      "symbol": "QQQ",
+      "weight": 0.0728,
+      "signal": 0.394,
+      "unrealized_pct": -0.085
+    },
+    {
+      "symbol": "IWM",
+      "weight": 0.3733,
+      "signal": 0.341,
+      "unrealized_pct": -0.382
     },
     {
       "symbol": "EWJ",
-      "weight": 0.1075,
-      "signal": 0.182,
-      "unrealized_pct": -0.402
+      "weight": 0.1069,
+      "signal": 0.18,
+      "unrealized_pct": -0.131
     },
     {
       "symbol": "SPY",
-      "weight": 0.1399,
-      "signal": 0.13,
-      "unrealized_pct": -0.052
+      "weight": 0.1369,
+      "signal": 0.124,
+      "unrealized_pct": 0.064
     },
     {
       "symbol": "COST",
-      "weight": 0.024,
+      "weight": 0.0231,
       "signal": 0.0,
-      "unrealized_pct": -0.004
+      "unrealized_pct": -0.016
     },
     {
       "symbol": "CVX",
-      "weight": 0.079,
+      "weight": 0.0773,
       "signal": 0.0,
-      "unrealized_pct": 0.547
+      "unrealized_pct": 0.59
     },
     {
       "symbol": "HD",
-      "weight": -0.0915,
+      "weight": -0.0884,
       "signal": 0.0,
-      "unrealized_pct": 0.248
+      "unrealized_pct": 0.282
     },
     {
       "symbol": "JPM",
-      "weight": -0.0896,
+      "weight": -0.0885,
       "signal": 0.0,
-      "unrealized_pct": -0.113
+      "unrealized_pct": -0.262
     },
     {
       "symbol": "MSFT",
-      "weight": 0.1019,
+      "weight": 0.0979,
       "signal": 0.0,
-      "unrealized_pct": 0.598
+      "unrealized_pct": 0.484
     },
     {
       "symbol": "NVDA",
-      "weight": 0.0538,
+      "weight": 0.0534,
       "signal": 0.0,
-      "unrealized_pct": 0.096
+      "unrealized_pct": 0.21
     },
     {
       "symbol": "PEP",
-      "weight": 0.0257,
+      "weight": 0.0249,
       "signal": 0.0,
-      "unrealized_pct": -0.054
+      "unrealized_pct": -0.058
     },
     {
       "symbol": "SVXY",
-      "weight": 0.0971,
+      "weight": 0.0957,
       "signal": 0.0,
-      "unrealized_pct": -0.166
+      "unrealized_pct": -0.009
     },
     {
       "symbol": "XLF",
-      "weight": -0.091,
+      "weight": -0.0884,
       "signal": 0.0,
-      "unrealized_pct": -0.102
+      "unrealized_pct": -0.108
     },
     {
       "symbol": "XLV",
-      "weight": -0.0885,
+      "weight": -0.0864,
       "signal": 0.0,
-      "unrealized_pct": 0.118
+      "unrealized_pct": 0.064
     },
     {
       "symbol": "XOM",
-      "weight": 0.0773,
+      "weight": 0.0768,
       "signal": 0.0,
-      "unrealized_pct": 0.382
+      "unrealized_pct": 0.545
     }
   ],
   "regime": {
@@ -210,10 +214,10 @@
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-20",
-    "close_date": "2026-07-20",
-    "captured_at": "2026-07-20T20:15:54.164546+00:00",
-    "blended_pnl_usd": 12402.82,
+    "date": "2026-07-21",
+    "close_date": "2026-07-21",
+    "captured_at": "2026-07-21T20:18:05.714988+00:00",
+    "blended_pnl_usd": 65844.77,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -241,44 +245,46 @@
       }
     ],
     "gate_state": {
-      "date": "2026-07-20",
-      "spot_vix": 18.43,
+      "date": "2026-07-21",
+      "spot_vix": 17.01,
       "vix_200dma": 18.7,
-      "f1": 18.43,
-      "f2": 20.27,
-      "contango_pct": 9.98,
-      "vix_3d_change_pct": 17.61,
+      "f1": 17.01,
+      "f2": 19.58,
+      "contango_pct": 15.11,
+      "vix_3d_change_pct": 1.67,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
-      "any_gate_active": true,
-      "in_confirmation": true,
+      "any_gate_active": false,
+      "in_confirmation": false,
       "g1_clear_days": 0,
-      "g2_clear_days": 1,
+      "g2_clear_days": 2,
       "g3_clear_days": 0,
       "ism_pmi": null,
       "credit_spread": null,
       "yield_curve": null,
       "macro_regime": "unknown",
       "sleeve_actions": {
-        "VRP": "suspend",
-        "MeanReversion": "reduce_50pct",
-        "FactorTiming": "none",
-        "EquityCarry": "reduce_25pct"
+        "VRP": "active",
+        "MeanReversion": "active",
+        "FactorTiming": "active",
+        "EquityCarry": "active"
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-20T16:15:43.673531",
-      "date": "2026-07-20",
+      "timestamp": "2026-07-21T16:17:47.388214",
+      "date": "2026-07-21",
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
       "sleeve_weights": {
-        "Trend": 0.5,
-        "MeanReversion": 0.5
+        "Trend": 0.3333,
+        "MeanReversion": 0.3333,
+        "VRP": 0.3333
       },
       "risk_contributions": {
-        "Trend": 0.1264,
-        "MeanReversion": 0.8736
+        "Trend": 0.0806,
+        "MeanReversion": 0.5524,
+        "VRP": 0.3669
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -287,20 +293,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.3456,
-          "sharpe_21d": 8.5393,
+          "vol_21d": 0.3425,
+          "sharpe_21d": 7.3668,
           "max_dd_21d": -0.025,
-          "hit_rate_21d": 0.6364
+          "hit_rate_21d": 0.5833
         },
         "VRP": {
-          "vol_21d": 0.2198,
-          "sharpe_21d": -1.2434,
+          "vol_21d": 0.2275,
+          "sharpe_21d": 0.5835,
           "max_dd_21d": -0.0391,
-          "hit_rate_21d": 0.4545
+          "hit_rate_21d": 0.5
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.6193
+        "MeanReversion_vs_VRP": -0.655
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -317,7 +323,7 @@
         }
       },
       "gate_summary": {
-        "any_gate_active": true,
+        "any_gate_active": false,
         "macro_regime": "unknown"
       },
       "erc_live_sizing": false,
@@ -341,6 +347,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-20T20:15:54.164610+00:00"
+    "last_updated": "2026-07-21T20:18:05.715023+00:00"
   }
 }
