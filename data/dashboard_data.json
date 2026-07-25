@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-23",
-  "captured_at": "2026-07-23T16:15:29.594765-04:00",
-  "last_updated": "2026-07-23T16:15:29.594765-04:00",
-  "daily_pnl": -1.798,
-  "prev_close_date": "2026-07-22",
-  "nav": 87.046,
+  "close_date": "2026-07-24",
+  "captured_at": "2026-07-25T09:40:02.687279-04:00",
+  "last_updated": "2026-07-25T09:40:02.687279-04:00",
+  "daily_pnl": -2.304,
+  "prev_close_date": "2026-07-23",
+  "nav": 84.742,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -102,98 +102,102 @@
     {
       "date": "2026-07-23",
       "nav": 87.046
+    },
+    {
+      "date": "2026-07-25",
+      "nav": 84.742
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.1596,
-      "signal": 0.726,
-      "unrealized_pct": 0.078
+      "weight": 0.1565,
+      "signal": 0.72,
+      "unrealized_pct": -0.667
     },
     {
       "symbol": "XLK",
-      "weight": 0.2022,
-      "signal": 0.579,
-      "unrealized_pct": -0.376
-    },
-    {
-      "symbol": "IWM",
-      "weight": 0.2886,
-      "signal": 0.546,
-      "unrealized_pct": -0.707
+      "weight": 0.2038,
+      "signal": 0.575,
+      "unrealized_pct": -0.778
     },
     {
       "symbol": "QQQ",
-      "weight": 0.1502,
-      "signal": 0.358,
-      "unrealized_pct": -0.35
+      "weight": 0.1518,
+      "signal": 0.451,
+      "unrealized_pct": -0.603
+    },
+    {
+      "symbol": "IWM",
+      "weight": 0.2958,
+      "signal": 0.434,
+      "unrealized_pct": -0.795
     },
     {
       "symbol": "EEM",
-      "weight": 0.2043,
-      "signal": 0.224,
-      "unrealized_pct": -0.483
-    },
-    {
-      "symbol": "EWJ",
-      "weight": 0.1172,
-      "signal": 0.155,
-      "unrealized_pct": -0.319
+      "weight": 0.2055,
+      "signal": 0.214,
+      "unrealized_pct": -0.928
     },
     {
       "symbol": "SPY",
-      "weight": 0.1444,
-      "signal": 0.103,
-      "unrealized_pct": -0.108
+      "weight": 0.1482,
+      "signal": 0.192,
+      "unrealized_pct": -0.124
+    },
+    {
+      "symbol": "EWJ",
+      "weight": 0.1204,
+      "signal": 0.034,
+      "unrealized_pct": -0.326
     },
     {
       "symbol": "COST",
-      "weight": 0.016,
+      "weight": 0.0166,
       "signal": 0.0,
-      "unrealized_pct": -0.034
+      "unrealized_pct": -0.015
     },
     {
       "symbol": "HD",
-      "weight": -0.012,
+      "weight": -0.0127,
       "signal": 0.0,
-      "unrealized_pct": 0.059
+      "unrealized_pct": 0.029
     },
     {
       "symbol": "JPM",
-      "weight": -0.0125,
+      "weight": -0.013,
       "signal": 0.0,
-      "unrealized_pct": -0.025
+      "unrealized_pct": -0.039
     },
     {
       "symbol": "MSFT",
-      "weight": 0.0163,
+      "weight": 0.0168,
       "signal": 0.0,
-      "unrealized_pct": -0.045
+      "unrealized_pct": -0.046
     },
     {
       "symbol": "PEP",
-      "weight": 0.0168,
+      "weight": 0.0175,
       "signal": 0.0,
-      "unrealized_pct": -0.045
+      "unrealized_pct": -0.018
     },
     {
       "symbol": "SVXY",
-      "weight": 0.0993,
+      "weight": 0.1023,
       "signal": 0.0,
-      "unrealized_pct": -0.27
+      "unrealized_pct": -0.249
     },
     {
       "symbol": "XLF",
-      "weight": -0.0126,
+      "weight": -0.013,
       "signal": 0.0,
-      "unrealized_pct": 0.01
+      "unrealized_pct": 0.001
     },
     {
       "symbol": "XLV",
-      "weight": -0.0127,
+      "weight": -0.0131,
       "signal": 0.0,
-      "unrealized_pct": 0.001
+      "unrealized_pct": -0.008
     }
   ],
   "regime": {
@@ -204,10 +208,10 @@
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-23",
-    "close_date": "2026-07-23",
-    "captured_at": "2026-07-23T20:15:31.001292+00:00",
-    "blended_pnl_usd": -18302.95,
+    "date": "2026-07-24",
+    "close_date": "2026-07-24",
+    "captured_at": "2026-07-25T13:40:04.142291+00:00",
+    "blended_pnl_usd": -41520.21,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -235,20 +239,20 @@
       }
     ],
     "gate_state": {
-      "date": "2026-07-23",
-      "spot_vix": 18.86,
+      "date": "2026-07-25",
+      "spot_vix": 18.58,
       "vix_200dma": 18.72,
-      "f1": 18.86,
-      "f2": 20.72,
-      "contango_pct": 9.86,
-      "vix_3d_change_pct": 1.13,
+      "f1": 18.58,
+      "f2": 20.51,
+      "contango_pct": 10.39,
+      "vix_3d_change_pct": 8.97,
       "gate_1_backwardation": false,
-      "gate_2_level": true,
+      "gate_2_level": false,
       "gate_3_shock": false,
       "any_gate_active": true,
-      "in_confirmation": false,
+      "in_confirmation": true,
       "g1_clear_days": 0,
-      "g2_clear_days": 0,
+      "g2_clear_days": 1,
       "g3_clear_days": 0,
       "ism_pmi": null,
       "credit_spread": null,
@@ -262,8 +266,8 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-23T16:15:25.406448",
-      "date": "2026-07-23",
+      "timestamp": "2026-07-25T09:39:58.718389",
+      "date": "2026-07-25",
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
       "sleeve_weights": {
@@ -271,8 +275,8 @@
         "MeanReversion": 0.5
       },
       "risk_contributions": {
-        "Trend": 0.1316,
-        "MeanReversion": 0.8684
+        "Trend": 0.1333,
+        "MeanReversion": 0.8667
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -281,20 +285,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.3298,
-          "sharpe_21d": 5.8103,
-          "max_dd_21d": -0.025,
-          "hit_rate_21d": 0.5
+          "vol_21d": 0.325,
+          "sharpe_21d": 5.0322,
+          "max_dd_21d": -0.0311,
+          "hit_rate_21d": 0.4667
         },
         "VRP": {
-          "vol_21d": 0.2381,
-          "sharpe_21d": -1.95,
+          "vol_21d": 0.2296,
+          "sharpe_21d": -1.8877,
           "max_dd_21d": -0.0529,
-          "hit_rate_21d": 0.4286
+          "hit_rate_21d": 0.4
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.4279
+        "MeanReversion_vs_VRP": -0.425
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -335,6 +339,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-23T20:15:31.001319+00:00"
+    "last_updated": "2026-07-25T13:40:04.142315+00:00"
   }
 }
