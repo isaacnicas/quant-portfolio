@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-24",
-  "captured_at": "2026-07-25T09:40:02.687279-04:00",
-  "last_updated": "2026-07-25T09:40:02.687279-04:00",
-  "daily_pnl": -2.304,
-  "prev_close_date": "2026-07-23",
-  "nav": 84.742,
+  "close_date": "2026-07-27",
+  "captured_at": "2026-07-28T09:17:27.673868-04:00",
+  "last_updated": "2026-07-28T09:17:27.673868-04:00",
+  "daily_pnl": -2.057,
+  "prev_close_date": "2026-07-25",
+  "nav": 82.685,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -106,112 +106,116 @@
     {
       "date": "2026-07-25",
       "nav": 84.742
+    },
+    {
+      "date": "2026-07-28",
+      "nav": 82.685
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.1565,
-      "signal": 0.72,
-      "unrealized_pct": -0.667
+      "weight": 0.1525,
+      "signal": 0.712,
+      "unrealized_pct": -1.47
     },
     {
       "symbol": "XLK",
-      "weight": 0.2038,
-      "signal": 0.575,
-      "unrealized_pct": -0.778
+      "weight": 0.2037,
+      "signal": 0.57,
+      "unrealized_pct": -1.313
     },
     {
       "symbol": "QQQ",
-      "weight": 0.1518,
-      "signal": 0.451,
-      "unrealized_pct": -0.603
+      "weight": 0.1541,
+      "signal": 0.449,
+      "unrealized_pct": -0.765
     },
     {
       "symbol": "IWM",
-      "weight": 0.2958,
-      "signal": 0.434,
-      "unrealized_pct": -0.795
+      "weight": 0.305,
+      "signal": 0.415,
+      "unrealized_pct": -0.628
     },
     {
       "symbol": "EEM",
-      "weight": 0.2055,
-      "signal": 0.214,
-      "unrealized_pct": -0.928
+      "weight": 0.2065,
+      "signal": 0.212,
+      "unrealized_pct": -1.365
     },
     {
       "symbol": "SPY",
-      "weight": 0.1482,
-      "signal": 0.192,
-      "unrealized_pct": -0.124
+      "weight": 0.1521,
+      "signal": 0.186,
+      "unrealized_pct": -0.099
     },
     {
       "symbol": "EWJ",
-      "weight": 0.1204,
-      "signal": 0.034,
-      "unrealized_pct": -0.326
+      "weight": 0.1211,
+      "signal": 0.029,
+      "unrealized_pct": -0.567
     },
     {
       "symbol": "COST",
-      "weight": 0.0166,
+      "weight": 0.0177,
       "signal": 0.0,
-      "unrealized_pct": -0.015
+      "unrealized_pct": 0.048
     },
     {
       "symbol": "HD",
-      "weight": -0.0127,
+      "weight": -0.0133,
       "signal": 0.0,
-      "unrealized_pct": 0.029
+      "unrealized_pct": -0.002
     },
     {
       "symbol": "JPM",
-      "weight": -0.013,
+      "weight": -0.0135,
       "signal": 0.0,
-      "unrealized_pct": -0.039
+      "unrealized_pct": -0.059
     },
     {
       "symbol": "MSFT",
-      "weight": 0.0168,
+      "weight": 0.0178,
       "signal": 0.0,
-      "unrealized_pct": -0.046
+      "unrealized_pct": 0.013
     },
     {
       "symbol": "PEP",
-      "weight": 0.0175,
+      "weight": 0.0188,
       "signal": 0.0,
-      "unrealized_pct": -0.018
+      "unrealized_pct": 0.063
     },
     {
       "symbol": "SVXY",
-      "weight": 0.1023,
+      "weight": 0.1055,
       "signal": 0.0,
-      "unrealized_pct": -0.249
+      "unrealized_pct": -0.193
     },
     {
       "symbol": "XLF",
-      "weight": -0.013,
+      "weight": -0.0136,
       "signal": 0.0,
-      "unrealized_pct": 0.001
+      "unrealized_pct": -0.023
     },
     {
       "symbol": "XLV",
-      "weight": -0.0131,
+      "weight": -0.0137,
       "signal": 0.0,
-      "unrealized_pct": -0.008
+      "unrealized_pct": -0.034
     }
   ],
   "regime": {
     "regime_scalar": 1.0,
     "raw_bull_score": 1.0,
-    "leverage_scalar": 1.5,
+    "leverage_scalar": 1.2,
     "fast_exit_triggered": false
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-24",
-    "close_date": "2026-07-24",
-    "captured_at": "2026-07-25T13:40:04.142291+00:00",
-    "blended_pnl_usd": -41520.21,
+    "date": "2026-07-27",
+    "close_date": "2026-07-27",
+    "captured_at": "2026-07-28T13:17:31.137801+00:00",
+    "blended_pnl_usd": -38743.95,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -239,13 +243,13 @@
       }
     ],
     "gate_state": {
-      "date": "2026-07-25",
-      "spot_vix": 18.58,
-      "vix_200dma": 18.72,
-      "f1": 18.58,
-      "f2": 20.51,
-      "contango_pct": 10.39,
-      "vix_3d_change_pct": 8.97,
+      "date": "2026-07-28",
+      "spot_vix": 18.62,
+      "vix_200dma": 18.75,
+      "f1": 18.62,
+      "f2": 20.2,
+      "contango_pct": 8.49,
+      "vix_3d_change_pct": -0.43,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -266,8 +270,8 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-25T09:39:58.718389",
-      "date": "2026-07-25",
+      "timestamp": "2026-07-28T09:16:12.002806",
+      "date": "2026-07-28",
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
       "sleeve_weights": {
@@ -275,8 +279,8 @@
         "MeanReversion": 0.5
       },
       "risk_contributions": {
-        "Trend": 0.1333,
-        "MeanReversion": 0.8667
+        "Trend": 0.1373,
+        "MeanReversion": 0.8627
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -285,20 +289,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.325,
-          "sharpe_21d": 5.0322,
+          "vol_21d": 0.3142,
+          "sharpe_21d": 5.3476,
           "max_dd_21d": -0.0311,
-          "hit_rate_21d": 0.4667
+          "hit_rate_21d": 0.5
         },
         "VRP": {
-          "vol_21d": 0.2296,
-          "sharpe_21d": -1.8877,
+          "vol_21d": 0.2223,
+          "sharpe_21d": -1.6861,
           "max_dd_21d": -0.0529,
-          "hit_rate_21d": 0.4
+          "hit_rate_21d": 0.4375
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.425
+        "MeanReversion_vs_VRP": -0.4214
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -339,6 +343,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-25T13:40:04.142315+00:00"
+    "last_updated": "2026-07-28T13:17:31.137830+00:00"
   }
 }
