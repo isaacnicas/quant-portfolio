@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-07-31",
-  "captured_at": "2026-07-31T16:15:27.087531-04:00",
-  "last_updated": "2026-07-31T16:15:27.087531-04:00",
-  "daily_pnl": -0.017,
-  "prev_close_date": "2026-07-30",
-  "nav": 85.064,
+  "close_date": "2026-08-03",
+  "captured_at": "2026-08-03T16:16:21.843727-04:00",
+  "last_updated": "2026-08-03T16:16:21.843727-04:00",
+  "daily_pnl": 2.142,
+  "prev_close_date": "2026-07-31",
+  "nav": 87.206,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -122,54 +122,58 @@
     {
       "date": "2026-07-31",
       "nav": 85.064
+    },
+    {
+      "date": "2026-08-03",
+      "nav": 87.206
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.1515,
-      "signal": 0.706,
-      "unrealized_pct": -0.68
+      "weight": 0.1493,
+      "signal": 0.687,
+      "unrealized_pct": -0.506
     },
     {
       "symbol": "XLK",
-      "weight": 0.1971,
-      "signal": 0.564,
-      "unrealized_pct": -0.354
-    },
-    {
-      "symbol": "QQQ",
-      "weight": 0.2049,
-      "signal": 0.43,
-      "unrealized_pct": -0.363
-    },
-    {
-      "symbol": "EEM",
-      "weight": 0.149,
-      "signal": 0.311,
-      "unrealized_pct": -0.125
+      "weight": 0.1959,
+      "signal": 0.551,
+      "unrealized_pct": 0.022
     },
     {
       "symbol": "IWM",
-      "weight": 0.2722,
-      "signal": 0.288,
-      "unrealized_pct": -0.612
+      "weight": 0.2705,
+      "signal": 0.506,
+      "unrealized_pct": -0.098
     },
     {
-      "symbol": "EWJ",
-      "weight": 0.098,
-      "signal": 0.13,
-      "unrealized_pct": 0.178
-    },
-    {
-      "symbol": "SPY",
-      "weight": 0.1078,
-      "signal": 0.071,
+      "symbol": "QQQ",
+      "weight": 0.2037,
+      "signal": 0.318,
       "unrealized_pct": 0.031
     },
     {
+      "symbol": "EWJ",
+      "weight": 0.0961,
+      "signal": 0.234,
+      "unrealized_pct": 0.225
+    },
+    {
+      "symbol": "EEM",
+      "weight": 0.1461,
+      "signal": 0.106,
+      "unrealized_pct": -0.039
+    },
+    {
+      "symbol": "SPY",
+      "weight": 0.1067,
+      "signal": 0.065,
+      "unrealized_pct": 0.19
+    },
+    {
       "symbol": "COST",
-      "weight": 0.0056,
+      "weight": 0.0055,
       "signal": 0.0,
       "unrealized_pct": 0.006
     },
@@ -177,41 +181,41 @@
       "symbol": "HD",
       "weight": -0.0043,
       "signal": 0.0,
-      "unrealized_pct": 0.003
+      "unrealized_pct": -0.007
     },
     {
       "symbol": "JPM",
-      "weight": -0.0042,
+      "weight": -0.0041,
       "signal": 0.0,
       "unrealized_pct": -0.015
     },
     {
       "symbol": "MSFT",
-      "weight": 0.0071,
+      "weight": 0.0073,
       "signal": 0.0,
-      "unrealized_pct": 0.106
+      "unrealized_pct": 0.138
     },
     {
       "symbol": "PEP",
-      "weight": 0.0058,
+      "weight": 0.0056,
       "signal": 0.0,
-      "unrealized_pct": 0.013
+      "unrealized_pct": 0.012
     },
     {
       "symbol": "SVXY",
-      "weight": 0.1041,
+      "weight": 0.1023,
       "signal": 0.0,
-      "unrealized_pct": -0.027
+      "unrealized_pct": 0.041
     },
     {
       "symbol": "XLF",
       "weight": -0.0044,
       "signal": 0.0,
-      "unrealized_pct": -0.008
+      "unrealized_pct": -0.011
     },
     {
       "symbol": "XLV",
-      "weight": -0.0044,
+      "weight": -0.0043,
       "signal": 0.0,
       "unrealized_pct": -0.006
     }
@@ -224,10 +228,10 @@
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-07-31",
-    "close_date": "2026-07-31",
-    "captured_at": "2026-07-31T20:15:28.370172+00:00",
-    "blended_pnl_usd": 16892.08,
+    "date": "2026-08-03",
+    "close_date": "2026-08-03",
+    "captured_at": "2026-08-03T20:16:23.835789+00:00",
+    "blended_pnl_usd": 7496.68,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -255,20 +259,20 @@
       }
     ],
     "gate_state": {
-      "date": "2026-07-31",
-      "spot_vix": 15.98,
-      "vix_200dma": 18.7,
-      "f1": 15.98,
-      "f2": 19.04,
-      "contango_pct": 19.15,
-      "vix_3d_change_pct": -12.25,
+      "date": "2026-08-03",
+      "spot_vix": 15.77,
+      "vix_200dma": 18.68,
+      "f1": 15.78,
+      "f2": 18.93,
+      "contango_pct": 19.96,
+      "vix_3d_change_pct": -23.67,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
       "any_gate_active": false,
       "in_confirmation": false,
       "g1_clear_days": 0,
-      "g2_clear_days": 2,
+      "g2_clear_days": 0,
       "g3_clear_days": 0,
       "ism_pmi": null,
       "credit_spread": null,
@@ -282,8 +286,8 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-07-31T16:15:22.962687",
-      "date": "2026-07-31",
+      "timestamp": "2026-08-03T16:16:07.633619",
+      "date": "2026-08-03",
       "vol_scalar": 1.0,
       "portfolio_vol_ex_ante": null,
       "sleeve_weights": {
@@ -292,9 +296,9 @@
         "VRP": 0.3333
       },
       "risk_contributions": {
-        "Trend": 0.0812,
-        "MeanReversion": 0.528,
-        "VRP": 0.3907
+        "Trend": 0.0798,
+        "MeanReversion": 0.5452,
+        "VRP": 0.375
       },
       "insufficient_history": {
         "MeanReversion": true,
@@ -303,20 +307,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.325,
-          "sharpe_21d": 6.9991,
+          "vol_21d": 0.3415,
+          "sharpe_21d": 5.3248,
           "max_dd_21d": -0.0363,
-          "hit_rate_21d": 0.5263
+          "hit_rate_21d": 0.5
         },
         "VRP": {
-          "vol_21d": 0.2405,
-          "sharpe_21d": -2.1616,
+          "vol_21d": 0.2349,
+          "sharpe_21d": -1.9114,
           "max_dd_21d": -0.08,
-          "hit_rate_21d": 0.4211
+          "hit_rate_21d": 0.45
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.4122
+        "MeanReversion_vs_VRP": -0.4125
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -357,6 +361,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-07-31T20:15:28.370192+00:00"
+    "last_updated": "2026-08-03T20:16:23.835818+00:00"
   }
 }
