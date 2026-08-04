@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-08-03",
-  "captured_at": "2026-08-03T16:16:21.843727-04:00",
-  "last_updated": "2026-08-03T16:16:21.843727-04:00",
-  "daily_pnl": 2.142,
-  "prev_close_date": "2026-07-31",
-  "nav": 87.206,
+  "close_date": "2026-08-04",
+  "captured_at": "2026-08-04T16:15:40.765769-04:00",
+  "last_updated": "2026-08-04T16:15:40.765769-04:00",
+  "daily_pnl": 4.253,
+  "prev_close_date": "2026-08-03",
+  "nav": 91.459,
   "inception_nav": 100.0,
   "nav_history": [
     {
@@ -126,98 +126,102 @@
     {
       "date": "2026-08-03",
       "nav": 87.206
+    },
+    {
+      "date": "2026-08-04",
+      "nav": 91.459
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
-      "weight": 0.1493,
-      "signal": 0.687,
-      "unrealized_pct": -0.506
+      "weight": 0.1497,
+      "signal": 0.67,
+      "unrealized_pct": 0.246
     },
     {
       "symbol": "XLK",
       "weight": 0.1959,
-      "signal": 0.551,
-      "unrealized_pct": 0.022
+      "signal": 0.533,
+      "unrealized_pct": 0.931
     },
     {
       "symbol": "IWM",
-      "weight": 0.2705,
-      "signal": 0.506,
-      "unrealized_pct": -0.098
+      "weight": 0.2628,
+      "signal": 0.503,
+      "unrealized_pct": 0.393
     },
     {
       "symbol": "QQQ",
-      "weight": 0.2037,
-      "signal": 0.318,
-      "unrealized_pct": 0.031
-    },
-    {
-      "symbol": "EWJ",
-      "weight": 0.0961,
-      "signal": 0.234,
-      "unrealized_pct": 0.225
-    },
-    {
-      "symbol": "EEM",
-      "weight": 0.1461,
-      "signal": 0.106,
-      "unrealized_pct": -0.039
+      "weight": 0.2004,
+      "signal": 0.307,
+      "unrealized_pct": 0.641
     },
     {
       "symbol": "SPY",
-      "weight": 0.1067,
-      "signal": 0.065,
-      "unrealized_pct": 0.19
+      "weight": 0.1035,
+      "signal": 0.266,
+      "unrealized_pct": 0.36
+    },
+    {
+      "symbol": "EWJ",
+      "weight": 0.0933,
+      "signal": 0.117,
+      "unrealized_pct": 0.376
     },
     {
       "symbol": "COST",
-      "weight": 0.0055,
+      "weight": 0.0052,
       "signal": 0.0,
-      "unrealized_pct": 0.006
+      "unrealized_pct": 0.003
     },
     {
       "symbol": "HD",
-      "weight": -0.0043,
+      "weight": -0.0042,
       "signal": 0.0,
-      "unrealized_pct": -0.007
+      "unrealized_pct": -0.017
     },
     {
       "symbol": "JPM",
-      "weight": -0.0041,
+      "weight": -0.0039,
       "signal": 0.0,
-      "unrealized_pct": -0.015
+      "unrealized_pct": -0.02
     },
     {
       "symbol": "MSFT",
-      "weight": 0.0073,
+      "weight": 0.007,
       "signal": 0.0,
-      "unrealized_pct": 0.138
+      "unrealized_pct": 0.14
     },
     {
       "symbol": "PEP",
-      "weight": 0.0056,
+      "weight": 0.0054,
       "signal": 0.0,
-      "unrealized_pct": 0.012
+      "unrealized_pct": 0.01
     },
     {
       "symbol": "SVXY",
-      "weight": 0.1023,
+      "weight": 0.0971,
       "signal": 0.0,
-      "unrealized_pct": 0.041
+      "unrealized_pct": -0.004
     },
     {
       "symbol": "XLF",
-      "weight": -0.0044,
+      "weight": -0.0042,
       "signal": 0.0,
-      "unrealized_pct": -0.011
+      "unrealized_pct": -0.014
     },
     {
       "symbol": "XLV",
-      "weight": -0.0043,
+      "weight": -0.0041,
       "signal": 0.0,
-      "unrealized_pct": -0.006
+      "unrealized_pct": -0.005
+    },
+    {
+      "symbol": "EEM",
+      "weight": 0.1428,
+      "signal": -0.008,
+      "unrealized_pct": 0.305
     }
   ],
   "regime": {
@@ -228,10 +232,10 @@
   },
   "next_rebalance": "2026-07-28",
   "multi_strategy": {
-    "date": "2026-08-03",
-    "close_date": "2026-08-03",
-    "captured_at": "2026-08-03T20:16:23.835789+00:00",
-    "blended_pnl_usd": 7496.68,
+    "date": "2026-08-04",
+    "close_date": "2026-08-04",
+    "captured_at": "2026-08-04T20:15:43.440066+00:00",
+    "blended_pnl_usd": 57650.24,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -259,13 +263,13 @@
       }
     ],
     "gate_state": {
-      "date": "2026-08-03",
-      "spot_vix": 15.77,
-      "vix_200dma": 18.68,
-      "f1": 15.78,
-      "f2": 18.93,
-      "contango_pct": 19.96,
-      "vix_3d_change_pct": -23.67,
+      "date": "2026-08-04",
+      "spot_vix": 16.39,
+      "vix_200dma": 18.64,
+      "f1": 16.39,
+      "f2": 19.24,
+      "contango_pct": 17.39,
+      "vix_3d_change_pct": -4.1,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -286,41 +290,41 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-08-03T16:16:07.633619",
-      "date": "2026-08-03",
-      "vol_scalar": 1.0,
-      "portfolio_vol_ex_ante": null,
+      "timestamp": "2026-08-04T16:15:31.413391",
+      "date": "2026-08-04",
+      "vol_scalar": 0.9863,
+      "portfolio_vol_ex_ante": 0.1115,
       "sleeve_weights": {
         "Trend": 0.3333,
         "MeanReversion": 0.3333,
         "VRP": 0.3333
       },
       "risk_contributions": {
-        "Trend": 0.0798,
-        "MeanReversion": 0.5452,
-        "VRP": 0.375
+        "Trend": 0.0796,
+        "MeanReversion": 0.5557,
+        "VRP": 0.3647
       },
       "insufficient_history": {
-        "MeanReversion": true,
-        "VRP": true,
+        "MeanReversion": false,
+        "VRP": false,
         "Trend": true
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 0.3415,
-          "sharpe_21d": 5.3248,
-          "max_dd_21d": -0.0363,
-          "hit_rate_21d": 0.5
+          "vol_21d": 0.3489,
+          "sharpe_21d": 4.1735,
+          "max_dd_21d": -0.0496,
+          "hit_rate_21d": 0.4762
         },
         "VRP": {
-          "vol_21d": 0.2349,
-          "sharpe_21d": -1.9114,
+          "vol_21d": 0.229,
+          "sharpe_21d": -2.0068,
           "max_dd_21d": -0.08,
-          "hit_rate_21d": 0.45
+          "hit_rate_21d": 0.4286
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": -0.4125
+        "MeanReversion_vs_VRP": -0.3895
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -361,6 +365,6 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-08-03T20:16:23.835818+00:00"
+    "last_updated": "2026-08-04T20:15:43.440095+00:00"
   }
 }
