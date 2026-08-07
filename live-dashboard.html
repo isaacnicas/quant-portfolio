@@ -529,8 +529,8 @@
     </div>
     <div class="flow-stat">
       <div class="flow-label">Rebalance</div>
-      <div class="flow-value" id="countdown-mini">—</div>
-      <div class="flow-sub">trading days out</div>
+      <div class="flow-value">Daily</div>
+      <div class="flow-sub">dead-band triggered</div>
     </div>
   </div>
 
@@ -594,9 +594,9 @@
     <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Next move</span></div>
     <div class="countdown-zone">
       <div>
-        <div class="cd-label">Scheduled rebalance</div>
-        <div class="cd-num" id="rebalance-date">—</div>
-        <div class="cd-date" id="rebalance-days">—</div>
+        <div class="cd-label">Rebalance cadence</div>
+        <div class="cd-num">Daily</div>
+        <div class="cd-date">Recomputed daily — no fixed rebalance cycle</div>
       </div>
     </div>
   </div>
@@ -732,27 +732,6 @@ async function loadDashboard() {
     (totalReturn >= 0 ? '+' : '') + (totalReturn * 100).toFixed(2) + '%';
   document.getElementById('leverage-value').textContent = data.regime.leverage_scalar.toFixed(2) + 'x';
   document.getElementById('leverage-sub').textContent = data.regime.leverage_scalar >= 1.2 ? 'bull regime' : 'bear regime';
-
-  const nextRebal = new Date(data.next_rebalance + 'T00:00:00');
-  const today = new Date();
-  function countTradingDays(from, to) {
-    let count = 0;
-    const d = new Date(from);
-    d.setHours(0,0,0,0);
-    const end = new Date(to);
-    end.setHours(0,0,0,0);
-    while (d < end) {
-      d.setDate(d.getDate() + 1);
-      const day = d.getDay();
-      if (day !== 0 && day !== 6) count++;
-    }
-    return Math.max(0, count);
-  }
-  const daysLeft = countTradingDays(today, nextRebal);
-  document.getElementById('countdown-mini').textContent = daysLeft;
-  document.getElementById('rebalance-date').textContent =
-    nextRebal.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-  document.getElementById('rebalance-days').textContent = daysLeft + ' trading days out, monthly schedule';
 
   const tbody = document.getElementById('positions-body');
   const maxSignal = Math.max(...data.positions.map(p => Math.abs(p.signal)), 0.01);
