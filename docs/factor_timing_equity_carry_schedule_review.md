@@ -60,3 +60,34 @@ Neither has been removed, disabled, or edited since creation on 2026-06-25. Both
 | Equity Carry (Oct 6) | Explicitly "conditional on Phase 1 review pass"; dated ~3-4 weeks after the Phase 1 (Sept 8) and VRP (Sept 15) review checkpoints. | Enabled, unmodified since 2026-06-25 | Review-based dependency **not yet evaluable** — the gating review itself is still in the future. On the closest measurable proxy (VRP's own active-trading tenure), VRP has 8 active days as of today, far short of any 60-90-day framing, whether or not that specific framing was ever the documented rule. |
 
 No document survives that states the original date-derivation logic in its own words for either reminder. The evidence above is a reconstruction from the reminders' own embedded messages, their creation timestamp, and current system state — reported as such, not as a confirmed original rationale.
+
+---
+
+## Decision — 2026-08-12 (supersedes "no recommendation" scope above)
+
+The original scope note above (line 3) explicitly deferred any recommendation to "a separate conversation." That conversation happened; this section records the actual decision, on evidence, ahead of both reminders' original trigger dates.
+
+### Factor Timing: PAUSED at Phase 2 — not deprioritized, killed on evidence
+
+Phase 1 (FRED data infrastructure) of the foundation-build effort was in progress when a clairvoyance/look-ahead-shift falsification test was run against the two mechanisms already on record in `research-falsification-log` as failed for insufficient predictive power: the live system's own leading-indicator regime engines v1 (`regime/`) and v2 (`regime_predictive/`). The test asked a narrower question than the original Gate 2 kill: **was the failure fixable in principle** (a latency/estimation-lag problem) or **structural** (no usable information content in the signal at this data frequency, regardless of implementation)?
+
+Method: each engine's own stored/reproduced honest (contemporaneous) prediction was compared against the same prediction shifted 2 trading days early — simulating perfect, unrealistic clairvoyance — scored against the same independent realized-outcome series, using each engine's own original evaluation code unmodified.
+
+| Engine | Honest | Perfect 2-day-early foresight | Delta |
+|---|---|---|---|
+| Live regime engine v1 | acc 0.2677 (majority-null 0.5230) | acc 0.2700 | **+0.0023** — negligible |
+| Live regime engine v2 | acc 0.3955 (majority-null 0.5436) | acc 0.4050 | **+0.0094** — negligible |
+
+Both engines remain far below a trivial majority-class baseline even under perfect foresight. This is a structural failure, not a latency problem — no amount of faster data or better estimation could have rescued either mechanism, because there is not enough information in the signal to rescue.
+
+(For contrast, the same test run against a third, unrelated mechanism — the standalone HMM/ensemble regime classifier — showed a real jump under clairvoyance: variance-explained 0.1439 → 0.1805, +0.0366, a ~25% relative gain. That engine's original kill (incoherent ensemble + look-ahead + circularity, per `research-falsification-log/hmm-regime-classifier.md`) was a genuine implementation/methodology defect, not a structural information-content dead end — a different finding from v1/v2, reported for contrast, not as grounds to revisit the HMM engine here.)
+
+Factor Timing's proposed mechanism (rotate MTUM/VLUE vs. QUAL/USMV on an ISM-PMI-derived expansion/contraction classification) is, structurally, the same kind of bet as the two engines just tested: classify a macro/market regime and act on the classification at a timescale where regime transitions are the thing being timed. The clairvoyance test's finding — that this live system's own regime-classification mechanisms carry no usable signal at this data frequency even under perfect foresight — applies directly to Factor Timing's core mechanism, not just to the two engines tested by name.
+
+**Status: PAUSED at Phase 2.** Phase 1 FRED infrastructure work is not resumed. This is an evidence-based pause, not a scheduling deprioritization — record it as such if `Reminder_Factor_Timing` fires before this doc is revisited.
+
+### Equity Carry: GREENLIT — primary research focus
+
+Equity Carry's proposed mechanism (DVY/VYM income/carry tilt vs. broad index, low turnover) is not a regime-transition-timing bet — it is closer in structure to VRP (a standing risk-premium harvest, already live and validated) than to the two falsified regime engines. Nothing in the clairvoyance finding above bears on it.
+
+**Status: GREENLIT as primary research focus**, ahead of its original 2026-10-06 reminder date, gated by the pre-registered validation discipline in [`equity_carry_prereg.md`](equity_carry_prereg.md) (Gate 1: yield-trap/quality filter; Gate 2: HML/market residual-return test) — both required before any Phase 2 backtest run, same discipline as every mechanism this project has built. The existing project-wide boundary is unchanged: no live capital, no shadow-mode wiring into any live sizing path, until the original 2026-12-01 re-evaluation date is reached and a real go/no-go decision is made.
