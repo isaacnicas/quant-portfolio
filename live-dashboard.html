@@ -829,7 +829,6 @@ async function loadDashboard() {
         pointBackgroundColor: lineColor,
         pointBorderColor: '#0B0F0C',
         pointHoverBorderColor: '#0B0F0C',
-        cubicInterpolationMode: 'monotone',
         fill: true,
       }]
     },
@@ -1234,6 +1233,20 @@ Chart.register({
     ctx.stroke();
     ctx.restore();
   }
+});
+
+// Mobile touch: tapping anywhere outside the chart canvas clears the active
+// tooltip/crosshair, since Chart.js's own touch handling otherwise leaves it
+// pinned until another data point is tapped. Guarded to only fire for taps
+// outside the canvas -- in-canvas taps stay Chart.js's own to handle.
+document.addEventListener('click', (e) => {
+  const chart = window.__navChartInstance;
+  if (!chart) return;
+  const canvas = document.getElementById('navChart');
+  if (canvas.contains(e.target)) return;
+  chart.setActiveElements([]);
+  chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+  chart.update();
 });
 
 loadDashboard();
