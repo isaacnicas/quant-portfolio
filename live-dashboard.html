@@ -329,6 +329,25 @@
   .pos-pnl.pos { color: var(--sage); }
   .pos-pnl.neg { color: var(--rust); }
 
+  .sig-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 130px;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sig-row:first-child { border-top: 1px solid var(--line); }
+  .sig-weight.pos { color: var(--sage); }
+  .sig-weight.neg { color: var(--rust); }
+  .signals-subsec { margin-bottom: 1.8rem; }
+  .signals-subsec:last-child { margin-bottom: 0; }
+  .signals-subsec-title {
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--ink-dim); margin-bottom: 0.6rem; letter-spacing: 0.02em;
+  }
+  .signals-subsec-count { color: var(--ink-faint); font-weight: 400; }
+
   .regime-row {
     display: flex; gap: 0.9rem; flex-wrap: wrap;
   }
@@ -565,14 +584,40 @@
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Risk gate</span></div>
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Sleeve signals</span></div>
+    <p class="sec-note">Post-governance target weight per instrument, recomputed each cycle — not filtered to current holdings, every universe ticker is shown including zero-weight ones. Secondary value is the pre-governance raw signal.</p>
+
+    <div class="signals-subsec">
+      <div class="signals-subsec-title">Trend <span class="signals-subsec-count" id="trend-sig-count"></span></div>
+      <div class="sig-row pos-head">
+        <span>Asset</span><span>Target weight</span><span>Raw signal</span>
+      </div>
+      <div id="trend-signals-body"></div>
+    </div>
+
+    <div class="signals-subsec">
+      <div class="signals-subsec-title">Mean Reversion <span class="signals-subsec-count" id="mr-sig-count"></span></div>
+      <div class="sig-row pos-head">
+        <span>Asset</span><span>Target weight</span><span>Z-score</span>
+      </div>
+      <div id="mr-signals-body"></div>
+    </div>
+
+    <div class="signals-subsec">
+      <div class="signals-subsec-title">VRP</div>
+      <div class="regime-row" id="vrp-signal-card"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Risk gate</span></div>
     <p class="sec-note">Live governance state, gate conditions recomputed each cycle from VIX term structure.</p>
     <div class="regime-row" id="gate-panel"></div>
     <div class="gate-strip" id="gate-stats"></div>
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Trend Strength</span></div>
+    <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Trend Strength</span></div>
     <p class="sec-note">Recomputed daily: 60% SPY vs 200d MA, 40% VIX term structure (short &lt; long MA), 10-day rolling blend.</p>
     <div class="regime-row">
       <div class="regime-card">
@@ -591,7 +636,7 @@
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Next move</span></div>
+    <div class="sec-head"><span class="sec-num">07</span><span class="sec-title">Next move</span></div>
     <div class="countdown-zone">
       <div>
         <div class="cd-label">Rebalance cadence</div>
@@ -820,6 +865,77 @@ async function loadDashboard() {
 
   renderGatePanel(data);
   renderSleeveStrip(data);
+  renderSignalsSection(data);
+}
+
+function renderSignalsSection(data) {
+  var sig = data.signals || null;
+  var trendBody = document.getElementById('trend-signals-body');
+  var mrBody = document.getElementById('mr-signals-body');
+  var vrpCard = document.getElementById('vrp-signal-card');
+
+  if (!sig) {
+    trendBody.innerHTML = '<span style="color:var(--ink-faint);font-size:13px">Awaiting data</span>';
+    mrBody.innerHTML = '';
+    vrpCard.innerHTML = '';
+    return;
+  }
+
+  function renderSigRows(rows, secondaryKey, secondaryDec) {
+    var maxAbs = Math.max.apply(null, rows.map(function(r) { return Math.abs(r.target_weight); }).concat([0.0001]));
+    return rows.map(function(r, i) {
+      var barWidth = Math.max(2, (Math.abs(r.target_weight) / maxAbs) * 100);
+      var secondary = r[secondaryKey];
+      var secondaryStr = (secondary == null || isNaN(secondary)) ? '—' : Number(secondary).toFixed(secondaryDec);
+      var wClass = r.target_weight > 0 ? 'pos' : (r.target_weight < 0 ? 'neg' : '');
+      return '<div class="sig-row">' +
+        '<span class="pos-symbol">' + r.ticker + '</span>' +
+        '<span class="sig-track"><span class="sig-fill" data-w="' + barWidth + '" style="transition-delay:' + (i * 40) + 'ms"></span></span>' +
+        '<span class="mono sig-weight ' + wClass + '">' + (r.target_weight * 100).toFixed(1) + '%<span style="color:var(--ink-faint)"> / ' + secondaryStr + '</span></span>' +
+      '</div>';
+    }).join('');
+  }
+
+  trendBody.innerHTML = renderSigRows(sig.trend.tickers, 'raw_signal', 3);
+  document.getElementById('trend-sig-count').textContent = '(' + sig.trend.tickers.length + ')';
+
+  mrBody.innerHTML = renderSigRows(sig.mean_reversion.tickers, 'z_score', 2);
+  document.getElementById('mr-sig-count').textContent = '(' + sig.mean_reversion.tickers.length + ')';
+
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      document.querySelectorAll('#trend-signals-body .sig-fill, #mr-signals-body .sig-fill').forEach(function(el) {
+        el.style.width = el.dataset.w + '%';
+      });
+    });
+  });
+
+  var v = sig.vrp;
+  if (!v) {
+    vrpCard.innerHTML = '<div class="regime-card"><div class="flow-label">VRP</div><div class="regime-state-row" style="color:var(--ink-faint)">Awaiting data</div></div>';
+    return;
+  }
+  var externalLabel = {
+    suspend: 'Suspended', reduce_50pct: 'Reduced 50%', reduce_25pct: 'Reduced 25%',
+    monitor_only: 'Monitor only', none: 'None', active: 'Active'
+  };
+  var externalTripped = v.external_gate_action === 'suspend' || (v.external_gate_action || '').indexOf('reduce') === 0;
+  vrpCard.innerHTML =
+    '<div class="regime-card">' +
+      '<div class="flow-label">' + (v.ticker || 'SVXY') + ' target weight</div>' +
+      '<div class="regime-state-row">' + (v.target_weight != null ? (v.target_weight * 100).toFixed(0) + '%' : '—') + '</div>' +
+      '<div class="flow-sub">Roll yield ' + (v.roll_yield_pct != null ? v.roll_yield_pct.toFixed(1) + '%' : '—') + '</div>' +
+    '</div>' +
+    '<div class="regime-card">' +
+      '<div class="flow-label">Self gate (sleeve)</div>' +
+      '<div class="regime-state-row"><span class="orb ' + (v.self_gate_active ? 'bull' : 'bear') + '"></span>' +
+        (v.self_gate_active ? 'Active' : 'Inactive') + '</div>' +
+    '</div>' +
+    '<div class="regime-card">' +
+      '<div class="flow-label">External gate (governance)</div>' +
+      '<div class="regime-state-row"><span class="orb ' + (externalTripped ? 'warn' : 'clear') + '"></span>' +
+        (externalLabel[v.external_gate_action] || v.external_gate_action || '—') + '</div>' +
+    '</div>';
 }
 
 function renderSleeveStrip(data) {
