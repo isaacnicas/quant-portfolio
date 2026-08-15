@@ -282,7 +282,7 @@
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 1.5rem 1.5rem 1.2rem;
-    height: 280px;
+    height: 440px;
     position: relative;
   }
 
@@ -476,6 +476,7 @@
     .pulse-zone { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .field { height: 300px; }
     .lede { font-size: 13px; }
+    .curve-card { height: 340px; padding: 1.1rem 1rem 0.9rem; }
   }
 </style>
 </head>
@@ -811,9 +812,7 @@ async function loadDashboard() {
 
   const labels = data.nav_history.map(h => h.date);
   const values = data.nav_history.map(h => h.nav);
-  const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;
-  const lineColor = trendUp ? '#34D399' : '#F4544A';
-  const fillColor = trendUp ? 'rgba(52,211,153,0.08)' : 'rgba(244,84,74,0.08)';
+  const { hex: lineColor } = getTrendColor(values);
 
   window.__navChartInstance = new Chart(document.getElementById('navChart'), {
     type: 'line',
@@ -822,33 +821,65 @@ async function loadDashboard() {
       datasets: [{
         data: values,
         borderColor: lineColor,
-        backgroundColor: fillColor,
-        borderWidth: 2,
-        pointRadius: labels.length < 15 ? 3 : 0,
+        backgroundColor: (ctx) => buildGradient(ctx.chart, lineColor),
+        borderWidth: 2.5,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointHoverBorderWidth: 2,
         pointBackgroundColor: lineColor,
         pointBorderColor: '#0B0F0C',
-        tension: 0.25,
+        pointHoverBorderColor: '#0B0F0C',
+        cubicInterpolationMode: 'monotone',
         fill: true,
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      hover: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: {
           backgroundColor: '#1A221B',
-          borderColor: 'rgba(237,234,224,0.1)',
+          borderColor: 'rgba(237,234,224,0.08)',
           borderWidth: 1,
+          cornerRadius: 10,
+          displayColors: false,
+          padding: 12,
           titleColor: '#EDEAE0',
           bodyColor: '#EDEAE0',
-          padding: 10,
-          callbacks: { label: (ctx) => '$' + ctx.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) }
+          titleFont: { size: 12, weight: '600' },
+          bodyFont: { size: 13, weight: '600' },
+          callbacks: {
+            title: (items) => new Date(items[0].label + 'T00:00:00')
+              .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            label: (ctx) => '$' + ctx.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0})
+          }
         }
       },
       scales: {
-        x: { grid: { color: 'rgba(237,234,224,0.06)' }, ticks: { color: '#565E57', font: { size: 10 } } },
-        y: { grid: { color: 'rgba(237,234,224,0.06)' }, ticks: { color: '#565E57', font: { size: 10 }, callback: (v) => '$' + (v/1000).toFixed(0) + 'k' } }
+        x: {
+          border: { display: false },
+          grid: { color: 'rgba(237,234,224,0.06)' },
+          ticks: {
+            color: '#565E57', font: { size: 10 },
+            autoSkip: true, maxTicksLimit: 7, maxRotation: 0,
+            callback: function (val, idx) {
+              const label = this.getLabelForValue(val);
+              return new Date(label + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            }
+          }
+        },
+        y: {
+          border: { display: false },
+          grid: { color: 'rgba(237,234,224,0.06)' },
+          ticks: {
+            color: '#565E57', font: { size: 10 },
+            maxTicksLimit: 5,
+            callback: (v) => Math.abs(v) >= 1e6 ? '$' + (v/1e6).toFixed(2) + 'M' : '$' + (v/1000).toFixed(0) + 'k'
+          }
+        }
       }
     }
   });
@@ -1126,6 +1157,31 @@ function filterByDays(hist, days) {
   return hist.filter(h => new Date(h.date + 'T00:00:00') >= cutoff);
 }
 
+function hexToRgba(hex, alpha) {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// Single source of truth for the equity curve's up/down state color,
+// read live from --sage/--rust rather than duplicating their hex values --
+// used both at initial chart construction and on every timeframe switch.
+function getTrendColor(values) {
+  const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;
+  const varName = trendUp ? '--sage' : '--rust';
+  const hex = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  return { trendUp, hex };
+}
+
+function buildGradient(chart, hex) {
+  const { ctx, chartArea } = chart;
+  if (!chartArea) return hexToRgba(hex, 0.22); // first render, before layout: flat fallback
+  const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+  gradient.addColorStop(0, hexToRgba(hex, 0.22));
+  gradient.addColorStop(1, hexToRgba(hex, 0));
+  return gradient;
+}
+
 function applyTimeframe(days) {
   if (!window.__navChartInstance || !window.__navHistory) return;
   const hist = window.__navHistory;
@@ -1133,16 +1189,13 @@ function applyTimeframe(days) {
   if (sliced.length < 2) sliced = hist;
   const labels = sliced.map(h => h.date);
   const values = sliced.map(h => h.nav);
-  const trendUp = values.length > 1 ? values[values.length - 1] >= values[0] : true;
-  const lineColor = trendUp ? '#34D399' : '#F4544A';
-  const fillColor = trendUp ? 'rgba(52,211,153,0.08)' : 'rgba(244,84,74,0.08)';
+  const { hex: lineColor } = getTrendColor(values);
   const chart = window.__navChartInstance;
   chart.data.labels = labels;
   chart.data.datasets[0].data = values;
   chart.data.datasets[0].borderColor = lineColor;
-  chart.data.datasets[0].backgroundColor = fillColor;
+  chart.data.datasets[0].backgroundColor = buildGradient(chart, lineColor);
   chart.data.datasets[0].pointBackgroundColor = lineColor;
-  chart.data.datasets[0].pointRadius = labels.length < 15 ? 3 : 0;
   chart.update();
 
   const pctEl = document.getElementById('tf-period-change');
@@ -1160,6 +1213,27 @@ document.querySelectorAll('.tf-pill').forEach(btn => {
     btn.classList.add('active');
     applyTimeframe(parseInt(btn.dataset.days, 10));
   });
+});
+
+// Registered globally rather than scoped to one chart instance -- fine only
+// because navChart is currently the page's only Chart.js chart. If a second
+// chart is ever added here, this plugin will draw on it too unless scoped.
+Chart.register({
+  id: 'crosshair',
+  afterDatasetsDraw(chart) {
+    const active = chart.getActiveElements();
+    if (!active.length) return;
+    const { ctx, chartArea } = chart;
+    const x = active[0].element.x;
+    ctx.save();
+    ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = 'rgba(237,234,224,0.25)';
+    ctx.beginPath();
+    ctx.moveTo(x, chartArea.top);
+    ctx.lineTo(x, chartArea.bottom);
+    ctx.stroke();
+    ctx.restore();
+  }
 });
 
 loadDashboard();
