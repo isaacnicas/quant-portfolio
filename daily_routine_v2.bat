@@ -1,7 +1,7 @@
 @echo off
 SET PYTHONIOENCODING=utf-8
 REM ============================================================
-REM daily_routine.bat  -  Multi-Strategy Pipeline
+REM daily_routine_v2.bat  -  Multi-Strategy Pipeline
 REM Runs Mon-Fri at 4:15 PM ET via Task Scheduler
 REM Account: DUP447680  |  Port: auto-detect (Gateway 4002 preferred, TWS 7497 fallback)
 REM ============================================================
