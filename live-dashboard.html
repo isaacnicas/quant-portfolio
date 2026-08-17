@@ -906,6 +906,11 @@ function renderSleeveStrip(data) {
   activeSleeves.forEach(function(s) { sleeveSet[s] = true; });
   gatedSleeves.forEach(function(s) { sleeveSet[s] = true; });
   summary.forEach(function(r) { if (r.sleeve) sleeveSet[r.sleeve] = true; });
+  // FactorTiming stays registered in governance (SLEEVE_GATE_RESPONSES) for
+  // if/when it's revisited, but its Phase 1 FRED/ISM dependency was never
+  // built and the work is paused, not in progress -- no research finding to
+  // show, so it's dropped from display entirely rather than mislabeled.
+  delete sleeveSet.FactorTiming;
   var sleeves = Object.keys(sleeveSet);
 
   if (sleeves.length === 0) {
@@ -928,6 +933,12 @@ function renderSleeveStrip(data) {
   var IMPLEMENTED = { Trend: true, MeanReversion: true, VRP: true, PEAD: true };
 
   var badges = sleeves.map(function(sleeve) {
+    if (sleeve === 'EquityCarry') {
+      return '<div class="pos-row"><div class="sleeve-row-inner">' +
+        '<span class="sleeve-row-name"><span class="sleeve-dot paused"></span>Equity Carry</span>' +
+        '<span class="sleeve-row-status paused">Researched — not adopted</span>' +
+      '</div></div>';
+    }
     if (!IMPLEMENTED[sleeve]) {
       var n = sleeve.replace(/([a-z])([A-Z])/g, '$1 $2');
       return '<div class="pos-row"><div class="sleeve-row-inner">' +
