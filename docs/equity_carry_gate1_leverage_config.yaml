@@ -1,0 +1,131 @@
+# Equity Carry -- Gate 1 leverage threshold, locked pre-registration.
+# Single source of truth for Gate 1's leverage filter. The execution
+# script must load its thresholds and tier definitions from this file,
+# not accept ad hoc threshold arguments. See
+# equity_carry_gate1_leverage_prereg.md for the human-readable writeup
+# and this file's SHA-256 hash.
+# Locked: 2026-08-17. No return data was examined before this was sealed.
+
+universe:
+  data_source: "quant_lab/data/equity_carry_store.duckdb, table equity_carry_fundamentals"
+  exclude_financial_institutions: true   # is_financial_institution == true excluded
+  exclude_reit: true                     # business_category == 'REIT' excluded
+  report_year_range: [2018, 2023]        # report_date fiscal year
+  utilities_included: true               # no industry carve-out (2 of 4 counsel reviews argued
+                                          # retain, 2 argued carve out; retaining is the
+                                          # less-discretionary default); utilities remain
+                                          # subject to Gate 1's other three filters regardless
+
+debt_tier_definitions:
+  high_confidence:
+    - consolidated_tag_high_confidence
+    - bare_total_tag_confirmed
+  low_confidence_excluded_from_primary:
+    - current_noncurrent_sum
+    - consolidated_tag_low_confidence_equals_noncurrent
+
+leverage_computation:
+  net_debt_formula: "total_debt - cash"
+  ebitda_nonpositive_rule: "automatic_fail"   # EBITDA <= 0 -> fail; excluded from the
+                                               # percentile distribution, NOT from the
+                                               # pass/fail determination
+  net_cash_rule: "automatic_pass"             # net_debt < 0 -> pass, ratio not computed
+  winsorization: "display_only"               # never applied to the actual pass/fail
+                                               # determination, only to distribution
+                                               # summary stats if requested
+
+primary_cutoff_derivation:
+  formula: "min(4.00, P90_of_ratio_computed_distribution)"
+  observed_p90: 5.7204
+  binding_constraint: "ceiling"
+  # IMPORTANT, stated explicitly per instruction: 4.00 is the PRE-REGISTERED
+  # CEILING binding here, not an empirically-discovered percentile or
+  # structural knee in the data. P90 (5.72x) sits well above the ceiling --
+  # the ceiling is what determined the cutoff, not the shape of the
+  # distribution. Any later description of "4.00x" must not imply it was
+  # derived from where the data naturally breaks.
+  value: 4.00
+
+distribution_reference:
+  # From the 480-row ratio_computed population (high-confidence tiers,
+  # EBITDA > 0, cash available, net_debt >= 0), for reference only --
+  # not used to re-derive the cutoff.
+  p50: 2.4284
+  p75: 3.9414
+  p80: 4.5512
+  p85: 5.0495
+  p90: 5.7204
+  p95: 7.7043
+  p97_5: 9.9644
+  p99: 13.5986
+  fraction_above_2_0x: 0.600
+  fraction_above_2_5x: 0.477
+  fraction_above_3_0x: 0.379
+  fraction_above_4_0x: 0.250
+  fraction_above_5_0x: 0.156
+  fraction_above_6_0x: 0.096
+
+variants:
+  PRIMARY:
+    debt_tiers: [consolidated_tag_high_confidence, bare_total_tag_confirmed]
+    cutoff: 4.00
+    n_total: 696
+    n_pass: 405
+    n_fail: 141
+    n_indeterminate: 150
+    true_pass_rate: 0.582        # indeterminate counted as non-pass -- the honest number
+    determinable_pass_rate: 0.742  # among cases where a determination was possible
+
+  SENSITIVITY_A:
+    description: "Convention-anchored fixed alternative"
+    debt_tiers: [consolidated_tag_high_confidence, bare_total_tag_confirmed]
+    cutoff: 2.50
+    n_total: 696
+    n_pass: 296
+    n_fail: 250
+    n_indeterminate: 150
+    true_pass_rate: 0.425
+    determinable_pass_rate: 0.542
+
+  SENSITIVITY_B:
+    debt_tiers: [consolidated_tag_high_confidence, bare_total_tag_confirmed]
+    cutoff: 3.00
+    n_total: 696
+    n_pass: 343
+    n_fail: 203
+    n_indeterminate: 150
+    true_pass_rate: 0.493
+    determinable_pass_rate: 0.628
+
+  ROBUSTNESS:
+    description: "Same cutoff as PRIMARY -- tests DATA CONFIDENCE sensitivity by admitting the current_noncurrent_sum tier, not a second threshold to re-tune"
+    debt_tiers: [consolidated_tag_high_confidence, bare_total_tag_confirmed, current_noncurrent_sum]
+    cutoff: 4.00
+    n_total: 1052
+    n_pass: 624
+    n_fail: 215
+    n_indeterminate: 213
+    true_pass_rate: 0.593
+    determinable_pass_rate: 0.744
+
+missing_data_handling:
+  ebitda_missing: "indeterminate -- excluded from both the percentile distribution and the pass/fail determination"
+  cash_or_debt_missing: "indeterminate -- same treatment as ebitda_missing"
+  debt_tier_outside_variant_scope: "row excluded from that variant's base entirely (not indeterminate, not fail -- simply out of scope for that variant)"
+
+stability_check:
+  cutoff_tested: 4.00
+  band: [0.40, 0.98]
+  by_year:
+    2018: {n_determinable: 179, pass_rate: 0.799}
+    2019: {n_determinable: 168, pass_rate: 0.744}
+    2020: {n_determinable: 150, pass_rate: 0.640}
+    2021: {n_determinable: 49, pass_rate: 0.837}
+    2022: {n_determinable: 0, note: "no data -- FY2022 filings mostly publish past the 2023-12-31 IN_SAMPLE_END holdout for Dec fiscal year-end filers, not a missingness-bias finding"}
+    2023: {n_determinable: 0, note: "same structural cause as 2022"}
+  flags: []
+  overall_note: "All non-empty years (2018-2021) fall within the [40%, 98%] band. 2020's 64.0% is the low point and is economically explainable (COVID-era EBITDA compression), not an anomaly."
+
+sealed: true
+locked_date: "2026-08-17"
+gate2_touched_return_data_before_seal: false
