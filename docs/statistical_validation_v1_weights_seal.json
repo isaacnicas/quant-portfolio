@@ -1,0 +1,56 @@
+{
+  "description": "Sealed record of the portfolio-construction weights Statistical Validation v1's combined-portfolio test is built on. Purpose: make the seal date auditable on its own, without requiring reconstruction from scattered git blame later -- same rationale as Equity Carry's Gate 1 leverage config (equity_carry_gate1_leverage_config.yaml).",
+
+  "what_this_tests": "The REAL, currently-deployed portfolio construction -- the live sizing fractions that actually govern order sizes today -- not the theoretical ERC design anchor (meta_allocator_v0.py's ERC_WEIGHTS: Trend 60% / MeanReversion 30% / VRP 10%), which is explicitly documented in docs/SYSTEM_ARCHITECTURE.md as never applied to live sizing.",
+
+  "live_sizing_fractions": {
+    "MR_SLEEVE_FRACTION": {
+      "value": 0.075,
+      "source_file": "TrendFollowing/order_engine.py",
+      "source_lines": [359, 545],
+      "note": "mr_capital = nav * 0.075, halved under gate_action='reduce_50pct'"
+    },
+    "VRP_SLEEVE_FRACTION": {
+      "value": 0.05,
+      "source_file": "TrendFollowing/order_engine.py",
+      "source_line": 662,
+      "note": "vrp_capital = nav * 0.05, delta vs current SVXY holding, gate-first"
+    },
+    "Trend_leverage_caps": {
+      "max_leverage": 1.5,
+      "bull_leverage": 1.2,
+      "source_file": "TrendFollowing/signal_engine.py",
+      "source_lines": [21, 30],
+      "note": "Trend has no fixed sleeve fraction -- vol-targeted (target_vol=0.15) with these leverage caps, not a hardcoded NAV fraction"
+    }
+  },
+
+  "seal_provenance": {
+    "commit_hash": "4f8dcbfa486accd817fe71cbf48503acb3b65f22",
+    "commit_date": "2026-07-25T12:03:11-04:00",
+    "commit_message": "Reduce MR/VRP sleeve fractions and Trend leverage ceiling; update locked-decision doc",
+    "verification_method": "git blame confirmed directly on each value's exact source line (not assumed from the commit diff alone) -- all four values (MR_SLEEVE_FRACTION x2, VRP_SLEEVE_FRACTION, max_leverage, bull_leverage) still attributed to this commit with zero later touches. order_engine.py's most recent commit (d041798, 2026-08-14) was checked explicitly and confirmed to be a pure log-write addition (32 insertions, 0 deletions) that referenced MR_SLEEVE_FRACTION without altering its value.",
+    "this_is_the_true_seal_date_for_contamination_purposes": true
+  },
+
+  "contamination_check": {
+    "question": "Could these weights have been set with knowledge of any combined-portfolio return analysis (blended_backtest.py output, Equity Carry Gate 2/diversification work, or similar)?",
+    "answer": "No -- verified by direct date comparison, not assumed.",
+    "evidence": [
+      "Seal commit 4f8dcbfa: 2026-07-25",
+      "blended_backtest_results.txt earliest real commit (quant-portfolio): 2026-07-07 -- predates the seal by 18 days, but the seal commit's own rationale (stated in its message) is tied to individual-sleeve OOS Sharpe, not blended-portfolio metrics",
+      "erc_validation_summary.json / sleeve_returns.csv / report.md: 2026-07-13 to 2026-07-17 -- predates the seal",
+      "Equity Carry Gate 1 (leverage threshold), Gate 2 (HML/market regression), and the diversification analysis: all dated 2026-08-17/18 -- 3-4 weeks AFTER the seal date"
+    ]
+  },
+
+  "erc_observation_mode_note": {
+    "status": "compute_erc_weights() in portfolio_risk.py is NOT used for live sizing",
+    "evidence": "Most recent portfolio_state.jsonl entries show erc_method='equal_fallback', erc_obs_count=0 -- insufficient live observation history for real inverse-vol ERC computation; currently defaults to equal-weight (33.33% each) when it runs at all",
+    "implication": "Statistical Validation v1's combined-portfolio test must use the live_sizing_fractions above, not any compute_erc_weights() output -- that computation has no live sizing authority and is not what actually governs today's orders"
+  },
+
+  "sealed_date": "2026-08-19",
+  "sealed_by": "isaacnicas",
+  "no_return_data_examined_before_this_seal": true
+}
