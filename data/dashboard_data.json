@@ -1,7 +1,7 @@
 {
   "close_date": "2026-08-20",
-  "captured_at": "2026-08-20T23:55:53.863174-04:00",
-  "last_updated": "2026-08-20T23:55:53.863174-04:00",
+  "captured_at": "2026-08-20T23:59:30.477324-04:00",
+  "last_updated": "2026-08-20T23:59:30.477324-04:00",
   "daily_pnl": -48078.5,
   "prev_close_date": "2026-08-13",
   "nav": 888972.88,
@@ -291,8 +291,8 @@
   "multi_strategy": {
     "date": "2026-08-20",
     "close_date": "2026-08-20",
-    "captured_at": "2026-08-21T03:55:55.322803+00:00",
-    "blended_pnl_usd": 21993.47,
+    "captured_at": "2026-08-21T03:59:32.338755+00:00",
+    "blended_pnl_usd": -742.98,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -303,7 +303,7 @@
       {
         "sleeve": "Trend",
         "is_active": true,
-        "pnl_usd": 18242.98,
+        "pnl_usd": -4493.47,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.6
@@ -353,7 +353,7 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-08-20T23:55:46.166856",
+      "timestamp": "2026-08-20T23:59:25.459662",
       "date": "2026-08-20",
       "nav": 968671.3,
       "vol_scalar": 1.1517,
@@ -429,15 +429,111 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-08-21T03:55:55.322821+00:00"
+    "last_updated": "2026-08-21T03:59:32.338770+00:00"
   },
   "signals": {
     "date": "2026-08-20",
     "trend": {
-      "tickers": []
+      "tickers": [
+        {
+          "ticker": "IWM",
+          "target_weight": 0.417,
+          "raw_signal": 0.4569
+        },
+        {
+          "ticker": "SPY",
+          "target_weight": 0.3845,
+          "raw_signal": 0.3355
+        },
+        {
+          "ticker": "EEM",
+          "target_weight": 0.0702,
+          "raw_signal": 0.1378
+        },
+        {
+          "ticker": "EWJ",
+          "target_weight": 0.0379,
+          "raw_signal": 0.059
+        },
+        {
+          "ticker": "QQQ",
+          "target_weight": 0.0,
+          "raw_signal": 0.477
+        },
+        {
+          "ticker": "XLK",
+          "target_weight": 0.0,
+          "raw_signal": 0.6136
+        },
+        {
+          "ticker": "SMH",
+          "target_weight": 0.0,
+          "raw_signal": 0.7228
+        },
+        {
+          "ticker": "TLT",
+          "target_weight": 0.0,
+          "raw_signal": -0.3975
+        },
+        {
+          "ticker": "IEF",
+          "target_weight": 0.0,
+          "raw_signal": -0.1497
+        },
+        {
+          "ticker": "GLD",
+          "target_weight": 0.0,
+          "raw_signal": -0.5297
+        },
+        {
+          "ticker": "FXE",
+          "target_weight": 0.0,
+          "raw_signal": -0.2946
+        },
+        {
+          "ticker": "FXY",
+          "target_weight": 0.0,
+          "raw_signal": -0.5244
+        }
+      ]
     },
     "mean_reversion": {
       "tickers": [
+        {
+          "ticker": "COST",
+          "target_weight": 0.0187,
+          "z_score": -0.8181808448247196
+        },
+        {
+          "ticker": "PEP",
+          "target_weight": 0.0187,
+          "z_score": 0.6724700395439313
+        },
+        {
+          "ticker": "KO",
+          "target_weight": -0.0075,
+          "z_score": 2.0325452936895556
+        },
+        {
+          "ticker": "XLV",
+          "target_weight": -0.0075,
+          "z_score": 1.7988225181082513
+        },
+        {
+          "ticker": "XLF",
+          "target_weight": -0.0075,
+          "z_score": 0.6331903138274148
+        },
+        {
+          "ticker": "JPM",
+          "target_weight": -0.0075,
+          "z_score": 0.6178584516885757
+        },
+        {
+          "ticker": "HD",
+          "target_weight": -0.0075,
+          "z_score": -0.5646668020529072
+        },
         {
           "ticker": "WMT",
           "target_weight": 0.0,
@@ -451,37 +547,27 @@
         {
           "ticker": "XLE",
           "target_weight": 0.0,
-          "z_score": 2.0480215744147983
-        },
-        {
-          "ticker": "KO",
-          "target_weight": 0.0,
-          "z_score": 2.032545293689817
+          "z_score": 2.0480215744149066
         },
         {
           "ticker": "TGT",
           "target_weight": 0.0,
-          "z_score": 1.9829144461116013
+          "z_score": 1.9829144461114285
         },
         {
           "ticker": "XOM",
           "target_weight": 0.0,
-          "z_score": 1.8915957729724922
+          "z_score": 1.891595772972588
         },
         {
           "ticker": "CVX",
           "target_weight": 0.0,
-          "z_score": 1.8894234951120792
-        },
-        {
-          "ticker": "XLV",
-          "target_weight": 0.0,
-          "z_score": 1.7988225181083246
+          "z_score": 1.8894234951119664
         },
         {
           "ticker": "MS",
           "target_weight": 0.0,
-          "z_score": -1.5184322794479788
+          "z_score": -1.5184322794488556
         },
         {
           "ticker": "GS",
@@ -491,7 +577,7 @@
         {
           "ticker": "MSFT",
           "target_weight": 0.0,
-          "z_score": 1.2941246414386756
+          "z_score": 1.2941246414386607
         },
         {
           "ticker": "MA",
@@ -501,42 +587,17 @@
         {
           "ticker": "JNJ",
           "target_weight": 0.0,
-          "z_score": 1.1916458164888162
+          "z_score": 1.191645816488889
         },
         {
           "ticker": "NVDA",
           "target_weight": 0.0,
-          "z_score": 0.9988625435479853
+          "z_score": 0.99886254354806
         },
         {
           "ticker": "V",
           "target_weight": 0.0,
-          "z_score": 0.930011087476415
-        },
-        {
-          "ticker": "COST",
-          "target_weight": 0.0,
-          "z_score": -0.8181808448249897
-        },
-        {
-          "ticker": "PEP",
-          "target_weight": 0.0,
-          "z_score": 0.6724700395439313
-        },
-        {
-          "ticker": "XLF",
-          "target_weight": 0.0,
-          "z_score": 0.6331903138275324
-        },
-        {
-          "ticker": "JPM",
-          "target_weight": 0.0,
-          "z_score": 0.6178584516885757
-        },
-        {
-          "ticker": "HD",
-          "target_weight": 0.0,
-          "z_score": -0.564666802052822
+          "z_score": 0.9300110874765962
         },
         {
           "ticker": "AAPL",
