@@ -1,2 +1,7 @@
 config/email_config.json
 *.bundle
+
+# Local backup/reference images -- intentional, not tracked (2026-08-22 audit)
+images/chart8_vrp_gate_and_cap_backup.png
+images/chart8_vrp_gate_and_cap_backup2.png
+images/system_architecture_diagram.png
