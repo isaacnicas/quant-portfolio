@@ -976,7 +976,12 @@ function renderSleeveStrip(data) {
       var parts = [];
       if (fig.pnl_usd != null && !isNaN(fig.pnl_usd)) {
         var sign = fig.pnl_usd >= 0 ? '+' : '';
-        parts.push('P&L ' + sign + '$' + Math.round(Math.abs(fig.pnl_usd)).toLocaleString('en-US'));
+        // "Attrib." (not plain "P&L"): this is a notional, signal-attribution
+        // figure -- prior positions x today's return x a fixed notional
+        // dollar-per-name -- not this sleeve's real share of account NAV.
+        // See the hero NAV figure above for real account P&L. OPERATIONS.md
+        // 2026-08-31.
+        parts.push('Attrib. ' + sign + '$' + Math.round(Math.abs(fig.pnl_usd)).toLocaleString('en-US'));
       }
       if (fig.sharpe_21d != null && !isNaN(fig.sharpe_21d)) {
         parts.push('21d Sh ' + Number(fig.sharpe_21d).toFixed(2));
@@ -984,10 +989,13 @@ function renderSleeveStrip(data) {
       if (parts.length) figLine = parts.join(' / ');
     }
 
+    var figTitle = fig && fig.pnl_usd != null
+      ? ' title="Notional signal-attribution P&amp;L (fixed notional size per name), not this sleeve\'s real share of account NAV -- see the real NAV figure above."'
+      : '';
     return '<div class="pos-row"><div class="sleeve-row-inner">' +
       '<span class="sleeve-row-name"><span class="sleeve-dot ' + cls + '"></span>' + name + '</span>' +
       '<span class="sleeve-row-status ' + cls + '">' + label + '</span>' +
-      (figLine ? '<span class="mono sleeve-row-fig">' + figLine + '</span>' : '') +
+      (figLine ? '<span class="mono sleeve-row-fig"' + figTitle + '>' + figLine + '</span>' : '') +
     '</div></div>';
   }).join('');
 
