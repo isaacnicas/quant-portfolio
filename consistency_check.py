@@ -233,21 +233,58 @@ def check_4_sleeve_invariants() -> dict:
 def check_5_weights() -> dict:
     """
     Configuration drift guard:
-      MR_SLEEVE_FRACTION must be 0.10 in order_engine.py (intentional locked choice).
+      TREND_SLEEVE_FRACTION=0.059, MR_SLEEVE_FRACTION=0.03,
+      VRP_SLEEVE_FRACTION=0.03 must be the real literal values in
+      order_engine.py -- the 2026-09-03 allocation decision, verified
+      live 2026-09-04 (see TrendFollowing/OPERATIONS.md, "Final
+      allocation decision implemented"). VOO_SLEEVE_FRACTION is
+      deliberately NOT a literal -- it's defined as the remainder
+      (1.0 - the other three), so what's checked is that the remainder
+      FORMULA is still intact, not a specific number.
       Trend target_vol must be 0.15 in signal_engine.py.
-      VRP must have 0 SVXY orders in pending_orders.json (no order path yet).
+
+    Fixed 2026-09-08: this copy had independently drifted even further
+    than TrendFollowing/consistency_check.py's own copy (was checking
+    0.10 -- a value from before the 2026-07-25 revision to 0.075, itself
+    since revised again to 0.03 on 2026-09-03; this file was never
+    updated for either change). Confirmed via a real Task Scheduler
+    check that this copy is NOT on the live path -- MultiStrategy_DailyRoutine
+    runs C:\\QuantTrading\\TrendFollowing\\daily_routine_v2.bat exclusively,
+    not this repo's copy -- so this was stale but not silently causing
+    real false alerts. Fixed anyway: a stale, confusable duplicate is
+    its own risk even when dormant.
     """
     issues = []
+    EXPECTED_LITERAL = {
+        'TREND_SLEEVE_FRACTION': 0.059,
+        'MR_SLEEVE_FRACTION':    0.03,
+        'VRP_SLEEVE_FRACTION':   0.03,
+    }
 
-    # MR fraction -appears at two sites in order_engine.py; both must be 0.10
     oe_text = (BASE / 'order_engine.py').read_text()
-    mr_matches = re.findall(r'MR_SLEEVE_FRACTION\s*=\s*([\d.]+)', oe_text)
-    if not mr_matches:
-        issues.append('MR_SLEEVE_FRACTION not found in order_engine.py')
-    else:
-        drifted = [v for v in mr_matches if abs(float(v) - 0.10) > 1e-6]
+
+    for name, expected in EXPECTED_LITERAL.items():
+        matches = re.findall(rf'^{name}\s*=\s*([\d.]+)', oe_text, re.MULTILINE)
+        if not matches:
+            issues.append(f'{name} not found in order_engine.py')
+            continue
+        drifted = [v for v in matches if abs(float(v) - expected) > 1e-6]
         if drifted:
-            issues.append(f'MR_SLEEVE_FRACTION drifted: {drifted} (expected [0.10, 0.10])')
+            issues.append(f'{name} drifted: {drifted} (expected {expected})')
+
+    voo_match = re.search(
+        r'^VOO_SLEEVE_FRACTION\s*=\s*(.+?)(?:\s*#.*)?$', oe_text, re.MULTILINE)
+    if not voo_match:
+        issues.append('VOO_SLEEVE_FRACTION not found in order_engine.py')
+    else:
+        voo_rhs = re.sub(r'\s+', '', voo_match.group(1))
+        expected_rhs = '1.0-TREND_SLEEVE_FRACTION-MR_SLEEVE_FRACTION-VRP_SLEEVE_FRACTION'
+        if voo_rhs != expected_rhs:
+            issues.append(
+                f'VOO_SLEEVE_FRACTION is no longer the remainder formula '
+                f'(found {voo_rhs!r}, expected {expected_rhs!r}) -- if this '
+                f'was an intentional change, update EXPECTED_LITERAL/this '
+                f'check to match, not just silence the alert')
 
     # Trend target_vol
     se_text = (BASE / 'signal_engine.py').read_text()
@@ -260,7 +297,7 @@ def check_5_weights() -> dict:
     if issues:
         return _r('C5', 'Weight Consistency', 'FAIL', '; '.join(issues))
     return _r('C5', 'Weight Consistency', 'PASS',
-              'MR_SLEEVE_FRACTION=0.10, Trend target_vol=0.15')
+              'Trend=5.9%, MR=3%, VRP=3%, VOO=remainder(88.1%), target_vol=0.15')
 
 
 # ── Check 6: Dashboard Pipeline Health ────────────────────────────────────────
