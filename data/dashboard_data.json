@@ -1,10 +1,10 @@
 {
-  "close_date": "2026-09-30",
-  "captured_at": "2026-09-30T16:15:40.274522-04:00",
-  "last_updated": "2026-09-30T16:15:40.274522-04:00",
-  "daily_pnl": -3798.66,
-  "prev_close_date": "2026-09-28",
-  "nav": 883760.99,
+  "close_date": "2026-10-01",
+  "captured_at": "2026-10-01T16:15:41.434259-04:00",
+  "last_updated": "2026-10-01T16:15:41.434259-04:00",
+  "daily_pnl": 1744.94,
+  "prev_close_date": "2026-09-30",
+  "nav": 885505.93,
   "inception_nav": 993973.57,
   "nav_history": [
     {
@@ -234,166 +234,170 @@
     {
       "date": "2026-09-30",
       "nav": 883760.99
+    },
+    {
+      "date": "2026-10-01",
+      "nav": 885505.93
     }
   ],
   "positions": [
     {
       "symbol": "SMH",
       "shares": 4,
-      "market_value": 2437.68,
-      "unrealized_pnl": 146.91,
+      "market_value": 2472.0,
+      "unrealized_pnl": 181.23,
       "weight": 0.0028,
-      "signal": 0.768
+      "signal": 0.761
     },
     {
       "symbol": "XLK",
       "shares": 18,
-      "market_value": 3520.99,
-      "unrealized_pnl": 124.08,
+      "market_value": 3565.04,
+      "unrealized_pnl": 168.13,
       "weight": 0.004,
-      "signal": 0.672
+      "signal": 0.668
     },
     {
       "symbol": "QQQ",
       "shares": 4,
-      "market_value": 2961.44,
-      "unrealized_pnl": 86.36,
+      "market_value": 2971.68,
+      "unrealized_pnl": 96.6,
       "weight": 0.0034,
-      "signal": 0.532
+      "signal": 0.53
     },
     {
       "symbol": "EEM",
       "shares": 121,
-      "market_value": 8079.17,
-      "unrealized_pnl": -81.79,
+      "market_value": 8089.49,
+      "unrealized_pnl": -71.47,
       "weight": 0.0091,
-      "signal": 0.374
+      "signal": 0.358
     },
     {
       "symbol": "SPY",
       "shares": 21,
-      "market_value": 16031.34,
-      "unrealized_pnl": -81.32,
+      "market_value": 16057.86,
+      "unrealized_pnl": -54.8,
       "weight": 0.0181,
-      "signal": 0.349
+      "signal": 0.347
     },
     {
       "symbol": "EWJ",
       "shares": 50,
-      "market_value": 4876.59,
-      "unrealized_pnl": 15.88,
+      "market_value": 4873.86,
+      "unrealized_pnl": 13.16,
       "weight": 0.0055,
-      "signal": 0.185
+      "signal": 0.162
     },
     {
       "symbol": "IWM",
       "shares": 7,
-      "market_value": 1946.25,
-      "unrealized_pnl": -113.11,
+      "market_value": 1956.02,
+      "unrealized_pnl": -103.34,
       "weight": 0.0022,
-      "signal": 0.031
+      "signal": 0.021
     },
     {
       "symbol": "COST",
       "shares": 2,
-      "market_value": 1822.0,
-      "unrealized_pnl": -8.8,
+      "market_value": 1829.78,
+      "unrealized_pnl": -1.02,
       "weight": 0.0021,
       "signal": 0.0
     },
     {
       "symbol": "CVX",
       "shares": -16,
-      "market_value": -3267.36,
-      "unrealized_pnl": -27.41,
+      "market_value": -3319.84,
+      "unrealized_pnl": -79.89,
       "weight": -0.0037,
       "signal": 0.0
     },
     {
       "symbol": "GS",
       "shares": 2,
-      "market_value": 1805.12,
-      "unrealized_pnl": -51.82,
+      "market_value": 1792.8,
+      "unrealized_pnl": -64.14,
       "weight": 0.002,
       "signal": 0.0
     },
     {
       "symbol": "HD",
       "shares": 9,
-      "market_value": 2559.6,
-      "unrealized_pnl": -300.02,
+      "market_value": 2542.59,
+      "unrealized_pnl": -317.03,
       "weight": 0.0029,
       "signal": 0.0
     },
     {
       "symbol": "JNJ",
       "shares": -12,
-      "market_value": -3181.0,
-      "unrealized_pnl": 52.1,
-      "weight": -0.0036,
+      "market_value": -3108.24,
+      "unrealized_pnl": 124.86,
+      "weight": -0.0035,
       "signal": 0.0
     },
     {
       "symbol": "JPM",
       "shares": -7,
-      "market_value": -2317.7,
-      "unrealized_pnl": 224.16,
+      "market_value": -2333.1,
+      "unrealized_pnl": 208.76,
       "weight": -0.0026,
       "signal": 0.0
     },
     {
       "symbol": "KO",
       "shares": -38,
-      "market_value": -3273.7,
-      "unrealized_pnl": 42.9,
+      "market_value": -3274.08,
+      "unrealized_pnl": 42.52,
       "weight": -0.0037,
       "signal": 0.0
     },
     {
       "symbol": "SVXY",
       "shares": 415,
-      "market_value": 26484.22,
-      "unrealized_pnl": 2233.98,
-      "weight": 0.03,
+      "market_value": 26356.65,
+      "unrealized_pnl": 2106.41,
+      "weight": 0.0298,
       "signal": 0.0
     },
     {
       "symbol": "UNH",
       "shares": 7,
-      "market_value": 2571.38,
-      "unrealized_pnl": -215.09,
+      "market_value": 2559.2,
+      "unrealized_pnl": -227.27,
       "weight": 0.0029,
       "signal": 0.0
     },
     {
       "symbol": "VOO",
       "shares": 1103,
-      "market_value": 773993.42,
-      "unrealized_pnl": -6749.04,
-      "weight": 0.8758,
+      "market_value": 775252.75,
+      "unrealized_pnl": -5489.72,
+      "weight": 0.8755,
       "signal": 0.0
     },
     {
       "symbol": "WMT",
       "shares": 24,
-      "market_value": 2506.08,
-      "unrealized_pnl": 0.62,
+      "market_value": 2505.84,
+      "unrealized_pnl": 0.38,
       "weight": 0.0028,
       "signal": 0.0
     },
     {
       "symbol": "XLF",
       "shares": -47,
-      "market_value": -2509.62,
-      "unrealized_pnl": 217.11,
+      "market_value": -2514.5,
+      "unrealized_pnl": 212.23,
       "weight": -0.0028,
       "signal": 0.0
     },
     {
       "symbol": "XLV",
       "shares": -19,
-      "market_value": -3200.17,
-      "unrealized_pnl": 19.21,
+      "market_value": -3160.51,
+      "unrealized_pnl": 58.87,
       "weight": -0.0036,
       "signal": 0.0
     }
@@ -405,12 +409,12 @@
     "fast_exit_triggered": false
   },
   "multi_strategy": {
-    "date": "2026-09-30",
-    "close_date": "2026-09-30",
-    "captured_at": "2026-09-30T20:15:42.258386+00:00",
-    "notional_signal_pnl_usd": -5431.4,
+    "date": "2026-10-01",
+    "close_date": "2026-10-01",
+    "captured_at": "2026-10-01T20:15:42.550859+00:00",
+    "notional_signal_pnl_usd": 2066.71,
     "real_nav_usd": 968671.3,
-    "real_daily_pnl_usd": 81111.65,
+    "real_daily_pnl_usd": 84910.31,
     "active_sleeves": [
       "Trend",
       "MeanReversion",
@@ -421,7 +425,7 @@
       {
         "sleeve": "Trend",
         "is_active": true,
-        "pnl_usd": 644.52,
+        "pnl_usd": 858.11,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.059
@@ -429,7 +433,7 @@
       {
         "sleeve": "MeanReversion",
         "is_active": true,
-        "pnl_usd": -5930.81,
+        "pnl_usd": 1373.23,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.03
@@ -437,20 +441,20 @@
       {
         "sleeve": "VRP",
         "is_active": true,
-        "pnl_usd": -145.11,
+        "pnl_usd": -164.63,
         "vol_21d": 0.0,
         "sharpe_21d": 0.0,
         "capital_alloc": 0.03
       }
     ],
     "gate_state": {
-      "date": "2026-09-30",
-      "spot_vix": 16.53,
+      "date": "2026-10-01",
+      "spot_vix": 16.42,
       "vix_200dma": 18.07,
-      "f1": 16.53,
-      "f2": 18.42,
-      "contango_pct": 11.43,
-      "vix_3d_change_pct": 11.16,
+      "f1": 16.42,
+      "f2": 18.59,
+      "contango_pct": 13.22,
+      "vix_3d_change_pct": 2.18,
       "gate_1_backwardation": false,
       "gate_2_level": false,
       "gate_3_shock": false,
@@ -471,11 +475,11 @@
       }
     },
     "portfolio_risk": {
-      "timestamp": "2026-09-30T14:15:34.217374",
-      "date": "2026-09-30",
+      "timestamp": "2026-10-01T14:15:36.239609",
+      "date": "2026-10-01",
       "nav": 968671.3,
-      "vol_scalar": 0.1674,
-      "portfolio_vol_ex_ante": 0.6569,
+      "vol_scalar": 0.167,
+      "portfolio_vol_ex_ante": 0.6587,
       "sleeve_weights": {
         "Trend": 0.3333,
         "MeanReversion": 0.3333,
@@ -483,8 +487,8 @@
       },
       "risk_contributions": {
         "Trend": 0.0227,
-        "MeanReversion": 0.9082,
-        "VRP": 0.0691
+        "MeanReversion": 0.9111,
+        "VRP": 0.0662
       },
       "insufficient_history": {
         "MeanReversion": false,
@@ -493,20 +497,20 @@
       },
       "sleeve_metrics": {
         "MeanReversion": {
-          "vol_21d": 2.0026,
-          "sharpe_21d": -1.0397,
+          "vol_21d": 2.011,
+          "sharpe_21d": -0.8106,
           "max_dd_21d": -0.4517,
           "hit_rate_21d": 0.5238
         },
         "VRP": {
-          "vol_21d": 0.1523,
-          "sharpe_21d": 0.3202,
+          "vol_21d": 0.1462,
+          "sharpe_21d": -1.1959,
           "max_dd_21d": -0.0484,
-          "hit_rate_21d": 0.4286
+          "hit_rate_21d": 0.381
         }
       },
       "correlations": {
-        "MeanReversion_vs_VRP": 0.0709
+        "MeanReversion_vs_VRP": 0.0567
       },
       "redundancy_flags": {
         "MeanReversion": {
@@ -547,187 +551,187 @@
       }
     ],
     "pipeline_alert": null,
-    "last_updated": "2026-09-30T20:15:42.258414+00:00"
+    "last_updated": "2026-10-01T20:15:42.550872+00:00"
   },
   "signals": {
-    "date": "2026-09-30",
+    "date": "2026-10-01",
     "trend": {
       "tickers": [
         {
           "ticker": "SPY",
           "target_weight": 0.4289,
-          "raw_signal": 0.3486
+          "raw_signal": 0.3474
         },
         {
           "ticker": "EEM",
           "target_weight": 0.2151,
-          "raw_signal": 0.3739
+          "raw_signal": 0.358
         },
         {
           "ticker": "EWJ",
           "target_weight": 0.1249,
-          "raw_signal": 0.1851
+          "raw_signal": 0.1616
         },
         {
           "ticker": "IWM",
-          "target_weight": 0.0429,
-          "raw_signal": 0.0309
+          "target_weight": 0.0223,
+          "raw_signal": 0.0212
         },
         {
           "ticker": "QQQ",
           "target_weight": 0.0,
-          "raw_signal": 0.5319
+          "raw_signal": 0.53
         },
         {
           "ticker": "XLK",
           "target_weight": 0.0,
-          "raw_signal": 0.6723
+          "raw_signal": 0.6683
         },
         {
           "ticker": "SMH",
           "target_weight": 0.0,
-          "raw_signal": 0.7678
+          "raw_signal": 0.7606
         },
         {
           "ticker": "TLT",
           "target_weight": 0.0,
-          "raw_signal": -0.6576
+          "raw_signal": -0.6985
         },
         {
           "ticker": "IEF",
           "target_weight": 0.0,
-          "raw_signal": -0.5778
+          "raw_signal": -0.5089
         },
         {
           "ticker": "GLD",
           "target_weight": 0.0,
-          "raw_signal": -0.3337
+          "raw_signal": -0.448
         },
         {
           "ticker": "FXE",
           "target_weight": 0.0,
-          "raw_signal": -0.3276
+          "raw_signal": -0.3289
         },
         {
           "ticker": "FXY",
           "target_weight": 0.0,
-          "raw_signal": -0.178
+          "raw_signal": -0.1844
         }
       ]
     },
     "mean_reversion": {
       "tickers": [
         {
+          "ticker": "JNJ",
+          "target_weight": -0.0037,
+          "z_score": -1.1029738093686603
+        },
+        {
           "ticker": "KO",
           "target_weight": -0.0037,
-          "z_score": -0.6070341675185565
+          "z_score": -0.6952672702918529
         },
         {
           "ticker": "CVX",
           "target_weight": -0.0037,
-          "z_score": 0.3410227328253541
+          "z_score": 0.6292234951119773
         },
         {
           "ticker": "XLV",
           "target_weight": -0.0037,
-          "z_score": 0.17919133378195157
-        },
-        {
-          "ticker": "JNJ",
-          "target_weight": -0.0037,
-          "z_score": -0.09089487112097501
+          "z_score": -0.4558813894927621
         },
         {
           "ticker": "GS",
           "target_weight": 0.003,
-          "z_score": -2.436260756880841
+          "z_score": -2.370925837290915
         },
         {
           "ticker": "HD",
           "target_weight": 0.003,
-          "z_score": -2.119123660934162
+          "z_score": -2.089631606316027
         },
         {
           "ticker": "UNH",
           "target_weight": 0.003,
-          "z_score": -1.779013556017924
+          "z_score": -1.8503876719471173
         },
         {
           "ticker": "WMT",
           "target_weight": 0.003,
-          "z_score": -1.4275048158919543
+          "z_score": -1.2772036229909385
         },
         {
           "ticker": "COST",
           "target_weight": 0.003,
-          "z_score": -0.9747065918843035
+          "z_score": -0.7628035521742698
         },
         {
           "ticker": "MS",
           "target_weight": 0.0,
-          "z_score": -2.968016808024991
-        },
-        {
-          "ticker": "JPM",
-          "target_weight": 0.0,
-          "z_score": -2.8885137807674375
+          "z_score": -2.6943558833288037
         },
         {
           "ticker": "XLF",
           "target_weight": 0.0,
-          "z_score": -2.783475519051161
+          "z_score": -2.5205435932599194
         },
         {
           "ticker": "PEP",
           "target_weight": 0.0,
-          "z_score": -2.416732396430008
+          "z_score": -2.49406926244385
+        },
+        {
+          "ticker": "JPM",
+          "target_weight": 0.0,
+          "z_score": -2.3849287529672116
         },
         {
           "ticker": "MA",
           "target_weight": 0.0,
-          "z_score": -1.2536034217040923
-        },
-        {
-          "ticker": "V",
-          "target_weight": 0.0,
-          "z_score": -1.1655657939718145
+          "z_score": -1.4611353751814837
         },
         {
           "ticker": "NVDA",
           "target_weight": 0.0,
-          "z_score": 1.1119226125998076
+          "z_score": 1.2904203241709025
         },
         {
-          "ticker": "AAPL",
+          "ticker": "V",
           "target_weight": 0.0,
-          "z_score": 0.8964528100966275
-        },
-        {
-          "ticker": "MSFT",
-          "target_weight": 0.0,
-          "z_score": 0.771015820107345
+          "z_score": -1.1512763900851197
         },
         {
           "ticker": "XOM",
           "target_weight": 0.0,
-          "z_score": 0.6518662355612707
+          "z_score": 0.8499368352773811
         },
         {
-          "ticker": "TGT",
+          "ticker": "MSFT",
           "target_weight": 0.0,
-          "z_score": 0.2743677991434911
+          "z_score": 0.7494282473198973
+        },
+        {
+          "ticker": "AAPL",
+          "target_weight": 0.0,
+          "z_score": 0.6737966511264716
         },
         {
           "ticker": "XLE",
           "target_weight": 0.0,
-          "z_score": -0.05018408038456071
+          "z_score": 0.4125557948869576
+        },
+        {
+          "ticker": "TGT",
+          "target_weight": 0.0,
+          "z_score": 0.23863301076497023
         }
       ]
     },
     "vrp": {
       "ticker": "SVXY",
       "target_weight": 1.0,
-      "roll_yield_pct": 11.55,
+      "roll_yield_pct": 13.22,
       "self_gate_active": true,
       "external_gate_action": "active"
     }
