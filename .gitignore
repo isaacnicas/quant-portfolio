@@ -5,3 +5,7 @@ config/email_config.json
 images/chart8_vrp_gate_and_cap_backup.png
 images/chart8_vrp_gate_and_cap_backup2.png
 images/system_architecture_diagram.png
+
+# Python bytecode caches (2026-11-01 audit C-03)
+__pycache__/
+*.pyc
