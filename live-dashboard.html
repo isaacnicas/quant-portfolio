@@ -484,7 +484,7 @@
 
   <div class="hero-chart-wrap">
     <div class="hero-chart">
-      <canvas id="navChart" role="img" aria-label="Line chart of net asset value since strategy inception on June 18 2026"></canvas>
+      <canvas id="navChart" role="img" aria-label="Line chart of the NAV index (inception = 100) since strategy inception on June 18 2026"></canvas>
     </div>
   </div>
 </div>
@@ -514,7 +514,7 @@
     <p class="sec-note">Ranked by signal conviction. The bar shows relative strength, not allocation size. Unrealized P&amp;L is gain/loss since each position was opened, not since yesterday's close.</p>
     <div class="pos-row pos-head">
       <div class="pos-row-desktop">
-        <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Shares</span><span class="col-mv">Value</span><span>Unrealized</span>
+        <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Signal</span><span class="col-mv">Weight</span><span>Unrealized (% NAV)</span>
       </div>
     </div>
     <div id="positions-body"></div>
@@ -647,7 +647,7 @@ async function loadDashboard() {
   function tick(now) {
     const tt = Math.min(1, (now - start) / duration);
     const eased = 1 - Math.pow(1 - tt, 3);
-    amountEl.textContent = sign + '$' + (target * eased).toLocaleString('en-US', {maximumFractionDigits: 0});
+    amountEl.textContent = sign + (target * eased).toFixed(2) + ' pts';
     if (tt < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
@@ -684,7 +684,7 @@ async function loadDashboard() {
     ? 'Refreshed ' + capturedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })
     : '';
 
-  document.getElementById('nav-value').textContent = '$' + nav.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('nav-value').textContent = nav.toFixed(2);   // NAV INDEX (inception = 100); dollar amounts are not published
   document.getElementById('total-return').textContent =
     (totalReturn >= 0 ? '+' : '') + (totalReturn * 100).toFixed(2) + '%';
   document.getElementById('leverage-value').textContent = data.regime.leverage_scalar.toFixed(2) + 'x';
@@ -694,12 +694,12 @@ async function loadDashboard() {
   const maxSignal = Math.max(...data.positions.map(p => Math.abs(p.signal)), 0.01);
   tbody.innerHTML = data.positions.map((p, i) => {
     const barWidth = Math.max(4, (Math.abs(p.signal) / maxSignal) * 100);
-    const pnlClass = p.unrealized_pnl >= 0 ? 'pos' : 'neg';
-    const pnlSign = p.unrealized_pnl >= 0 ? '+' : '';
-    const pnlStr = pnlSign + '$' + Math.abs(p.unrealized_pnl).toLocaleString('en-US', {maximumFractionDigits: 0});
+    const pnlClass = p.unrealized_pct >= 0 ? 'pos' : 'neg';
+    const pnlSign = p.unrealized_pct >= 0 ? '+' : '';
+    const pnlStr = pnlSign + Math.abs(p.unrealized_pct).toFixed(2) + '%';
     const weightStr = (p.weight * 100).toFixed(1) + '%';
-    const sharesStr = p.shares.toLocaleString();
-    const valueStr = '$' + p.market_value.toLocaleString('en-US', {maximumFractionDigits: 0});
+    const sharesStr = p.signal.toFixed(2);   // share counts are not published
+    const valueStr = (p.weight * 100).toFixed(2) + '%';   // dollar values are not published
     // Desktop: 6-column grid, signal shown as an inline bar. Mobile: same
     // underlying data recomposed into two lines (not the desktop columns
     // merely hidden) -- ticker+P&L are primary, weight/shares/value drop to
@@ -720,7 +720,7 @@ async function loadDashboard() {
           '<span class="mono pos-pnl ' + pnlClass + '">' + pnlStr + '</span>' +
         '</div>' +
         '<div class="pos-row-line2">' +
-          '<span class="mono">' + weightStr + ' · ' + sharesStr + ' sh</span>' +
+          '<span class="mono">' + weightStr + ' · signal ' + sharesStr + '</span>' +
           '<span class="mono">' + valueStr + '</span>' +
         '</div>' +
         '<span class="pos-row-spine"><span class="pos-row-spine-fill" data-w="' + barWidth + '" style="transition-delay:' + (i * 60) + 'ms"></span></span>' +
@@ -777,7 +777,7 @@ async function loadDashboard() {
           callbacks: {
             title: (items) => new Date(items[0].label + 'T00:00:00')
               .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            label: (ctx) => '$' + ctx.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0})
+            label: (ctx) => ctx.parsed.y.toFixed(2)
           }
         }
       },
@@ -800,7 +800,7 @@ async function loadDashboard() {
           ticks: {
             color: '#565E57', font: { size: 10 },
             maxTicksLimit: 5,
-            callback: (v) => Math.abs(v) >= 1e6 ? '$' + (v/1e6).toFixed(2) + 'M' : '$' + (v/1000).toFixed(0) + 'k'
+            callback: (v) => v.toFixed(0)
           }
         }
       }
