@@ -434,6 +434,8 @@
     color: var(--ink); font-family: 'Inter', sans-serif; font-size: 13px;
   }
   .stale-banner.show { display: block; }
+  .sizing-note { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-dim); padding: 0.6rem 1.2rem 0; max-width: 1180px; margin: 0 auto; }
+  .sizing-note b { color: var(--gold); font-weight: 500; }
   .sleeve-row-note { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--ink-faint); }
 
   @media (max-width: 700px) {
@@ -501,6 +503,7 @@
       <canvas id="navChart" role="img" aria-label="Line chart of the NAV index (inception = 100) since strategy inception on June 18 2026"></canvas>
     </div>
   </div>
+  <div class="sizing-note" id="sizing-note"></div>
 </div>
 
 <div class="wrap">
@@ -793,6 +796,12 @@ async function loadDashboard() {
       ? 'fixed: bull = bear = ' + rg.bull_leverage.toFixed(2) + 'x' + (rg.max_leverage != null ? ' · cap ' + rg.max_leverage.toFixed(2) + 'x' : '')
       : 'Trend sleeve only';
   renderStaleBanner(data);
+  const sr = data.sizing_regime;
+  const sn = document.getElementById('sizing-note');
+  if (sr && sr.switch_date) {
+    const sd = new Date(sr.switch_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    sn.innerHTML = '<b>Sizing regime change ' + sd + '.</b> Before this date positions ran at about 1.39× gross exposure (a currency-unit bug in position sizing); from this date gross exposure is capped at 1.0×. Results before and after are different regimes and are not comparable.';
+  }
 
   if (data.weight_basis !== 'base_ccy') {
     const bn = document.getElementById('basis-note');
@@ -915,6 +924,7 @@ async function loadDashboard() {
   });
 
   window.__navHistory = data.nav_history;
+  window.__switchDate = data.sizing_regime ? data.sizing_regime.switch_date : null;
   applyTimeframe(0);
 
   document.querySelectorAll('.tf-pill').forEach(btn => {
@@ -1277,6 +1287,24 @@ document.querySelectorAll('.tf-pill').forEach(btn => {
 // Registered globally rather than scoped to one chart instance -- fine only
 // because navChart is currently the page's only Chart.js chart. If a second
 // chart is ever added here, this plugin will draw on it too unless scoped.
+Chart.register({
+  id: 'switchMarker',
+  afterDatasetsDraw(chart) {
+    const sd = window.__switchDate;
+    if (!sd) return;
+    const labels = chart.data.labels || [];
+    const i = labels.findIndex(l => l >= sd);
+    if (i < 0) return;                      // switch date not yet on the chart
+    const x = chart.scales.x.getPixelForValue(i);
+    const { ctx, chartArea } = chart;
+    ctx.save(); ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(201,162,75,0.7)';
+    ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+    ctx.fillStyle = 'rgba(201,162,75,0.9)'; ctx.font = '10px Inter, sans-serif';
+    ctx.fillText('sizing fix', x + 5, chartArea.top + 12);
+    ctx.restore();
+  }
+});
+
 Chart.register({
   id: 'crosshair',
   afterDatasetsDraw(chart) {
