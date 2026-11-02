@@ -577,7 +577,7 @@
 
   <div class="sec">
     <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Governance</span></div>
-    <p class="sec-note">Live governance state, gate conditions and trend regime recomputed each cycle from VIX term structure and SPY/VIX trend.</p>
+    <p class="sec-note">Live governance state, gate conditions and trend regime recomputed each cycle from the spot VIX / VIX3M term structure (index levels, not futures) and SPY/VIX trend.</p>
     <div class="gov-flow">
       <div class="gov-stage">
         <div class="signals-subsec-title">Market</div>
@@ -1167,10 +1167,10 @@ function renderGatePanel(data) {
 
   const gates = [
     {
-      label: 'Backwardation',
+      label: 'VIX/VIX3M inversion',
       tripped: !!gs.gate_1_backwardation,
       value: (gs.f1 != null && gs.f2 != null)
-        ? 'F1 ' + fmt(gs.f1, 2) + '  F2 ' + fmt(gs.f2, 2) : ''
+        ? 'VIX ' + fmt(gs.f1, 2) + '  VIX3M ' + fmt(gs.f2, 2) : ''
     },
     {
       label: 'VIX level',
@@ -1206,8 +1206,8 @@ function renderGatePanel(data) {
   const stripItems = [];
   if (gs.contango_pct != null) {
     const f1f2 = (gs.f1 != null && gs.f2 != null)
-      ? ' (F1 ' + fmt(gs.f1, 2) + ' / F2 ' + fmt(gs.f2, 2) + ')' : '';
-    stripItems.push('<span class="gate-strip-item"><b>Contango</b> ' + fmtSgn(gs.contango_pct, 2) + '%' + f1f2 + '</span>');
+      ? ' (VIX ' + fmt(gs.f1, 2) + ' / VIX3M ' + fmt(gs.f2, 2) + ')' : '';
+    stripItems.push('<span class="gate-strip-item"><b>VIX3M vs VIX</b> ' + fmtSgn(gs.contango_pct, 2) + '%' + f1f2 + '</span>');
   }
   if (gs.macro_regime && gs.macro_regime !== 'unknown') {
     stripItems.push('<span class="gate-strip-item"><b>Macro regime</b> ' + gs.macro_regime.toUpperCase() + '</span>');
