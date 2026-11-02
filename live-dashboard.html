@@ -64,7 +64,6 @@
     height: 34px;
     white-space: nowrap;
     width: max-content;
-    animation: scroll-left 38s linear infinite;
   }
   @keyframes scroll-left {
     from { transform: translateX(0); }
@@ -258,7 +257,7 @@
   .pos-row:hover { background: rgba(237,234,224,0.025); }
   .pos-row-desktop {
     display: grid;
-    grid-template-columns: 70px 1fr 90px 110px 130px 110px;
+    grid-template-columns: 70px 1fr 90px 110px 120px;
     align-items: center;
     gap: 0.8rem;
   }
@@ -425,6 +424,17 @@
   .gate-strip-item b { font-weight: 500; color: var(--ink); }
 
   .flow-stats { margin-top: 2rem; }
+  .flow-stats.four { grid-template-columns: repeat(4, 1fr); }
+  .ticker-track.static { animation: none; width: auto; }
+  .ticker-track.pan { animation: ticker-pan 45s ease-in-out infinite alternate; }
+  @keyframes ticker-pan { from { transform: translateX(0); } to { transform: translateX(var(--shift, 0px)); } }
+  .stale-banner {
+    display: none; margin: 0; padding: 0.85rem 1.2rem;
+    background: rgba(244,84,74,0.10); border-bottom: 1px solid var(--rust); border-left: 4px solid var(--rust);
+    color: var(--ink); font-family: 'Inter', sans-serif; font-size: 13px;
+  }
+  .stale-banner.show { display: block; }
+  .sleeve-row-note { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--ink-faint); }
 
   @media (max-width: 700px) {
     .field { height: 300px; }
@@ -433,6 +443,8 @@
     .pos-head { display: none; }
     .pos-row-desktop { display: none; }
     .pos-row-mobile { display: block; }
+    .flow-stats.four { grid-template-columns: repeat(2, 1fr); row-gap: 1.2rem; }
+    .flow-stats.four .flow-stat:nth-child(3) { padding-left: 0; }
   }
 </style>
 </head>
@@ -457,6 +469,8 @@
     </div>
   </div>
 </div>
+
+<div id="stale-banner" class="stale-banner" role="alert"></div>
 
 <div class="hero-nav">
   <div class="hero-nav-inner">
@@ -491,14 +505,19 @@
 
 <div class="wrap">
 
-  <div class="flow-stats">
+  <div class="flow-stats four">
     <div class="flow-stat">
       <div class="flow-label">Total return</div>
       <div class="flow-value" id="total-return">—</div>
-      <div class="flow-sub">since inception</div>
+      <div class="flow-sub">since inception · NAV index base 100</div>
     </div>
     <div class="flow-stat">
-      <div class="flow-label">Leverage</div>
+      <div class="flow-label">Gross exposure</div>
+      <div class="flow-value" id="gross-value">—</div>
+      <div class="flow-sub" id="gross-sub">of NAV · long + short, whole account</div>
+    </div>
+    <div class="flow-stat">
+      <div class="flow-label">Trend leverage scalar</div>
       <div class="flow-value" id="leverage-value">—</div>
       <div class="flow-sub" id="leverage-sub">—</div>
     </div>
@@ -511,12 +530,13 @@
 
   <div class="sec">
     <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">Open positions</span></div>
-    <p class="sec-note">Ranked by signal conviction. The bar shows relative strength, not allocation size. Unrealized P&amp;L is gain/loss since each position was opened, not since yesterday's close.</p>
+    <p class="sec-note">Ranked by signal conviction. The bar shows relative strength, not allocation size. Unrealized P&amp;L is gain/loss since each position was opened, not since yesterday's close. Weights and unrealized figures are percentages of account NAV, with positions converted to the account's base currency.</p>
     <div class="pos-row pos-head">
       <div class="pos-row-desktop">
-        <span>Asset</span><span>Signal</span><span class="col-weight">Weight</span><span class="col-shares">Signal</span><span class="col-mv">Weight</span><span>Unrealized (% NAV)</span>
+        <span>Asset</span><span>Signal strength</span><span class="col-weight">Weight</span><span class="col-shares">Raw signal</span><span>Unrealized (% NAV)</span>
       </div>
     </div>
+    <p class="sec-note" id="basis-note" style="display:none;color:var(--gold)"></p>
     <div id="positions-body"></div>
   </div>
 
@@ -603,6 +623,65 @@ function animateWave() {
 }
 animateWave();
 
+// ---- NYSE calendar (client-side staleness check). Same dates as utils/freshness.py NYSE_HOLIDAYS; a test compares them.
+const NYSE_HOLIDAYS = new Set([
+  '2026-01-01','2026-01-19','2026-02-16','2026-04-03','2026-05-25','2026-06-19','2026-07-03','2026-09-07','2026-11-26','2026-12-25',
+  '2027-01-01','2027-01-18','2027-02-15','2027-03-26','2027-05-31','2027-06-18','2027-07-05','2027-09-06','2027-11-25','2027-12-24'
+]);
+function isTradingDay(iso) {
+  const wd = new Date(iso + 'T00:00:00Z').getUTCDay();
+  return wd !== 0 && wd !== 6 && !NYSE_HOLIDAYS.has(iso);
+}
+function addDaysIso(iso, n) {
+  const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10);
+}
+// Current date/time in New York. `?asof=<ISO instant>` overrides the clock (used by the headless render tests).
+function etNow() {
+  const o = new URLSearchParams(location.search).get('asof');
+  const now = o ? new Date(o) : new Date();
+  const f = {};
+  new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).forEach(x => { f[x.type] = x.value; });
+  return { date: f.year + '-' + f.month + '-' + f.day, minutes: parseInt(f.hour, 10) * 60 + parseInt(f.minute, 10) };
+}
+// How many NYSE trading-day closes are missing: the latest close that should exist is today's if today is a trading day
+// and it is past 18:00 ET (the routine publishes ~17:15 ET), otherwise the previous trading day's.
+function tradingDaysOld(closeIso) {
+  const n = etNow();
+  let expected = n.date;
+  if (!(isTradingDay(expected) && n.minutes >= 18 * 60)) {
+    expected = addDaysIso(expected, -1);
+    while (!isTradingDay(expected)) expected = addDaysIso(expected, -1);
+  }
+  let k = 0, d = closeIso;
+  while (d < expected) { d = addDaysIso(d, 1); if (isTradingDay(d)) k++; }
+  return k;
+}
+function renderStaleBanner(data) {
+  const el = document.getElementById('stale-banner');
+  if (!data.close_date) { el.classList.remove('show'); return; }
+  const k = tradingDaysOld(data.close_date);
+  if (k > 1) {
+    const last = new Date(data.close_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    el.textContent = 'Data is ' + k + ' trading days old (last close ' + last + '). The daily update may have missed a run, so the figures below are not current.';
+    el.classList.add('show');
+  } else {
+    el.classList.remove('show');
+  }
+}
+
+// Effective per-sleeve state from the governance action (suspend / reduce_*), not the sleeve's own is_active flag.
+function sleeveState(sleeve, data) {
+  const ms = data.multi_strategy || {};
+  const a = ((ms.gate_state || {}).sleeve_actions || {})[sleeve];
+  if (a === 'suspend') return { cls: 'suspended', label: 'Suspended' };
+  if (a && a.indexOf('reduce') === 0) return { cls: 'reduced', label: 'Reduced ' + a.replace('reduce_', '').replace('pct', '%') };
+  if (a === 'monitor_only') return { cls: 'paused', label: 'Monitor only' };
+  if ((ms.gated_sleeves || []).indexOf(sleeve) !== -1) return { cls: 'suspended', label: 'Suspended' };
+  if ((ms.active_sleeves || []).indexOf(sleeve) !== -1 || a === 'run') return { cls: 'live', label: 'Live' };
+  return { cls: 'inactive', label: 'Inactive' };
+}
+
 async function loadDashboard() {
   let data;
   try {
@@ -636,7 +715,18 @@ async function loadDashboard() {
       const arrow = p.signal >= 0 ? '↑' : '↓';
       return '<span class="tick"><b>' + p.symbol + '</b><span class="' + cls + '">' + arrow + ' ' + p.signal.toFixed(3) + '</span></span>';
     });
-  document.getElementById('ticker-track').innerHTML = tickerItems.join('') + tickerItems.join('');
+  const trackEl = document.getElementById('ticker-track');
+  trackEl.innerHTML = tickerItems.join('');
+  requestAnimationFrame(() => {
+    // Each chip appears exactly once. If they overflow the bar, pan back and forth instead of looping a duplicate copy.
+    const overflow = trackEl.scrollWidth - trackEl.parentElement.clientWidth;
+    if (overflow > 0) {
+      trackEl.style.setProperty('--shift', (-overflow) + 'px');
+      trackEl.classList.add('pan');
+    } else {
+      trackEl.classList.add('static');
+    }
+  });
 
   const amountEl = document.getElementById('pulse-amount');
   amountEl.classList.add(isNeg ? 'neg' : 'pos');
@@ -681,25 +771,43 @@ async function loadDashboard() {
   // caption only needs the refresh time -- restating "NAV $X" here would
   // just duplicate the giant number a few pixels up.
   document.getElementById('pulse-meta').textContent = capturedAt
-    ? 'Refreshed ' + capturedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })
+    ? 'Refreshed ' + capturedAt.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' ET'
+      + (closeDate ? ' · data as of close ' + closeDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '')
     : '';
 
   document.getElementById('nav-value').textContent = nav.toFixed(2);   // NAV INDEX (inception = 100); dollar amounts are not published
   document.getElementById('total-return').textContent =
     (totalReturn >= 0 ? '+' : '') + (totalReturn * 100).toFixed(2) + '%';
-  document.getElementById('leverage-value').textContent = data.regime.leverage_scalar.toFixed(2) + 'x';
-  document.getElementById('leverage-sub').textContent = data.regime.leverage_scalar >= 1.2 ? 'bull regime' : 'bear regime';
+  window.__inceptionNav = inceptionNav;
 
+  // Account gross exposure (IBKR GrossPositionValue / NetLiquidation), a percentage only.
+  document.getElementById('gross-value').textContent = data.gross_exposure != null ? (data.gross_exposure * 100).toFixed(0) + '%' : '—';
+  if (data.gross_exposure == null) document.getElementById('gross-sub').textContent = 'not available in this snapshot';
+
+  // Trend leverage scalar: the Trend sleeve's own leverage multiplier. It says nothing about the market regime
+  // (since 2026-07-17 bull and bear leverage are both 0.8x), so the regime is shown separately in Governance.
+  const rg = data.regime || {};
+  document.getElementById('leverage-value').textContent = rg.leverage_scalar != null ? rg.leverage_scalar.toFixed(2) + 'x' : '—';
+  document.getElementById('leverage-sub').textContent =
+    (rg.bull_leverage != null && rg.bull_leverage === rg.bear_leverage)
+      ? 'fixed: bull = bear = ' + rg.bull_leverage.toFixed(2) + 'x' + (rg.max_leverage != null ? ' · cap ' + rg.max_leverage.toFixed(2) + 'x' : '')
+      : 'Trend sleeve only';
+  renderStaleBanner(data);
+
+  if (data.weight_basis !== 'base_ccy') {
+    const bn = document.getElementById('basis-note');
+    bn.textContent = 'Note: weights and unrealized % in this snapshot were not currency-converted (understated by roughly 28%); corrected from the next daily update.';
+    bn.style.display = 'block';
+  }
   const tbody = document.getElementById('positions-body');
   const maxSignal = Math.max(...data.positions.map(p => Math.abs(p.signal)), 0.01);
   tbody.innerHTML = data.positions.map((p, i) => {
     const barWidth = Math.max(4, (Math.abs(p.signal) / maxSignal) * 100);
     const pnlClass = p.unrealized_pct >= 0 ? 'pos' : 'neg';
-    const pnlSign = p.unrealized_pct >= 0 ? '+' : '';
+    const pnlSign = p.unrealized_pct >= 0 ? '+' : '−';   // U+2212, same glyph as the session P&L above
     const pnlStr = pnlSign + Math.abs(p.unrealized_pct).toFixed(2) + '%';
     const weightStr = (p.weight * 100).toFixed(1) + '%';
     const sharesStr = p.signal.toFixed(2);   // share counts are not published
-    const valueStr = (p.weight * 100).toFixed(2) + '%';   // dollar values are not published
     // Desktop: 6-column grid, signal shown as an inline bar. Mobile: same
     // underlying data recomposed into two lines (not the desktop columns
     // merely hidden) -- ticker+P&L are primary, weight/shares/value drop to
@@ -711,7 +819,6 @@ async function loadDashboard() {
         '<span class="sig-track"><span class="sig-fill" data-w="' + barWidth + '" style="transition-delay:' + (i * 60) + 'ms"></span></span>' +
         '<span class="mono col-weight">' + weightStr + '</span>' +
         '<span class="mono col-shares">' + sharesStr + '</span>' +
-        '<span class="mono col-mv">' + valueStr + '</span>' +
         '<span class="mono pos-pnl ' + pnlClass + '">' + pnlStr + '</span>' +
       '</div>' +
       '<div class="pos-row-mobile">' +
@@ -720,8 +827,8 @@ async function loadDashboard() {
           '<span class="mono pos-pnl ' + pnlClass + '">' + pnlStr + '</span>' +
         '</div>' +
         '<div class="pos-row-line2">' +
-          '<span class="mono">' + weightStr + ' · signal ' + sharesStr + '</span>' +
-          '<span class="mono">' + valueStr + '</span>' +
+          '<span class="mono">' + weightStr + ' of NAV</span>' +
+          '<span class="mono">signal ' + sharesStr + '</span>' +
         '</div>' +
         '<span class="pos-row-spine"><span class="pos-row-spine-fill" data-w="' + barWidth + '" style="transition-delay:' + (i * 60) + 'ms"></span></span>' +
       '</div>' +
@@ -947,51 +1054,25 @@ function renderSleeveStrip(data) {
       '</div></div>';
     }
 
-    // Determine CSS class (live > suspended > action-based > inactive)
-    var cls;
-    if (activeSleeves.indexOf(sleeve) !== -1)      cls = 'live';
-    else if (gatedSleeves.indexOf(sleeve) !== -1)  cls = 'suspended';
-    else {
-      var a = actions[sleeve];
-      if (a === 'run')                              cls = 'live';
-      else if (a === 'suspend')                     cls = 'suspended';
-      else if (a === 'monitor_only')                cls = 'paused';
-      else if (a && a.indexOf('reduce') === 0)      cls = 'reduced';
-      else                                          cls = 'inactive';
-    }
-
-    // Label: prefer specific action string, fall back to class default
-    var label;
-    if (activeSleeves.indexOf(sleeve) !== -1)     label = 'Live';
-    else if (gatedSleeves.indexOf(sleeve) !== -1) label = 'Suspended';
-    else label = actionLabel[actions[sleeve]] || 'Inactive';
+    // Effective state: the governance action wins over the sleeve's own is_active flag (a sleeve can be "active"
+    // internally while governance has suspended it -- that showed every sleeve as LIVE).
+    var st = sleeveState(sleeve, data);
+    var cls = st.cls, label = st.label;
 
     // Pretty display name: insert space before each uppercase run after lowercase
     var name = sleeve.replace(/([a-z])([A-Z])/g, '$1 $2');
 
     // Optional live figures from sleeve_summary (rolling, not backtest)
-    var fig = sumMap[sleeve];
-    var figLine = '';
-    if (fig) {
-      var parts = [];
-      if (fig.pnl_usd != null && !isNaN(fig.pnl_usd)) {
-        var sign = fig.pnl_usd >= 0 ? '+' : '';
-        // "Attrib." (not plain "P&L"): this is a notional, signal-attribution
-        // figure -- prior positions x today's return x a fixed notional
-        // dollar-per-name -- not this sleeve's real share of account NAV.
-        // See the hero NAV figure above for real account P&L. OPERATIONS.md
-        // 2026-08-31.
-        parts.push('Attrib. ' + sign + '$' + Math.round(Math.abs(fig.pnl_usd)).toLocaleString('en-US'));
-      }
-      if (fig.sharpe_21d != null && !isNaN(fig.sharpe_21d)) {
-        parts.push('21d Sh ' + Number(fig.sharpe_21d).toFixed(2));
-      }
-      if (parts.length) figLine = parts.join(' / ');
-    }
-
-    var figTitle = fig && fig.pnl_usd != null
-      ? ' title="Notional signal-attribution P&amp;L (fixed notional size per name), not this sleeve\'s real share of account NAV -- see the real NAV figure above."'
-      : '';
+    // Sharpe: the sleeve's own logged value, else the risk module's, else say so. A logged 0.00 together with
+    // 0.00 vol is the old "not computed" placeholder, never a measurement.
+    var fig = sumMap[sleeve] || {};
+    var pr = ms.portfolio_risk || {};
+    var rm = (pr.sleeve_metrics || {})[sleeve];
+    var sharpe = null;
+    if (fig.sharpe_21d != null && !(fig.sharpe_21d === 0 && !fig.vol_21d)) sharpe = fig.sharpe_21d;
+    else if (rm && rm.sharpe_21d != null && !rm.suspect && (pr.insufficient_history || {})[sleeve] === false) sharpe = rm.sharpe_21d;
+    var figLine = sharpe != null ? '21d Sharpe ' + Number(sharpe).toFixed(2) : '21d Sharpe: insufficient data';
+    var figTitle = ' title="Rolling 21-day Sharpe of the sleeve\'s signal-attribution returns (not the account\'s real P&amp;L)."';
     return '<div class="pos-row"><div class="sleeve-row-inner">' +
       '<span class="sleeve-row-name"><span class="sleeve-dot ' + cls + '"></span>' + name + '</span>' +
       '<span class="sleeve-row-status ' + cls + '">' + label + '</span>' +
@@ -999,7 +1080,26 @@ function renderSleeveStrip(data) {
     '</div></div>';
   }).join('');
 
-  el.innerHTML = badges;
+  var voo = (data.positions || []).filter(function(p) { return p.symbol === 'VOO'; })[0];
+  var coreRow = voo
+    ? '<div class="pos-row"><div class="sleeve-row-inner">' +
+        '<span class="sleeve-row-name"><span class="sleeve-dot live"></span>Core · VOO</span>' +
+        '<span class="sleeve-row-status live">Held</span>' +
+        '<span class="mono sleeve-row-fig">' + (voo.weight * 100).toFixed(1) + '% of NAV</span>' +
+      '</div></div>'
+    : '';
+  el.innerHTML = coreRow + badges;
+
+  // Lede: statuses come from the data, never hard-coded.
+  var parts = [];
+  if (voo) parts.push('VOO core ' + (voo.weight * 100).toFixed(0) + '% of NAV');
+  [['Trend', 'Trend'], ['MeanReversion', 'Mean reversion'], ['VRP', 'VRP']].forEach(function(s) {
+    var stt = sleeveState(s[0], data);
+    parts.push(s[1] + ' ' + stt.label.toLowerCase());
+  });
+  document.querySelector('.lede').textContent =
+    'A multi-sleeve systematic trading system, tracked in real time. ' + parts.join(' · ') +
+    '. PEAD paused pending a qualifying cohort. Paper account on Interactive Brokers, positions and signals updated after each close.';
 }
 function renderGatePanel(data) {
   const gs = (data.multi_strategy || {}).gate_state || null;
@@ -1013,16 +1113,20 @@ function renderGatePanel(data) {
   // Market stage: trend-regime stats, always available from data.regime
   // (unlike gate_state, which can be missing on a cold start) -- folded in
   // from what used to be its own separate "Trend Strength" section.
+  const bullThr = data.regime.bull_threshold != null ? data.regime.bull_threshold : 0.55;
+  const regimeState = data.regime.regime_state || (data.regime.raw_bull_score > bullThr ? 'bull' : 'bear');
   marketEl.innerHTML =
     '<div class="flow-stat">' +
-      '<div class="flow-label">Bull score</div>' +
-      '<div class="flow-value"><span class="orb ' + (data.regime.raw_bull_score > 0.55 ? 'bull' : 'bear') + '"></span>' +
-        data.regime.raw_bull_score.toFixed(3) + '</div>' +
+      '<div class="flow-label">Trend regime</div>' +
+      '<div class="flow-value"><span class="orb ' + (regimeState === 'bull' ? 'bull' : 'bear') + '"></span>' +
+        (regimeState === 'bull' ? 'Bull' : 'Bear') + '</div>' +
+      '<div class="flow-sub">bull score ' + data.regime.raw_bull_score.toFixed(3) + ' vs threshold ' + bullThr.toFixed(2) + '</div>' +
     '</div>' +
     '<div class="flow-stat">' +
-      '<div class="flow-label">Leverage state</div>' +
-      '<div class="flow-value"><span class="orb ' + (data.regime.leverage_scalar >= 1.2 ? 'bull' : 'bear') + '"></span>' +
-        (data.regime.leverage_scalar >= 1.2 ? 'Bull · 1.5x' : 'Bear · 0.8x') + '</div>' +
+      '<div class="flow-label">Leverage scalar</div>' +
+      '<div class="flow-value">' + data.regime.leverage_scalar.toFixed(2) + 'x</div>' +
+      '<div class="flow-sub">' + ((data.regime.bull_leverage != null && data.regime.bull_leverage === data.regime.bear_leverage)
+        ? 'fixed in both regimes' : 'varies with regime') + '</div>' +
     '</div>' +
     '<div class="flow-stat">' +
       '<div class="flow-label">Fast-exit</div>' +
@@ -1151,7 +1255,11 @@ function applyTimeframe(days) {
 
   const pctEl = document.getElementById('tf-period-change');
   if (pctEl && values.length >= 2) {
-    const pct = (values[values.length - 1] - values[0]) / values[0];
+    // ALL means since inception, measured from inception_nav (index base 100), exactly like the Total return card;
+    // other windows are measured from their first point.
+    const base = (days === 0 && window.__inceptionNav) ? window.__inceptionNav : values[0];
+    const pct = (values[values.length - 1] - base) / base;
+    pctEl.title = days === 0 ? 'Since inception (index base 100)' : 'Change over this window';
     const sign = pct >= 0 ? '+' : '';
     pctEl.textContent = sign + (pct * 100).toFixed(2) + '%';
     pctEl.className = 'tf-period-change ' + (pct >= 0 ? 'pos' : 'neg');
