@@ -531,12 +531,12 @@
   <div class="sec">
     <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">Open positions</span></div>
     <p class="sec-note">Ranked by signal conviction. The bar shows relative strength, not allocation size. Unrealized P&amp;L is gain/loss since each position was opened, not since yesterday's close. Weights and unrealized figures are percentages of account NAV, with positions converted to the account's base currency.</p>
+    <p class="sec-note" id="basis-note" style="display:none;color:var(--gold)"></p>
     <div class="pos-row pos-head">
       <div class="pos-row-desktop">
         <span>Asset</span><span>Signal strength</span><span class="col-weight">Weight</span><span class="col-shares">Raw signal</span><span>Unrealized (% NAV)</span>
       </div>
     </div>
-    <p class="sec-note" id="basis-note" style="display:none;color:var(--gold)"></p>
     <div id="positions-body"></div>
   </div>
 
@@ -1085,14 +1085,14 @@ function renderSleeveStrip(data) {
     ? '<div class="pos-row"><div class="sleeve-row-inner">' +
         '<span class="sleeve-row-name"><span class="sleeve-dot live"></span>Core · VOO</span>' +
         '<span class="sleeve-row-status live">Held</span>' +
-        '<span class="mono sleeve-row-fig">' + (voo.weight * 100).toFixed(1) + '% of NAV</span>' +
+        '<span class="mono sleeve-row-fig">' + (data.weight_basis === 'base_ccy' ? (voo.weight * 100).toFixed(1) + '% of NAV' : 'weight pending currency fix') + '</span>' +
       '</div></div>'
     : '';
   el.innerHTML = coreRow + badges;
 
   // Lede: statuses come from the data, never hard-coded.
   var parts = [];
-  if (voo) parts.push('VOO core ' + (voo.weight * 100).toFixed(0) + '% of NAV');
+  if (voo) parts.push(data.weight_basis === 'base_ccy' ? 'VOO core ' + (voo.weight * 100).toFixed(0) + '% of NAV' : 'VOO core');
   [['Trend', 'Trend'], ['MeanReversion', 'Mean reversion'], ['VRP', 'VRP']].forEach(function(s) {
     var stt = sleeveState(s[0], data);
     parts.push(s[1] + ' ' + stt.label.toLowerCase());
